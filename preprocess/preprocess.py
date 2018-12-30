@@ -1,8 +1,26 @@
-mport numpy as np
+import argparse
+import numpy as np
 import pandas as pd
 
 from pathlab import Path
 from rpy2.robjects import pandas2ri, r
+
+
+def get_args():
+    """Preprocessing arguments"""
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--config_path",
+        required = True,
+        help='the path to the json file specifying the query')
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help='print status of current processes')
+
+    return parser.parse_args()
 
 
 def createBaseDataFrame():
@@ -21,4 +39,4 @@ def read_sav(path):
 
 
 if __name__ == "__main__":
-    pass
+    args = get_args()
