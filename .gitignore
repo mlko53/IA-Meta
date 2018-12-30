@@ -1,0 +1,4 @@
+# Any data files
+*.sav
+*.csv
+*.txt
