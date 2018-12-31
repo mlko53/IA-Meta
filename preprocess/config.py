@@ -25,12 +25,34 @@ def load_config(path, verbose=True):
     with path.open('r') as f:
         config = json.load(f)
 
-    validate_config(config, verbose=verbose)
-
     return config
 
 
 def validate_config(config, verbose=False):
-    
+    """Validates config file"""
+
+    datasets = config['Datasets']
+
+    for year, year_dataset_list in datasets.items():
+        assert len(year_dataset_list) == len(set(year_dataset_list)), \
+            "Non unique papers"
+
     if verbose:
         print("Config tests passed!")
+
+
+def load_dataset_paths(config, verbose=False):
+    """Return dataset paths from config file"""
+
+    dataset_paths = []
+    datasets = config['Datasets']
+
+    for year, year_dataset_list in datasets.items():
+        year_dataset_list = [DATA_DIR / (year + " " + s) \
+                                for s in year_dataset_list]
+        dataset_paths.extend(year_dataset_list)
+
+    if verbose:
+        print("Preprocessing {} Datasets".format(len(dataset_paths)))
+
+    return dataset_paths
