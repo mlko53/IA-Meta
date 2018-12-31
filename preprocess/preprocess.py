@@ -5,7 +5,8 @@ import pandas as pd
 from pathlib import Path
 #from rpy2.robjects import pandas2ri, r
 
-from config import load_config, load_AVI_words, load_dataset_paths, validate_config
+from config import load_config, load_dataset_paths, validate_config
+from create_base import create_base_df
 from constants import *
 
 def get_args():
@@ -37,9 +38,8 @@ if __name__ == "__main__":
     args = get_args()
 
     config = load_config(CONFIG_DIR / args.config_file, args.verbose)
-    
     validate_config(config, args.verbose)
 
-    AVI_words = load_AVI_words(AVI_DIR, args.verbose)
+    meta_df = create_base_df()
 
     dataset_paths = load_dataset_paths(config, args.verbose)
