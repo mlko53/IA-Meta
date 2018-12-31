@@ -25,13 +25,6 @@ def get_args():
     return parser.parse_args()
 
 
-def createBaseDataFrame():
-    """Create base dataframe to append all datasets to"""
-    df = pd.DataFrame()
-
-    return df
-
-
 def read_sav(path):
     """Read .sav files, return pandas DataFrame"""
     w = r('foreign::read.spss("%s", to.data.frame=TRUE)' % path)
