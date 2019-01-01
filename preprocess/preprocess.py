@@ -39,6 +39,6 @@ if __name__ == "__main__":
     config = load_config(CONFIG_DIR / args.config_file, args.verbose)
     validate_config(config, args.verbose)
 
-    meta_df = create_base_df()
+    meta_df = create_base_df(args.verbose)
 
     dataset_paths = load_dataset_paths(config, args.verbose)
