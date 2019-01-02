@@ -14,6 +14,7 @@ AFFECTIVE_STATES_DIR = CONFIG_DIR / "affective_states.txt"
 META_DIR = CONFIG_DIR / "meta_items.txt"
 DEMO_DIR = CONFIG_DIR / "demo_items.txt"
 SES_DIR = CONFIG_DIR / "SES_items.txt"
+VAR_NAME_DICT_DIR = CONFIG_DIR / "var_name_dict.csv"
 
 # Preprocessed
 PREPROCESSED_DIR = PROJECT_DIR / "preprocessed"
