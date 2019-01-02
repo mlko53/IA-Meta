@@ -19,3 +19,6 @@ VAR_NAME_DICT_DIR = CONFIG_DIR / "var_name_dict.csv"
 # Preprocessed
 PREPROCESSED_DIR = PROJECT_DIR / "preprocessed"
 AVI_ABBREVIATION_DIR = PREPROCESSED_DIR / "AVI_abbreviations.json"
+
+# VALUES
+NAN = "_NAN_"

@@ -8,9 +8,9 @@ from constants import *
 def read_sav(path):
     """Read .sav files, return pandas DataFrame"""
     raw_data = list(spss.SavReader(path, returnHeader = True))
-    df = pd.DataFrame(raw_data, dtype=str)
+    df = pd.DataFrame(raw_data)
     columns = list(df.loc[0])
-    #columns = [s.decode('utf-8') for s in columns]
+    columns = [s.decode('utf-8') for s in columns]
     df.columns = columns
     df = df.iloc[1:].reset_index(drop=True) # sets column name to the first row
 
@@ -42,10 +42,12 @@ def load_metadata(path):
     return metadata
 
 
-def replace(df, metadata):
+def replace(df, study, metadata):
     """Replace values of df"""
+    replace_map = metadata['Replace'][study]
+    replace_map = {v:(np.nan if k==NAN else k) for k, v in replace_map.items()}
 
-    return df
+    return df.replace(replace_map)
 
 
 def rename_and_drop(df, name, var_name_dict):
@@ -80,8 +82,8 @@ def load_and_merge(meta_df, paper_paths, verbose=False):
 
             # basic preprocessing
             df = rename_and_drop(df, name, var_name_dict)
-            df = replace(df, metadata['Replace'][study])
+            df = replace(df, study, metadata)
 
-            meta_df = meta_df.append(df)
+            meta_df = meta_df.append(df, sort=False)
 
     return meta_df
