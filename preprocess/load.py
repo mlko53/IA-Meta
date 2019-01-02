@@ -42,6 +42,16 @@ def load_metadata(path):
     return metadata
 
 
+def recode(df, study, metadata):
+    """Recodes columns of df"""
+    recode_map = metadata['Recode'][study]
+    for col, recode_col_map in recode_map.items():
+        recode_col_map = {v:k for k, v in recode_col_map.items()}
+        df[col] = df[col].replace(recode_col_map)
+
+    return df
+
+
 def replace(df, study, metadata):
     """Replace values of df"""
     replace_map = metadata['Replace'][study]
@@ -81,6 +91,7 @@ def load_and_merge(meta_df, paper_paths, verbose=False):
             df = read_sav(df_path)
 
             # basic preprocessing
+            df = recode(df, study, metadata)
             df = rename_and_drop(df, name, var_name_dict)
             df = replace(df, study, metadata)
 
