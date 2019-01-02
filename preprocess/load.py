@@ -21,6 +21,14 @@ def load_var_name_dict(path, verbose=False):
     """Loads variable name dictionary csv"""
     var_name_dict = pd.read_csv(path)
 
+    var_name_dict.index = var_name_dict['paper'].astype('str') +\
+                                            '_' + var_name_dict['study']
+
+    var_name_dict = var_name_dict.drop(['paper', 'study'], axis=1)
+
+    if verbose:
+        print("Loaded in variable name dictionary")
+
     return var_name_dict
 
 
@@ -40,8 +48,17 @@ def replace(df, metadata):
     return df
 
 
-def rename(df, var_name_dict):
+def rename_and_drop(df, name, var_name_dict):
     """Rename df using variable name dictionary"""
+    # get rename map
+    rename_map = dict(var_name_dict.loc[name, ~var_name_dict.loc[name].isnull()])
+    rename_map = {v:k for k, v in rename_map.items()}
+
+    # rename
+    df = df.rename(columns=rename_map)
+
+    # drop
+    df = df[list(rename_map.values())]
 
     return df
 
@@ -53,14 +70,16 @@ def load_and_merge(meta_df, paper_paths, verbose=False):
 
     for paper_path in paper_paths:
         metadata = load_metadata(paper_path)
+        paper = metadata['Paper']
         for study_dir in metadata['Usable']:
             df_path = paper_path / study_dir
             study = study_dir.split('.')[0]
+            name = '_'.join([paper, study])
             # read each study
             df = read_sav(df_path)
 
             # basic preprocessing
-            df = rename(df, var_name_dict)
+            df = rename_and_drop(df, name, var_name_dict)
             df = replace(df, metadata['Replace'][study])
 
             meta_df = meta_df.append(df)
