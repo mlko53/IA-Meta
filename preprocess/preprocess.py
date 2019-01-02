@@ -24,7 +24,7 @@ def get_args():
         help='print status of current processes')
     parser.add_argument(
         "--name",
-        default="debuggin",
+        default="debugging",
         help='the file name to save as')
 
     return parser.parse_args()
@@ -48,9 +48,9 @@ if __name__ == "__main__":
 
     paper_paths = load_paper_paths(config, args.verbose)
 
-    meta_df = load_and_merge(meta_df, args.verbose)
+    meta_df = load_and_merge(meta_df, paper_paths, args.verbose)
 
-    if verbose:
-        print("Saving meta_df in {}".format(PREPROCESSED / args.name + '.csv'))
+    if args.verbose:
+        print("Saving meta_df in {}".format(PREPROCESSED_DIR / (args.name + '.csv')))
 
-    meta_df.to_csv(PRePROCESSED / args.name + '.csv', index=False)
+    meta_df.to_csv(PREPROCESSED_DIR / (args.name + '.csv'), index=False)
