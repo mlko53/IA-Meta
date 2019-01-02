@@ -1,0 +1,8 @@
+HAP
+LAP
+HAN
+LAN
+POS
+NEG
+HA
+LA
