@@ -30,7 +30,7 @@ def validate_config(config, verbose=False):
         print("Config tests passed!")
 
 
-def load_dataset_paths(config, verbose=False):
+def load_paper_paths(config, verbose=False):
     """Return dataset paths from config file"""
 
     dataset_paths = []

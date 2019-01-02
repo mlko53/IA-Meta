@@ -4,8 +4,9 @@ import pandas as pd
 
 from pathlib import Path
 
-from config import load_config, load_dataset_paths, validate_config
+from config import load_config, load_paper_paths, validate_config
 from create_base import create_base_df
+from load import load_and_merge
 from constants import *
 
 def get_args():
@@ -21,6 +22,10 @@ def get_args():
         "--verbose",
         action="store_true",
         help='print status of current processes')
+    parser.add_argument(
+        "--name",
+        default="debuggin",
+        help='the file name to save as')
 
     return parser.parse_args()
 
@@ -41,4 +46,11 @@ if __name__ == "__main__":
 
     meta_df = create_base_df(args.verbose)
 
-    dataset_paths = load_dataset_paths(config, args.verbose)
+    paper_paths = load_paper_paths(config, args.verbose)
+
+    meta_df = load_and_merge(meta_df, args.verbose)
+
+    if verbose:
+        print("Saving meta_df in {}".format(PREPROCESSED / args.name + '.csv'))
+
+    meta_df.to_csv(PRePROCESSED / args.name + '.csv', index=False)
