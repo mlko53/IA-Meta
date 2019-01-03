@@ -69,10 +69,10 @@ def replace(df, study, metadata):
     return df.replace(replace_map)
 
 
-def rename_and_drop(df, name, var_name_dict):
+def rename_and_drop(df, study, var_name_dict):
     """Rename df using variable name dictionary"""
     # get rename map
-    rename_map = dict(var_name_dict.loc[name, ~var_name_dict.loc[name].isnull()])
+    rename_map = dict(var_name_dict.loc[study, ~var_name_dict.loc[study].isnull()])
     rename_map = {v:k for k, v in rename_map.items()}
 
     # rename
@@ -84,6 +84,22 @@ def rename_and_drop(df, name, var_name_dict):
     return df
 
 
+def validate(df, study, metadata):
+    """Validates reported subject number"""
+    reported_N = metadata['Reported'][study]
+    actual_N = df['ethn'].value_counts()
+
+    allMatches = True
+    for ethn, number in reported_N.items():
+        if number != actual_N[ethn]:
+            print("WARNING: reported {} {}, found {} {}".format(number, ethn, actual_N[ethn], ethn))
+            allMatches = False
+
+    if allMatches:
+        print("    All subject numbers match")
+
+    return
+
 def load_and_merge(meta_df, paper_paths, verbose=False):
     """Loads all datasets from paper paths and merge with meta_df"""
 
@@ -92,10 +108,18 @@ def load_and_merge(meta_df, paper_paths, verbose=False):
     for paper_path in paper_paths:
         metadata = load_metadata(paper_path)
         paper = metadata['Paper']
+        if verbose:
+            print("{}".format(paper))
+            print("===============================")
         for study_dir in metadata['Usable']:
+
             df_path = paper_path / study_dir
             study = study_dir.split('.')[0]
             name = '_'.join([paper, study])
+
+            if verbose:
+                print("Processing {}...".format(study))
+
             # read each study
             df = read_sav(df_path)
 
@@ -104,6 +128,9 @@ def load_and_merge(meta_df, paper_paths, verbose=False):
             df = recode(df, study, metadata)
             df = rename_and_drop(df, name, var_name_dict)
             df = replace(df, study, metadata)
+
+            # validate final subject number
+            validate(df, study, metadata)
 
             meta_df = meta_df.append(df, sort=False)
 
