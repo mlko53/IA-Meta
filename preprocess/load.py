@@ -3,6 +3,7 @@ import pandas as pd
 import json
 
 import savReaderWriter as spss
+from compute import compute_ipsatized
 from constants import *
 
 def read_sav(path):
@@ -100,6 +101,7 @@ def validate(df, study, metadata):
 
     return
 
+
 def load_and_merge(meta_df, paper_paths, verbose=False):
     """Loads all datasets from paper paths and merge with meta_df"""
 
@@ -131,6 +133,9 @@ def load_and_merge(meta_df, paper_paths, verbose=False):
 
             # validate final subject number
             validate(df, study, metadata)
+
+            # compute
+            df = compute_ipsatized(df, verbose=verbose)
 
             meta_df = meta_df.append(df, sort=False)
 
