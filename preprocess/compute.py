@@ -21,10 +21,11 @@ def compute_ipsatized(df, verbose=False):
     actuals = df[raw_actuals].values
     ideals = df[raw_ideals].values
 
-    actuals_mean = actuals.mean(axis=1, keepdims=True)
-    actuals_sd = actuals.std(axis=1, keepdims=True)
-    ideals_mean = ideals.mean(axis=1, keepdims=True)
-    ideals_sd = ideals.std(axis=1, keepdims=True)
+    # ddof = 1 to compute sample standard deviation
+    actuals_mean = np.nanmean(actuals, axis=1, keepdims=True)
+    actuals_sd = np.nanstd(actuals, axis=1, keepdims=True, ddof=1)
+    ideals_mean = np.nanmean(ideals, axis=1, keepdims=True)
+    ideals_sd = np.nanstd(ideals, axis=1, keepdims=True, ddof=1)
 
     ipsatized_actuals = (actuals - actuals_mean) / actuals_sd
     ipsatized_ideals = (ideals - ideals_mean) / ideals_sd

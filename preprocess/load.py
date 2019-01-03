@@ -141,6 +141,8 @@ def load_and_merge(meta_df, paper_paths, verbose=False):
             df = rename_and_drop(df, name, var_name_dict, verbose=verbose)
             df = replace(df, study, metadata)
 
+            df = df.reset_index(drop=True)
+
             # validate final subject number
             validate(df, study, metadata)
 
