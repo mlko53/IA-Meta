@@ -22,3 +22,7 @@ AVI_ABBREVIATION_DIR = PREPROCESSED_DIR / "AVI_abbreviations.json"
 
 # VALUES
 NAN = "_NAN_"
+
+# Anaylsis
+ANALYSIS_DIR = PROJECT_DIR / "analysis"
+RESULTS_DIR = PROJECT_DIR / "results"
