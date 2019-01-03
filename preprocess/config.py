@@ -42,6 +42,6 @@ def load_paper_paths(config, verbose=False):
         dataset_paths.extend(year_dataset_list)
 
     if verbose:
-        print("Preprocessing {} Datasets".format(len(dataset_paths)))
+        print("Preprocessing {} Papers".format(len(dataset_paths)))
 
     return dataset_paths

@@ -42,6 +42,15 @@ def load_metadata(path):
     return metadata
 
 
+def filter(df, study, metadata):
+    """Filter df based on columns"""
+    filter_cols = metadata['Filter'][study]
+    for col, values in filter_cols.items():
+        df = df.loc[df[col].isin(values)]
+
+    return df
+
+
 def recode(df, study, metadata):
     """Recodes columns of df"""
     recode_map = metadata['Recode'][study]
@@ -91,6 +100,7 @@ def load_and_merge(meta_df, paper_paths, verbose=False):
             df = read_sav(df_path)
 
             # basic preprocessing
+            df = filter(df, study, metadata)
             df = recode(df, study, metadata)
             df = rename_and_drop(df, name, var_name_dict)
             df = replace(df, study, metadata)
