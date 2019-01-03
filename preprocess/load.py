@@ -70,11 +70,21 @@ def replace(df, study, metadata):
     return df.replace(replace_map)
 
 
-def rename_and_drop(df, study, var_name_dict):
+def rename_and_drop(df, study, var_name_dict, verbose=False):
     """Rename df using variable name dictionary"""
     # get rename map
     rename_map = dict(var_name_dict.loc[study, ~var_name_dict.loc[study].isnull()])
     rename_map = {v:k for k, v in rename_map.items()}
+
+    if verbose:
+        var_name_dict_cols = rename_map.keys()
+        present = [col in list(df) for col in var_name_dict_cols]
+        if all(present):
+            print("    All columns found in variable name dictionary.")
+        else:
+            for col in var_name_dict_cols:
+                if col not in list(df):
+                    print("    WARNING: '{}' column in variable name dictionary missing.".format(col))
 
     # rename
     df = df.rename(columns=rename_map)
@@ -97,7 +107,7 @@ def validate(df, study, metadata):
             allMatches = False
 
     if allMatches:
-        print("    All subject numbers match")
+        print("    All subject numbers match.")
 
     return
 
@@ -128,7 +138,7 @@ def load_and_merge(meta_df, paper_paths, verbose=False):
             # basic preprocessing
             df = filter(df, study, metadata)
             df = recode(df, study, metadata)
-            df = rename_and_drop(df, name, var_name_dict)
+            df = rename_and_drop(df, name, var_name_dict, verbose=verbose)
             df = replace(df, study, metadata)
 
             # validate final subject number
