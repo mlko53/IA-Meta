@@ -27,8 +27,17 @@ def compute_ipsatized(df, verbose=False):
     ideals_mean = np.nanmean(ideals, axis=1, keepdims=True)
     ideals_sd = np.nanstd(ideals, axis=1, keepdims=True, ddof=1)
 
-    ipsatized_actuals = (actuals - actuals_mean) / actuals_sd
-    ipsatized_ideals = (ideals - ideals_mean) / ideals_sd
+    if verbose:
+        actual_no_vary = (actuals_sd == 0).sum()
+        ideal_no_vary = (ideals_sd == 0).sum()
+        if actual_no_vary:
+            print("    WARNING: {} did not vary actual affect".format(actual_no_vary))
+        if ideal_no_vary:
+            print("    Warning: {} did not vary ideal affect".format(ideal_no_vary))
+
+    with np.errstate(divide='ignore', invalid='ignore'):
+        ipsatized_actuals = (actuals - actuals_mean) / actuals_sd
+        ipsatized_ideals = (ideals - ideals_mean) / ideals_sd
 
     ipsatized_actuals = pd.DataFrame(ipsatized_actuals,
                                      columns = [col.replace(".raw", ".ips.us") for col in raw_actuals])

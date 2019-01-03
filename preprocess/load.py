@@ -103,7 +103,7 @@ def validate(df, study, metadata):
     allMatches = True
     for ethn, number in reported_N.items():
         if number != actual_N[ethn]:
-            print("WARNING: reported {} {}, found {} {}".format(number, ethn, actual_N[ethn], ethn))
+            print("    WARNING: reported {} {}, found {} {}".format(number, ethn, actual_N[ethn], ethn))
             allMatches = False
 
     if allMatches:
@@ -148,6 +148,10 @@ def load_and_merge(meta_df, paper_paths, verbose=False):
 
             # compute
             df = compute_ipsatized(df, verbose=verbose)
+
+            # meta items
+            df['paper'] = paper
+            df['study'] = study
 
             meta_df = meta_df.append(df, sort=False)
 
