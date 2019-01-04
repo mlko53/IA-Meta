@@ -22,6 +22,16 @@ def load_grouping(path, verbose=False):
     return group_to_ethn, ethn_to_group
 
 
+def load_query(path, verbose=False):
+    """Loads query file"""
+    with path.open('r') as f:
+        l = f.read().split('\n')
+
+    assert len(l) == len(set(l)),\
+        "ERROR: non unique list."
+
+    return l
+
 def filter_studies_with_groups(df, ethn_to_group, verbose=False):
     """Get studies with ethnicity grouping"""
     df['ethn'] = df['ethn'].map(ethn_to_group)
