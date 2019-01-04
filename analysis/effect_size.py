@@ -2,7 +2,7 @@ import argparse
 import numpy as np
 import pandas as pd
 
-from utils import load_grouping, get_studies_with_group
+from utils import load_grouping, filter_studies_with_groups
 from constants import *
 
 def get_args():
@@ -33,8 +33,8 @@ def get_args():
 if __name__ == "__main__":
     args = get_args()
     
-    grouping = load_grouping(ANALYSIS_DIR / args.group_file, args.verbose)
+    group_to_ethn, ethn_to_group = load_grouping(ANALYSIS_DIR / args.group_file, args.verbose)
 
     meta_df = pd.read_csv(PREPROCESSED_DIR / args.meta_df_file)
 
-    studies_list = get_studies_with_group(meta_df, grouping, args.verbose)
+    meta_df = filter_studies_with_groups(meta_df, ethn_to_group, args.verbose)

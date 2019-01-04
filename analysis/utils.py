@@ -8,21 +8,42 @@ from constants import *
 
 def load_grouping(path, verbose=False):
     """Read grouping file"""
-    with path.open('r') as f:
-        d = json.load(f)
+    with open(path) as f:
+        group_to_ethn = json.load(f)
 
     if verbose:
-        print("Using grouping --- {}".format(d))
+        print("Using grouping --- {}".format(group_to_ethn))
 
-    grouping  = {}
-    for k, v in d.items():
+    ethn_to_group = {}
+    for k, v in group_to_ethn.items():
         for ethn in v:
-            grouping[ethn] = k
+            ethn_to_group[ethn] = k
 
-    return grouping
+    return group_to_ethn, ethn_to_group
 
 
-def get_studies_with_groups(df, grouping, verbose=False):
+def filter_studies_with_groups(df, ethn_to_group, verbose=False):
     """Get studies with ethnicity grouping"""
+    df['ethn'] = df['ethn'].map(ethn_to_group)
+    df['paper_study'] = df['paper'] + '_' + df['study']
 
-    return 
+    study_list = df.groupby('paper_study')['ethn'].unique()
+
+    mask = ["Group1" in s and "Group2" in s for s in study_list.values]
+
+    study_list = study_list.index[mask]
+    
+    if verbose:
+        print("Before filtering studies with groups, dataset contains...")
+        print("    {} papers.".format(len(df['paper'].unique())))
+        print("    {} studies.".format(len(df['paper_study'].unique())))
+
+    df = df[df['paper_study'].isin(study_list)]
+    df = df[df['ethn'].isin(["Group1", "Group2"])]
+
+    if verbose:
+        print("After filtering studies with groups, dataset contains...")
+        print("    {} papers.".format(len(df['paper'].unique())))
+        print("    {} studies.".format(len(df['paper_study'].unique())))
+
+    return df
