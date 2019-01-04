@@ -1,6 +1,9 @@
+import json
 import numpy as np
 import pandas as pd
 
+import config
+from constants import *
 
 def compute_ipsatized(df, verbose=False):
     """Computes ipatized AVI scores"""
@@ -45,5 +48,40 @@ def compute_ipsatized(df, verbose=False):
                                     columns = [col.replace(".raw", ".ips.us") for col in raw_ideals])
 
     df = df.join(ipsatized_actuals).join(ipsatized_ideals)
+
+    return df
+
+
+def compute_affective_states(df, verbose=False):
+    """Computes affective states"""
+
+    if verbose:
+        print("Aggregating emotion words to affective states.")
+        print("----------------------------------------------")
+
+    with open(AFFECTIVE_STATES_DIR) as f:
+        affective_states = json.load(f)
+
+    with open(AVI_ABBREVIATION_DIR) as f:
+        AVI_abbreviation_dict = json.load(f)
+
+    affect_types = ['real', 'ideal']
+    compute_types = ['raw', 'ipsatized']
+
+    for affect in affect_types:
+        for compute in compute_types:
+            for state, items in affective_states.items():
+                items = [AVI_abbreviation_dict[item] for item in items]
+                items = ['.'.join([affect[0], item, compute[:3]]) \
+                                                      for item in items]
+                if compute == "ipsatized":
+                    items = ['.'.join([item, "us"]) for item in items]
+                col = '.'.join([affect[0], state, compute[:3], "us"])
+
+                if verbose:
+                    print("    Computing {}".format(col))
+
+                with np.errstate(divide='ignore', invalid='ignore'):
+                    df[col] = np.nanmean(df[items].values.astype(float), axis=1)
 
     return df

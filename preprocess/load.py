@@ -3,7 +3,7 @@ import pandas as pd
 import json
 
 import savReaderWriter as spss
-from compute import compute_ipsatized
+from compute import compute_ipsatized, compute_affective_states
 from constants import *
 
 def read_sav(path):
@@ -146,7 +146,7 @@ def load_and_merge(meta_df, paper_paths, verbose=False):
             # validate final subject number
             validate(df, study, metadata)
 
-            # compute
+            # compute ipsatized
             df = compute_ipsatized(df, verbose=verbose)
 
             # meta items
@@ -154,5 +154,8 @@ def load_and_merge(meta_df, paper_paths, verbose=False):
             df['study'] = study
 
             meta_df = meta_df.append(df, sort=False)
+
+    # compute affective states
+    meta_df = compute_affective_states(meta_df, verbose=verbose)
 
     return meta_df

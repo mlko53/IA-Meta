@@ -85,7 +85,8 @@ def get_columns(verbose=False):
     demo_items = load_list_from_txt(DEMO_DIR)
     SES_items = load_list_from_txt(SES_DIR)
     AVI_words = load_list_from_txt(AVI_DIR)
-    affective_states = load_list_from_txt(AFFECTIVE_STATES_DIR)
+    with open(AFFECTIVE_STATES_DIR) as f:
+        affective_states = list(json.load(f).keys())
 
     if verbose:
         print("Using {} emotion words".format(len(AVI_words)))
