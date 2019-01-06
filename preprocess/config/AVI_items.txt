@@ -13,6 +13,7 @@ contemptuous
 content
 disgusted
 distressed
+disturbed
 dull
 elated
 empathic
@@ -52,4 +53,5 @@ strong
 surprised
 sympathetic
 unhappy
+warm
 worried

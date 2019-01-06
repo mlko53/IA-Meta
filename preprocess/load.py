@@ -97,6 +97,10 @@ def rename_and_drop(df, study, var_name_dict, verbose=False):
 
 def validate(df, study, metadata):
     """Validates reported subject number"""
+    if study not in metadata['Reported'].keys():
+        print("    WARNING: skipping subject number validation.")
+        return
+
     reported_N = metadata['Reported'][study]
     actual_N = df['ethn'].value_counts()
 

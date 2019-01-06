@@ -52,5 +52,7 @@ if __name__ == "__main__":
     
     meta_df = compute_diff_mean_sd(meta_df, query_cols)
 
+    meta_df = meta_df.sort_index()
+
     print(meta_df)
     meta_df.to_csv('test.csv')
