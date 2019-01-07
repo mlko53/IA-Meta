@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 from utils import load_grouping, filter_studies_with_groups, load_query
-from compute import compute_group_mean_sd, compute_diff_mean_sd
+from compute import compute_d 
 from constants import *
 
 def get_args():
@@ -48,11 +48,9 @@ if __name__ == "__main__":
 
     meta_df = filter_studies_with_groups(meta_df, ethn_to_group, args.verbose)
 
-    meta_df = compute_group_mean_sd(meta_df, query_cols)
-    
-    meta_df = compute_diff_mean_sd(meta_df, query_cols)
+    meta_df = compute_d(meta_df, query_cols)
 
     meta_df = meta_df.sort_index()
 
     print(meta_df)
-    meta_df.to_csv('test.csv')
+    meta_df.to_csv(RESULTS_DIR / ("d/" + args.name))
