@@ -31,6 +31,8 @@ def compute_d(df, query_cols):
 
     df = compute_group_mean_sd(df, query_cols)
 
+    return df
+
     studies_list = set(df['paper_study'].values)
     df.index = df['paper_study'] + '_' + df['ethn']
 
@@ -73,7 +75,14 @@ def compute_d(df, query_cols):
 def compute_r(df, var1, var2):
     """Computes correlation coefficient for each study between var1 and var2"""
     
+    count = df.dropna(axis=0, how='any').groupby('paper_study').count()
+    count = count.iloc[:, 1:]
+    count.columns = ['n']
+
     df = df.groupby('paper_study').corr().iloc[0::2, -1]
     df = df.reset_index(1).iloc[:, 1:]
-    df = df.rename({var2: '_'.join(['corr', var1, var2])}, axis=1)
+    df.columns = ['_'.join(['corr', var1, var2])]
+
+    df = df.join(count)
+
     return df

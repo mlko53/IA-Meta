@@ -47,4 +47,6 @@ if __name__ == "__main__":
     meta_df = meta_df[['paper_study', args.var1, args.var2]]
 
     meta_df = compute_r(meta_df, args.var1, args.var2)
+    
     print(meta_df)
+    meta_df.to_csv(RESULTS_DIR / ("r/" + args.name))
