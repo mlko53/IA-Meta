@@ -116,7 +116,7 @@ def validate(df, study, metadata):
     return
 
 
-def load_and_merge(meta_df, paper_paths, verbose=False):
+def load_and_merge(meta_df, paper_paths, manipulation, verbose=False):
     """Loads all datasets from paper paths and merge with meta_df"""
 
     var_name_dict = load_var_name_dict(VAR_NAME_DICT_DIR, verbose=verbose)
@@ -127,7 +127,13 @@ def load_and_merge(meta_df, paper_paths, verbose=False):
         if verbose:
             print("{}".format(paper))
             print("===============================")
-        for study_dir in metadata['Usable']:
+
+        if manipulation:
+            study_dirs = metadata['Manipulation']
+        else:
+            study_dirs = list(set(metadata['Usable']) - set(metadata['Manipulation']))
+
+        for study_dir in study_dirs:
 
             df_path = paper_path / study_dir
             study = study_dir.split('.')[0]

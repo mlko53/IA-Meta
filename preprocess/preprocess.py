@@ -18,6 +18,10 @@ def get_args():
         required = True,
         help='the file to the json file specifying the query')
     parser.add_argument(
+        "-m",
+        "--manipulation",
+        help='compile meta analysis dataset')
+    parser.add_argument(
         "-v",
         "--verbose",
         action="store_true",
@@ -48,7 +52,7 @@ if __name__ == "__main__":
 
     paper_paths = load_paper_paths(config, args.verbose)
 
-    meta_df = load_and_merge(meta_df, paper_paths, args.verbose)
+    meta_df = load_and_merge(meta_df, paper_paths, args.manipulation, args.verbose)
 
     if args.verbose:
         print("Saving meta_df in {}".format(PREPROCESSED_DIR / (args.name + '.csv')))
