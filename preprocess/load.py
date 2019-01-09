@@ -76,6 +76,9 @@ def rename_and_drop(df, study, var_name_dict, verbose=False):
     rename_map = dict(var_name_dict.loc[study, ~var_name_dict.loc[study].isnull()])
     rename_map = {v:k for k, v in rename_map.items()}
 
+    # drop
+    df = df[list(rename_map.keys())]
+
     if verbose:
         var_name_dict_cols = rename_map.keys()
         present = [col in list(df) for col in var_name_dict_cols]
@@ -88,9 +91,6 @@ def rename_and_drop(df, study, var_name_dict, verbose=False):
 
     # rename
     df = df.rename(columns=rename_map)
-
-    # drop
-    df = df[list(rename_map.values())]
 
     return df
 
@@ -120,7 +120,7 @@ def load_and_merge(meta_df, paper_paths, verbose=False):
     """Loads all datasets from paper paths and merge with meta_df"""
 
     var_name_dict = load_var_name_dict(VAR_NAME_DICT_DIR, verbose=verbose)
-
+    
     for paper_path in paper_paths:
         metadata = load_metadata(paper_path)
         paper = metadata['Paper']
