@@ -2,10 +2,12 @@ activated
 alarmed
 alert
 angry
+anxious
 aroused
 ashamed
 astonished
 atrest
+bored
 calm
 compassionate
 concerned
@@ -30,12 +32,15 @@ happy
 hostile
 idle
 inactive
+irritated
+joyx
 lonely
 nervous
 noemotion
 passive
 peaceful
 pity
+pleasant
 proud
 quiet
 relaxed
@@ -46,6 +51,7 @@ satisfied
 serene
 sleepy
 sluggish
+sociable
 softhearted
 still
 stressed
@@ -53,5 +59,6 @@ strong
 surprised
 sympathetic
 unhappy
+unpleasant
 warm
 worried
