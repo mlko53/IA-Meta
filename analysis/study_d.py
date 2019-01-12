@@ -15,6 +15,11 @@ def get_args():
         required=True,
         help="the groups to use when computing effect size")
     parser.add_argument(
+        "-s",
+        "--single_group",
+        action="store_true",
+        help="compute for only one group")
+    parser.add_argument(
         "-v",
         "--verbose",
         action="store_true",
@@ -46,11 +51,11 @@ if __name__ == "__main__":
 
     meta_df = pd.read_csv(PREPROCESSED_DIR / args.meta_df_file)
 
-    meta_df = filter_studies_with_groups(meta_df, ethn_to_group, args.verbose)
+    meta_df = filter_studies_with_groups(meta_df, ethn_to_group, args.single_group, args.verbose)
 
     meta_df = compute_d(meta_df, query_cols)
 
     meta_df = meta_df.sort_index()
 
     print(meta_df)
-    meta_df.to_csv(RESULTS_DIR / ("d/" + args.name))
+    meta_df.to_csv(RESULTS_DIR / ("d/" + args.name + '.csv'))

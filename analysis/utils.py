@@ -6,10 +6,13 @@ sys.path.append(str(Path(__file__).absolute().parent.parent))
 from constants import *
 
 
-def load_grouping(path, verbose=False):
+def load_grouping(path, single_group, verbose=False):
     """Read grouping file"""
     with open(path) as f:
         group_to_ethn = json.load(f)
+
+    if single_group:
+        del group_to_ethn['Group2']
 
     if verbose:
         print("Using grouping --- {}".format(group_to_ethn))
@@ -32,14 +35,17 @@ def load_query(path, verbose=False):
 
     return l
 
-def filter_studies_with_groups(df, ethn_to_group, verbose=False):
+def filter_studies_with_groups(df, ethn_to_group, single_group, verbose=False):
     """Get studies with ethnicity grouping"""
     df['ethn'] = df['ethn'].map(ethn_to_group)
     df['paper_study'] = df['paper'] + '_' + df['study']
 
     study_list = df.groupby('paper_study')['ethn'].unique()
 
-    mask = ["Group1" in s and "Group2" in s for s in study_list.values]
+    if single_group:
+        mask = ["Group1" in s for s in study_list.values]
+    else:
+        mask = ["Group1" in s and "Group2" in s for s in study_list.values]
 
     study_list = study_list.index[mask]
     
