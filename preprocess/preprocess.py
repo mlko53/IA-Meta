@@ -56,5 +56,6 @@ if __name__ == "__main__":
 
     if args.verbose:
         print("Saving meta_df in {}".format(PREPROCESSED_DIR / (args.name + '.csv')))
+        print("Found {} individual participants".format(len(meta_df)))
 
     meta_df.to_csv(PREPROCESSED_DIR / (args.name + '.csv'), index=False)
