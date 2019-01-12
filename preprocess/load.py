@@ -104,6 +104,8 @@ def validate(df, study, metadata):
     reported_N = metadata['Reported'][study]
     actual_N = df['ethn'].value_counts()
 
+    actual_N['total'] = len(df)
+
     allMatches = True
     for ethn, number in reported_N.items():
         if number != actual_N[ethn]:
