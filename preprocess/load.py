@@ -145,7 +145,12 @@ def load_and_merge(meta_df, paper_paths, manipulation, verbose=False):
                 print("Processing {}...".format(study))
 
             # read each study
-            df = read_sav(df_path)
+            if str(df_path).split(".")[-1] == "sav":
+                df = read_sav(df_path)
+            elif str(df_path).split(".")[-1] == "csv":
+                df = pd.read_csv(df_path)
+            else:
+                raise ValueError("Invalid data type found in metadata.json")
 
             # basic preprocessing
             df = filter(df, study, metadata)
