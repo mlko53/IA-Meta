@@ -102,7 +102,9 @@ def validate(df, study, metadata):
         return
 
     reported_N = metadata['Reported'][study]
-    actual_N = df['ethn'].value_counts()
+    actual_N = {}
+    if 'ethn' in list(df):
+        actual_N = df['ethn'].value_counts()
 
     actual_N['total'] = len(df)
 
