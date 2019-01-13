@@ -1,0 +1,53 @@
+---
+title: "explore"
+author: "Michael Ko"
+date: "January 12, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(lme4)
+library(lmerTest)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Import Data
+
+```{r cars}
+d <- read.csv("../../preprocessed/debugging.csv")
+d <- d %>%
+        unite(paper_study, c(paper, study), remove=FALSE) %>%
+        separate(paper, into=c("time", "author"), sep=" ", remove=FALSE) %>%
+        mutate(time = factor(time), author = factor(author))
+
+d_age <- d %>%
+        filter(paper_study != "2014 Mannell_study1") %>%
+        filter(paper_study != "2018 Bencharit_study4a")
+```
+
+## Age
+
+```{r pressure, echo=FALSE}
+summary(lmer(data=d_age, i.exci.raw ~ age + (1|paper_study)))
+```
+```{r pressure, echo=FALSE}
+summary(lmer(data=d_age, i.LAP.ips.us ~ age + (1|paper_study)))
+```
+
+## Ethnicity
+
+```{r}
+summary(lmer(data=d %>% filter(ethn %in% c("EA", "HK")), i.HAP.ips.us ~ ethn + (1|paper_study)))
+```
+
+## Time
+
+```{r}
+summary(lmer(data=d %>% filter(ethn %in% c("EA", "AA", "HK")), i.LAP.raw.us ~ as.numeric(time) + (1|paper)))
+```
+
+
+```{r}
+summary(lmer(data=d %>% filter(ethn %in% c("EA", "HK")), i.LAP.ips.us ~ ethn * as.numeric(time) + (1|paper)))
+```
