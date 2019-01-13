@@ -19,7 +19,8 @@ def compute_ipsatized(df, verbose=False):
     if verbose:
         if len(raw_actuals) != len(raw_ideals):
             print("    WARNING: actual and ideal length don't match.")
-        print("    Detected {} emotion words.".format(len(raw_actuals)))
+        print("    Detected {} actual emotion words.".format(len(raw_actuals)))
+        print("    Detected {} ideal emotion words.".format(len(raw_ideals)))
 
     actuals = df[raw_actuals].values
     ideals = df[raw_ideals].values
