@@ -9,11 +9,12 @@ DATA_DIR = PROJECT_DIR / "data"
 
 # Prepro
 CONFIG_DIR = PROJECT_DIR / "preprocess/config"
-AVI_DIR = CONFIG_DIR / "AVI_items.txt"
+ITEM_DIR = PROJECT_DIR / "preprocess/items"
+AVI_DIR = ITEM_DIR / "AVI_items.txt"
 AFFECTIVE_STATES_DIR = CONFIG_DIR / "affective_states.json"
-META_DIR = CONFIG_DIR / "meta_items.txt"
-DEMO_DIR = CONFIG_DIR / "demo_items.txt"
-SES_DIR = CONFIG_DIR / "SES_items.txt"
+META_DIR = ITEM_DIR / "meta_items.txt"
+DEMO_DIR = ITEM_DIR / "demo_items.txt"
+SES_DIR = ITEM_DIR / "SES_items.txt"
 VAR_NAME_DICT_DIR = CONFIG_DIR / "var_name_dict.csv"
 
 # Preprocessed
