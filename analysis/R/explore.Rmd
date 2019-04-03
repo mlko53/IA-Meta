@@ -9,6 +9,9 @@ output: html_document
 library(tidyverse)
 library(lme4)
 library(lmerTest)
+library(rethinking)
+library(rstan)
+library(ggridges)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -26,13 +29,259 @@ d_age <- d %>%
         filter(paper_study != "2018 Bencharit_study4a")
 ```
 
+### Comparing HAP across ethnicity
+
+```{r}
+d$ethnicity <- recode(d$ethn, "AFrican American" = "African American", 
+                              "Chinese" = "East Asian", 
+                              "Hong Kong Chinese" = "East Asian", 
+                              "British" = "European",
+                              "German" = "European", 
+                              "French" = "European", 
+                              "Korean"="East Asian", 
+                              "Taiwanese"="East Asian", 
+                              "Japanese"="East Asian",
+                              "Latino American" = "Latino")
+
+d$z.iHAP <- scale(d$i.HAP.ips.them, scale=T, center=T)[,]
+
+cc <- d%>%
+          filter(ethnicity %in% c("European",
+                                  "European American", 
+                                  "East Asian", 
+                                  "East Asian American", 
+                                  "Latino",
+                                  "African American")) %>%
+        filter(!is.na(z.iHAP) & !is.na(i.HAP.ips.us)) %>%
+        filter(gender != "") %>%
+        filter(age >15 & !is.na(age)) %>%
+        select(ethnicity, z.iHAP, age, gender, i.HAP.ips.us, paper_study) %>%
+        mutate(ethnicity = factor(ethnicity),
+               gender = factor(gender),
+               gender = as.numeric(gender),
+               zGender = scale(gender, scale=T, center=T)[,],
+               zAge = scale(age, scale=T, center=T)[,])
+
+cc$ethnicity <- factor(cc$ethnicity, levels=c("African American", "European", "European American", "East Asian", "East Asian American", "Latino"))
+
+# Bayesian Approach
+m1 <- map2stan(
+  alist(
+    z.iHAP ~ dnorm(mu, sigma),
+    mu <- a + a_ethnicity[ethnicity],
+    a_ethnicity[ethnicity] ~ dnorm(0,sigma_group),
+    a ~ dnorm(0,5),
+    sigma ~ dcauchy(0,1),
+    sigma_group ~ dcauchy(0, 1)
+  ), data=cc, iter=6000, warmup=1000, chains=3
+)
+
+m2 <- map2stan(
+  alist(
+    z.iHAP ~ dnorm(mu, sigma),
+    mu <- a + a_ethnicity[ethnicity] + b_fem * zGender + b_age * zAge,
+    a_ethnicity[ethnicity] ~ dnorm(0,sigma_group),
+    c(a, b_fem, b_age) ~ dnorm(0,5),
+    sigma ~ dcauchy(0,1),
+    sigma_group ~ dcauchy(0,1)
+  ), data=cc, iter=6000, warmup=1000, chains=3
+)
+
+plot(m1)
+precis(m1, depth=2, prob=.95)
+precis(m2, depth=2, prob=.95)
+
+compare(m1, m2)
+
+# sample
+
+post <- data.frame(extract.samples(m2))
+post <- post %>% 
+        select(Total=a,
+               European = a_ethnicity.1,
+               European_American=a_ethnicity.2,
+               East_Asian=a_ethnicity.3,
+               East_Asian_American=a_ethnicity.4,
+               Latino=a_ethnicity.5) %>%
+        mutate(European = European + Total,
+               East_Asian = East_Asian + Total,
+               East_Asian_American = East_Asian_American + Total,
+               European_American = European_American + Total,
+               Latino = Latino +Total) %>%
+        gather(country, beta) %>%
+        mutate(country = as.factor(country))
+
+ggplot(post, aes(x = beta, y = country)) +
+    geom_vline(xintercept = 0) +
+    geom_density_ridges(alpha = .8, scale = 1.9) +
+    labs(x = '\nstandardized means HAP') +
+    scale_x_continuous(limits = c(-1, 1)) +
+    theme_bw() +
+    theme(text = element_text(family="Times"),
+          axis.text = element_text(size = 16),
+          axis.title = element_text(size = 20),
+          panel.grid.minor.y = element_blank(),
+          panel.grid.minor.x = element_blank(),
+          panel.background = element_blank(),
+          plot.background = element_blank(),
+          panel.border = element_rect(color="darkgrey"),
+          axis.title.y = element_blank())
+
+ggplot(post, aes(x=beta, color=country)) + geom_density()
+```
+
+### Comparing LAP across countries
+```{r}
+d$z.iLAP <- scale(d$i.LAP.ips.them, scale=T, center=T)[,]
+
+cc <- d%>%
+          filter(ethnicity %in% c("European",
+                                  "European American", 
+                                  "East Asian", 
+                                  "East Asian American", 
+                                  "Latino",
+                                  "African American")) %>%
+        filter(!is.na(z.iLAP) & !is.na(i.LAP.ips.us)) %>%
+        filter(gender != "") %>%
+        filter(age >15 & !is.na(age)) %>%
+        select(ethnicity, z.iLAP, age, gender, i.HAP.ips.us) %>%
+        mutate(ethnicity = factor(ethnicity),
+               gender = factor(gender),
+               gender = as.numeric(gender),
+               zGender = scale(gender, scale=T, center=T)[,],
+               zAge = scale(age, scale=T, center=T)[,])
+
+cc$ethnicity <- factor(cc$ethnicity, levels=c("African American", "European", "European American", "East Asian", "East Asian American", "Latino"))
+
+# Bayesian Approach
+m1 <- map2stan(
+  alist(
+    z.iLAP ~ dnorm(mu, sigma),
+    mu <- a + a_ethnicity[ethnicity],
+    a_ethnicity[ethnicity] ~ dnorm(0,sigma_group),
+    a ~ dnorm(0,5),
+    sigma ~ dcauchy(0,1),
+    sigma_group ~ dcauchy(0, 1)
+  ), data=cc, iter=6000, warmup=1000, chains=3
+)
+
+m2 <- map2stan(
+  alist(
+    z.iLAP ~ dnorm(mu, sigma),
+    mu <- a + a_ethnicity[ethnicity] + b_fem * zGender + b_age * zAge,
+    a_ethnicity[ethnicity] ~ dnorm(0,sigma_group),
+    c(a, b_fem, b_age) ~ dnorm(0,5),
+    sigma ~ dcauchy(0,1),
+    sigma_group ~ dcauchy(0,1)
+  ), data=cc, iter=6000, warmup=1000, chains=3
+)
+
+plot(m1)
+precis(m1, depth=2, prob=.95)
+precis(m2, depth=2, prob=.95)
+
+compare(m1, m2)
+
+# sample
+
+post <- data.frame(extract.samples(m2))
+post <- post %>% 
+        select(Total=a,
+               European = a_ethnicity.1,
+               European_American=a_ethnicity.2,
+               East_Asian=a_ethnicity.3,
+               East_Asian_American=a_ethnicity.4,
+               Latino=a_ethnicity.5) %>%
+        mutate(European = European + Total,
+               East_Asian = East_Asian + Total,
+               East_Asian_American = East_Asian_American + Total,
+               European_American = European_American + Total,
+               Latino = Latino +Total) %>%
+        gather(country, beta) %>%
+        mutate(country = as.factor(country))
+
+ggplot(post, aes(x = beta, y = country)) +
+    geom_vline(xintercept = 0) +
+    geom_density_ridges(alpha = .8, scale = 1.9) +
+    labs(x = '\nstandardized means LAP') +
+    scale_x_continuous(limits = c(-1, 1)) +
+    theme_bw() +
+    theme(text = element_text(family="Times"),
+          axis.text = element_text(size = 16),
+          axis.title = element_text(size = 20),
+          panel.grid.minor.y = element_blank(),
+          panel.grid.minor.x = element_blank(),
+          panel.background = element_blank(),
+          plot.background = element_blank(),
+          panel.border = element_rect(color="darkgrey"),
+          axis.title.y = element_blank())
+
+ggplot(post, aes(x=beta, color=country)) + geom_density()
+```
+
+
+```{r}
+# Unstandardized Means
+i.HAP.mean = mean(cc$i.HAP.ips.us)
+i.HAP.sd = sd(cc$i.HAP.ips.us)
+
+m3 <- map2stan(
+  alist(
+    i.HAP.ips.us ~ dnorm(mu, sigma),
+    mu <- a + a_ethnicity[ethnicity] + b_fem * zGender + b_age * zAge,
+    a_ethnicity[ethnicity] ~ dnorm(0,.42),
+    a ~ dnorm(.54, .42),
+    c(b_fem, b_age) ~ dnorm(0, .42),
+    sigma ~ dcauchy(0,2)
+  ), data=cc, iter=11000, warmup=2000, chains=1
+)
+
+# sample
+
+post <- data.frame(extract.samples(m2, n = 5000))
+
+post <- post %>% 
+        select( Total = a, 
+                East_Asian = a_ethnicity.1,
+                East_Asian_American = a_ethnicity.2,
+                European_American = a_ethnicity.3) %>%
+        mutate(East_Asian = East_Asian + Total,
+               East_Asian_American = East_Asian_American + Total,
+               European_American = European_American + Total) %>%
+        gather(country, beta) %>%
+        mutate(country = as.factor(country))
+
+ggplot(post, aes(x = beta, y = country)) +
+    geom_vline(xintercept = 0) +
+    geom_density_ridges(alpha = .8, scale = 1.9) +
+    labs(x = '\nunstandardized means') +
+    scale_x_continuous(limits = c(-1, 1)) +
+    theme_bw() +
+    theme(text = element_text(family="Times"),
+          axis.text = element_text(size = 16),
+          axis.title = element_text(size = 20),
+          panel.grid.minor.y = element_blank(),
+          panel.grid.minor.x = element_blank(),
+          panel.background = element_blank(),
+          plot.background = element_blank(),
+          panel.border = element_rect(color="darkgrey"),
+          axis.title.y = element_blank())
+```
+
 ## Age
 
 ```{r pressure, echo=FALSE}
-summary(lmer(data=d_age, i.exci.raw ~ age + (1|paper_study)))
+summary(lmer(data=d_age, i.HAP.ips.us ~ age + (1|paper_study)))
 ```
 ```{r pressure, echo=FALSE}
 summary(lmer(data=d_age, i.LAP.ips.us ~ age + (1|paper_study)))
+```
+
+## Gender
+
+```{r}
+d$gender = factor(relevel(d$gender, ref="F"))
+summary(lmer(data=d %>% filter(gender != ""), i.HAP.ips.us ~ gender + (1|paper_study)))
 ```
 
 ## Ethnicity
@@ -44,10 +293,80 @@ summary(lmer(data=d %>% filter(ethn %in% c("EA", "HK")), i.HAP.ips.us ~ ethn + (
 ## Time
 
 ```{r}
-summary(lmer(data=d %>% filter(ethn %in% c("EA", "AA", "HK")), i.LAP.raw.us ~ as.numeric(time) + (1|paper)))
+summary(lmer(data=d, i.LAP.ips.us ~ as.numeric(time) + (1|paper)))
+```
+### Visualize
+
+```{r}
+x <- select(d, time, i.HAP.ips.us, i.LAP.ips.us) %>% gather(item, value, c(i.HAP.ips.us, i.LAP.ips.us))
+ggplot(x, aes(time, value, fill=item)) + geom_boxplot()
 ```
 
 
 ```{r}
-summary(lmer(data=d %>% filter(ethn %in% c("EA", "HK")), i.LAP.ips.us ~ ethn * as.numeric(time) + (1|paper)))
+summary(lmer(data=d %>% filter(ethn %in% c("EA", "HK")), i.HAP.ips.us ~ ethn * as.numeric(time) + (1|paper_study)))
+```
+
+## Actual and Ideal
+
+```{r}
+words <- c("exci", "enth", "elat", "euph", "happ", "content", "sati", "calm", "atre", "rela", "peac", "sere", 
+           "quie", "stil", "pass", "dull", "slee", "slug", "sadx", "lone", "unha", "fear", "host", "nerv", 
+           "arou", "surp", "asto")
+
+item <- c()
+r <- c()
+lower <- c()
+upper <- c()
+
+for(word in words){
+        ideal = paste0("i.", word, ".ips.us")
+        actual = paste0("r.", word, ".ips.us")
+        
+        r_test = cor.test(d[,actual], d[,ideal])
+        
+        r <- c(r, unname(r_test$estimate))
+        lower <- c(lower, unname(r_test$conf.int[1]))
+        upper <- c(upper, unname(r_test$conf.int[2]))
+        item <- c(item, word)
+}
+item_cor <- data.frame(item=item, r=r, lower=lower, upper=upper)
+```
+
+```{r}
+states <- c("HAP", "POS", "LAP", "LA", "LAN", "NEG", "HAN", "HA")
+
+item <- c()
+r <- c()
+lower <- c()
+upper <- c()
+
+for(word in states){
+        ideal = paste0("i.", word, ".ips.us")
+        actual = paste0("r.", word, ".ips.us")
+        
+        r_test = cor.test(d[,actual], d[,ideal])
+        
+        r <- c(r, unname(r_test$estimate))
+        lower <- c(lower, unname(r_test$conf.int[1]))
+        upper <- c(upper, unname(r_test$conf.int[2]))
+        item <- c(item, word)
+}
+state_cor <- data.frame(item=item, r=r, lower=lower, upper=upper)
+```
+
+### Visualize
+
+```{r}
+item_cor$item <- factor(item_cor$item, levels=words)
+ggplot(data=item_cor, aes(item, r, sep=item)) + 
+        geom_bar(stat='identity', position=position_dodge()) +
+        geom_errorbar(aes(ymin=lower, ymax=upper), width=.2, position=position_dodge(.9))
+```
+
+```{r}
+state_cor$item <- factor(state_cor$item, levels=states)
+ggplot(data=state_cor, aes(item, r, sep=item)) + 
+        geom_bar(stat='identity', position=position_dodge()) +
+        geom_errorbar(aes(ymin=lower, ymax=upper), width=.2, position=position_dodge(.9))
 ```
