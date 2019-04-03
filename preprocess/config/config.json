@@ -4,10 +4,11 @@
     "2007": ["Tsai"],
     "2009": ["Scollon"],
     "2011": ["Harmon-Jones"],
+    "2012": ["Chow", "Ruby", "Tamir"],
     "2013": ["Koopman-Holm", "Scheibe"],
-    "2014": ["Koopman-Holm"],
+    "2014": ["Koopman-Holm", "Mannell"],
     "2015": ["Sims"],
     "2016": ["Tsai"],
-    "2018": ["Bencharit"]
-    }
+    "2018": ["Bencharit", "Tsai", "Ito"]
+	}
 }
