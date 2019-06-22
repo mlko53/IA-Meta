@@ -1,0 +1,58 @@
+{
+    "Paper": "2016 Tamir",
+    "Year": 2016,
+    "Title": "Desired emotions across cultures: A value-based account",
+    "Authors": "Tamir, M., Schwartz, S. H., Cieciuch, J., Riediger, M., Torres, C., Scollon,... Vishkin, A.",
+    "Journal": "Journal of Personality and Social Psychology",
+    "Studies": ["study1.sav", "pilot1.sav"],
+    "Usable": ["study1.sav", "pilot1.sav"],
+    "Manipulation": ["pilot1.sav"],
+    "Reported": {
+        "study1": {
+            "total": 2324
+        },
+        "pilot1": {
+            "total": 200
+        }
+
+    },
+    "Filter":{
+        "study1": {
+        },
+        "pilot1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Gender":{
+                "M": 1,
+                "F": 2
+            },
+            "Sample":{
+                "German": 1,
+                "Israeli": 2,
+                "American": 3,
+                "Brazilian": 4,
+                "Ghanaian": 5,
+                "Polish": 6,
+                "Chinese": 8,
+                "Singaporean": 9
+            }
+        },
+        "pilot1": {
+            "Gender":{
+                "M": 1,
+                "F": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        },
+        "pilot1":{
+            "_NAN_": 999
+        }
+
+    }
+}
