@@ -1,0 +1,8 @@
+famSES
+famincome
+finanindep
+indSES
+indincome
+livewith
+educ
+major
