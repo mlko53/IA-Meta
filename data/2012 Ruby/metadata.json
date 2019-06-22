@@ -1,0 +1,60 @@
+{
+    "Paper": "2012 Ruby",
+    "Year": 2012,
+    "Title": "Not all collectivisms are equal: Opposing preferences for ideal affect between East Asians and Mexicans",
+    "Authors": "Ruby, M. B., Falk, C. F., Heine, S. J., Villa, C., & Silberstein, O.",
+    "Journal": "Emotion",
+    "Studies": ["study1.sav", "study2.sav"],
+    "Usable": ["study1.sav", "study2.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 236,
+            "European American": 78,
+            "Latino": 26,
+            "Hong Kong Chinese": 132
+        },
+        "study2": {
+            "total": 182,
+            "European American": 94,
+            "Latino": 54,
+            "Japanese": 34
+        }
+    },
+    "Filter":{
+        "study1": {},
+        "study2": {}
+    },
+    "Recode":{
+        "study1": {
+            "ethn": {
+                "European American": 1,
+                "Latino": 2,
+                "Hong Kong Chinese": 3
+            },
+            "gender": {
+                "F": 1,
+                "M": 2
+            }
+        },
+        "study2": {
+            "ethn": {
+                "European American": 1,
+                "Japanese": 2,
+                "Latino": 3
+            },
+            "gender": {
+                "F": 0,
+                "M": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        },
+        "study2":{
+            "_NAN_": 999
+        }
+    }
+}

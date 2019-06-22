@@ -1,0 +1,39 @@
+{
+    "Paper": "2009 Scollon",
+    "Year": 2009,
+    "Title": "Good feelings in christianity and buddhism: religious differences in ideal affect",
+    "Authors": "Scollon, C. N., Howard, A. H., Caldwell, A. E., & Ito, S.",
+    "Journal": "Journal of Happiness Studies",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+        	"total": 83
+        }
+    },
+    "Filter":{
+        "study1": {}
+    },
+    "Recode":{
+        "study1": {
+            "ethnic": {
+                "European American": 1,
+                "African American": 2,
+                "Latino American": 3,
+                "East Asian American": 4,
+                "Native American": 5,
+                "Other": 6
+            },
+            "sex": {
+                "F": 1,
+                "M": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

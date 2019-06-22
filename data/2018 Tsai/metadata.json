@@ -1,0 +1,50 @@
+{
+    "Paper": "2018 Tsai",
+    "Year": 2018,
+    "Title": "Valuing excitement makes people look forward to old age less and dread it more",
+    "Authors": "Tsai, J.L., Sims, T., Qu, Y., Jiang, D., Thomas, E., & Fung, H.H.",
+    "Journal": "Psychology and Aging",
+    "Studies": ["study1.sav", "study2.sav"],
+    "Usable": ["study2.sav"],
+    "Manipulation": ["study2.sav"],
+    "Reported": {
+        "study1": {
+            "European American": 267,
+            "East Asian American": 265,
+            "Hong Kong Chinese": 320
+        },
+        "study2": {
+        	"European American": 54,
+        	"East Asian American": 52,
+        	"Hong Kong Chinese": 58
+        }
+    },
+    "Filter":{
+        "study1": {},
+        "study2": {
+            "Include": [1]
+        }
+    },
+    "Recode":{
+        "study2": {
+            "Ethn": {
+            	"European American": 0,
+            	"East Asian American": 1,
+            	"Hong Kong Chinese": 2
+            },
+            "Gender":{
+                "M": 1,
+                "F": 0
+            },
+            "COND": {
+            	"Control Value LAP": 0,
+            	"Value HAP": 1
+            }
+        }
+    },
+    "Replace":{
+        "study2":{
+            "_NAN_": 999
+        }
+    }
+}

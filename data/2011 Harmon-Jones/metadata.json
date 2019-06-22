@@ -1,0 +1,26 @@
+{
+    "Paper": "2011 Harmon-Jones",
+    "Year": 2011,
+    "Title": "Attitudes toward emotions",
+    "Authors": "Harmon-Jones, E., Harmon-Jones, C., Amodio, D. M., & Gable, P. A.",
+    "Journal": "Journal of Personality and Social Psychology",
+    "Studies": ["study4.csv"],
+    "Usable": ["study4.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study4": {
+        	"total": 131
+        }
+    },
+    "Filter":{
+        "study4": {}
+    },
+    "Recode":{
+        "study4": {}
+    },
+    "Replace":{
+        "study4":{
+            "_NAN_": 999
+        }
+    }
+}

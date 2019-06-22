@@ -1,0 +1,42 @@
+{
+    "Paper": "2017 Parker",
+    "Year": 2017,
+    "Title": "No thanks! Autonomous interpersonal style is associated with less experience and valuing of gratitude",
+    "Authors": "Parker, S. C., Majid, H., Stewart, K. L., & Ahrens, A. H.",
+    "Journal": "Cognition and Emotion",
+    "Studies": ["study3.csv"],
+    "Usable": ["study3.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study3": {
+            "total": 271
+        }
+    },
+    "Filter":{
+        "study3": {
+        }
+    },
+    "Recode":{
+        "study3": {
+            "Gender":{
+                "M": 1,
+                "F": 2,
+                "Other": 3
+            },
+            "Race":{
+                "African American": 1,
+                "European American": 2,
+                "Hispanic": 3,
+                "Asian and Pacific Islander": 4,
+                "Middle Eastern": 5,
+                "Multiracial": 6,
+                "Other": 7
+            }
+        }
+    },
+    "Replace":{
+        "study3":{
+            "_NAN_": 999
+        }
+    }
+}

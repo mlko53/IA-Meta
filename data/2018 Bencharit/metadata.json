@@ -1,0 +1,116 @@
+{
+    "Paper": "2018 Bencharit",
+    "Year": 2018,
+    "Title": "Should job applicants be excited or calm? The role of culture and ideal affect in employment settings",
+    "Authors": "Bencharit, L. Z., Ho, Y. W., Fung, H. H., Yeung, D. Y., Stephens, N. M., Romero-Canyas, R., & Tsai, J. L.",
+    "Journal": "Emotion",
+    "Studies": ["study1.sav", "study2.sav", "study3.sav", "study4a.sav"],
+    "Usable": ["study1.sav", "study2.sav", "study3.sav", "study4a.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "European American": 72,
+            "East Asian American": 69,
+            "Hong Kong Chinese": 95
+        },
+        "study2": {
+            "European American": 60,
+            "East Asian American": 55,
+            "Hong Kong Chinese": 59
+        },
+        "study3": {
+            "European American": 69,
+            "East Asian American": 49,
+            "Hong Kong Chinese": 67
+        },
+        "study4a": {
+            "European American": 58,
+            "East Asian American": 25,
+            "Hong Kong Chinese": 42
+        }
+    },
+    "Filter": {
+        "study1": {
+            "Include": [1]
+        },
+        "study2": {
+        	"Include": [1]
+        },
+        "study3": {
+        	"Include": [1]
+        },
+        "study4a": {
+        	"Include": [1]
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Ethnicity": {
+                "European American": 1,
+                "East Asian American": 2,
+                "Hong Kong Chinese": 0
+            },
+            "D_Gender": {
+                "F": 2,
+                "M": 1
+            }
+        },
+        "study2": {
+        	"Ethnicity": {
+        		"European American": 1,
+        		"East Asian American": 2,
+        		"Hong Kong Chinese": 3
+        	},
+        	"D_Gender1Male":{
+        		"M": 1,
+        		"F": 2
+        	}
+        },
+        "study3": {
+        	"Ethnicity": {
+        		"European American": 1,
+        		"East Asian American": 0,
+        		"Hong Kong Chinese": -1
+        	},
+            "Age":{
+                "21.5": 2,
+                "28": 3,
+                "33": 4,
+                "38": 5,
+                "43": 6,
+                "48": 7,
+                "53": 8
+            },
+            "Gender":{
+                "M": 1,
+                "F": 2
+            }
+
+        },
+        "study4a": {
+        	"Ethnicity": {
+        		"European American": 1,
+        		"East Asian American": 0,
+        		"Hong Kong Chinese": -1
+        	},
+            "Gender":{
+                "M": 1,
+                "F": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        },
+        "study2": {
+        	"_NAN_": 999
+        },
+        "study3": {
+        	"_NAN_": 999
+        },
+        "study4a": {
+        	"_NAN_": 999
+        }
+    }
+}

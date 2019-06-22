@@ -1,0 +1,34 @@
+{
+    "Paper": "2018 Ito",
+    "Year": 2018,
+    "Title": "Discrepancies between Japanese undergraduate students’ ideal affect and actual affect in social contexts and life domains",
+    "Authors": "Ito, E., Walker, G. J., & Mannell, B.",
+    "Journal": "International Journal of the Sociology of Leisure",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1":{
+            "total": 41
+        }
+    },
+    "Filter":{
+        "study1": {}
+    },
+    "Recode":{
+        "study1": {
+            "ethn":{
+            	"Japanese": 1
+            },
+            "gender":{
+                "M": 0,
+                "F": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999 
+        }
+    }
+}

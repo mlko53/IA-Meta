@@ -1,0 +1,39 @@
+{
+    "Paper": "2012 Tamir",
+    "Year": 2012,
+    "Title": "Should people pursue feelings that feel good or feelings that do good? Emotional preferences and well-being",
+    "Authors": "Tamir, M., & Ford, B. Q.",
+    "Journal": "Emotion",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 173
+        }
+    },
+    "Filter":{
+        "study1": {}
+    },
+    "Recode":{
+        "study1": {
+            "ethn": {
+                "African American": 1,
+                "European American": 2,
+                "Latino American":  3,
+                "East Asian American": 4,
+                "Middle Eastern American": 5,
+                "Other": 6
+            },
+            "gender": {
+                "M": 1,
+                "F": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "Paper": "2016 Thompson",
+    "Year": 2016,
+    "Title": "The grass is not as green as you think: Affect evaluation in people with internalizing disorders",
+    "Authors": "Thompson, R. J., Kircanski, K., & Gotlib, I. H.",
+    "Journal": "Journal of Affective Disorders",
+    "Studies": ["PACO_Level2_Master_S2FullQuestionnaires (Tsai Lab) - Renee Thompson.sav"],
+    "Usable": ["PACO_Level2_Master_S2FullQuestionnaires (Tsai Lab) - Renee Thompson.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "PACO_Level2_Master_S2FullQuestionnaires (Tsai Lab) - Renee Thompson": {
+            "total": 70
+        }
+    },
+    "Filter":{
+        "PACO_Level2_Master_S2FullQuestionnaires (Tsai Lab) - Renee Thompson": {}
+    },
+    "Recode":{
+        "PACO_Level2_Master_S2FullQuestionnaires (Tsai Lab) - Renee Thompson": {
+            "race":{
+                "Native American": 1,
+                "Asian American": 2,
+                "African American": 3,
+                "Pacific Islander": 4,
+                "European American": 5,
+                "Hispanic": 6,
+                "Other": 7
+            }
+        }
+    },
+    "Replace":{
+        "PACO_Level2_Master_S2FullQuestionnaires (Tsai Lab) - Renee Thompson":{
+            "_NAN_": 999
+        }
+    }
+}

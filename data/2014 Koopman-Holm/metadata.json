@@ -1,0 +1,64 @@
+{
+    "Paper": "2014 Koopman-Holm",
+    "Year": 2014,
+    "Title": "Focusing on the negative: Cultural differences in expressions of sympathy",
+    "Authors": "Koopmann-Holm, B., & Tsai, J. L.",
+    "Journal": "Journal of Personality and Social Psychology",
+    "Studies": ["study2.sav", "study3.sav", "study4a.sav", "study4b.sav"],
+    "Usable": ["study2.sav", "study3.sav", "study4a.sav"],
+    "Manipulation": ["study4a.sav", "study4b.sav"],
+    "Reported": {
+        "study2":{
+            "total": 223
+        },
+        "study3":{
+            "total": 190
+        },
+        "study4a": {
+            "total": 62
+        }
+    },
+    "Filter":{
+        "study2": {},
+        "study3": {},
+        "study4a": {}
+    },
+    "Recode":{
+        "study2": {
+            "consent":{
+                "European American": 1
+            },
+            "gender":{
+                "F": 0,
+                "M": 1
+            }
+        },
+        "study3":{
+            "ethnicity":{
+                "European American": 1,
+                "Southeast Asian": 7
+            },
+            "gender":{
+                "F": 1,
+                "M": 2
+            }
+        },
+        "study4a":{
+            "gender":{
+                "F": 1,
+                "M": 2
+            }
+        }
+    },
+    "Replace":{
+        "study2":{
+            "_NAN_": 999 
+        },
+        "study3":{
+            "_NAN_": 999 
+        },
+        "study4a":{
+            "_NAN_": 999 
+        }
+    }
+}

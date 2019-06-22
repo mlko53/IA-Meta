@@ -1,0 +1,31 @@
+{
+    "Paper": "2014 Ford",
+    "Year": 2014,
+    "Title": "Preferring familiar emotions: As you want (and like) it?",
+    "Authors": "Ford, B. Q., & Tamir, M.",
+    "Journal": "Cognition & Emotion",
+    "Studies": ["pilot1.sav"],
+    "Usable": ["pilot1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "pilot1":{
+            "total": 60
+        }
+    },
+    "Filter":{
+        "pilot1": {}
+    },
+    "Recode":{
+        "pilot1": {
+            "gender":{
+                "F": 1,
+                "M": 2
+            }
+        }
+    },
+    "Replace":{
+        "pilot1":{
+            "_NAN_": 999
+        }
+    }
+}

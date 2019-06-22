@@ -1,0 +1,31 @@
+{
+    "Paper": "2014 Mannell",
+    "Year": 2014,
+    "Title": "Ideal affect, actual affect, and affect discrepancy during leisure and paid work",
+    "Authors": "Mannell, B., Walker, G. J., & Ito, E.",
+    "Journal": "Journal of Leisure Research",
+    "Studies": ["study1.csv"],
+    "Usable": ["study1.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 257
+        }
+    },
+    "Filter":{
+        "study1": {}
+    },
+    "Recode":{
+        "study1": {
+            "gender":{
+                "M": 1,
+                "F": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

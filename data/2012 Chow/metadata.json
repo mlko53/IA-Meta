@@ -1,0 +1,38 @@
+{
+    "Paper": "2012 Chow",
+    "Year": 2012,
+    "Title": "Perceived utility of emotion: The structure and construct validity of the Perceived Affect Utility Scale in a cross-ethnic sample",
+    "Authors": "Chow, P. I., & Berenbaum, H.",
+    "Journal": "Cultural Diversity and Ethnic Minority Psychology",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 298,
+            "European American": 142,
+            "East Asian American": 156
+        }
+    },
+    "Filter":{
+        "study1": {}
+    },
+    "Recode":{
+        "study1": {
+            "ethn": {
+                "European American": 0,
+                "East Asian American": 1
+            },
+            "gender": {
+                "M": 0,
+                "F": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999,
+            "_NAN_": 9999
+        }
+    }
+}

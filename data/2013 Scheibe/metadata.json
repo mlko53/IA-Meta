@@ -1,0 +1,39 @@
+{
+    "Paper": "2013 Scheibe",
+    "Year": 2013,
+    "Title": "Striving to feel good: Ideal affect, actual affect, and their correspondence across adulthood",
+    "Authors": "Scheibe, S., English, T., Tsai, J. L., & Carstensen, L. L.",
+    "Journal": "Psychology and Aging",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 136,
+            "European American": 89,
+            "African American": 43,
+            "Other": 4
+        }
+    },
+    "Filter":{
+        "study1": {}
+    },
+    "Recode":{
+        "study1": {
+            "race.3": {
+                "European American": 1,
+                "African American": 2,
+                "Other": 6
+            },
+            "sex": {
+                "F": 2,
+                "M": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

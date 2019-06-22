@@ -1,0 +1,55 @@
+{
+    "Paper": "2013 Koopman-Holm",
+    "Year": 2013,
+    "Title": "Buddhist-Inspired Meditation Increases the Value of Calm",
+    "Authors": "Koopmann-Holm, B., Sze, J., Ochs, C., & Tsai, J. L.",
+    "Journal": "Emotion",
+    "Studies": ["study1.sav", "study2.sav", "study3.sav"],
+    "Usable": ["study1.sav", "study2.sav", "study3.sav"],
+    "Manipulation": ["study2.sav", "study3.sav"],
+    "Reported": {
+        "study1": {
+            "total": 91
+        },
+        "study2":{
+            "total": 74
+        },
+        "study3":{
+            "total": 102
+        }
+    },
+    "Filter":{
+        "study1": {},
+        "study2": {},
+        "study3": {}
+    },
+    "Recode":{
+        "study1": {
+            "ethnicit": {
+                "European American": 3,
+                "East Asian American": 1
+            },
+            "gender": {
+                "F": 2,
+                "M": 1
+            }
+        },
+        "study2": {
+            "ethncat":{
+                "European American": 1,
+                "East Asian American": 2
+            },
+            "gender":{
+                "F": 0
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        },
+        "study2":{
+            "_NAN_": 999 
+        }
+    }
+}
