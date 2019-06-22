@@ -1,0 +1,10 @@
+{
+    "HAP": ["excited", "enthusiastic", "elated", "euphoric"],
+    "LAP": ["relaxed", "calm", "peaceful", "serene", "atrest"],
+    "HAN": ["fearful", "hostile", "nervous"],
+    "LAN": ["dull", "sleepy", "sluggish"],
+    "POS": ["content", "happy", "satisfied"],
+    "NEG": ["sadx", "unhappy", "lonely"],
+    "HA": ["astonished", "surprised", "aroused"],
+    "LA": ["idle", "passive", "inactive", "quiet", "still"]
+}
