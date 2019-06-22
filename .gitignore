@@ -2,9 +2,17 @@
 *.sav
 *.csv
 *.txt
-*>Rhistory
+*Rhistory
 !preprocess/config/*
 !preprocess/items/*
+
+# Folders that aren't ready
+analysis/
+results/
+scripts/
+temporary/
+papers/
+preprocessed/
 
 # pycache files
 __pycache__/
