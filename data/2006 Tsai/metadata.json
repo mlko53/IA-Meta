@@ -1,0 +1,56 @@
+{
+    "Paper": "2006 Tsai",
+    "Year": 2006,
+    "Title": "Cultural variation in affect valuation",
+    "Authors": "Tsai, J. L., Knutson, B., & Fung, H. H.",
+    "Journal": "Journal of personality and social psychology",
+    "Studies": ["study1.sav", "study2.sav"],
+    "Usable": ["study1.sav", "study2.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "European American": 201,
+            "East Asian American": 196
+        },
+        "study2": {
+            "European American": 79,
+            "East Asian American": 81,
+            "Hong Kong Chinese": 96
+        }
+    },
+    "Filter":{
+        "study1": {},
+        "study2": {}
+    },
+    "Recode":{
+        "study1": {
+            "ethn": {
+                "European American": 0,
+                "East Asian American": 1
+            },
+            "sex": {
+                "F": 0,
+                "M": 1
+            }
+        },
+        "study2": {
+            "group5": {
+                "European American": 1,
+                "East Asian American": 2,
+                "Hong Kong Chinese": 3
+            },
+            "sex": {
+                "F": 0,
+                "M": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        },
+        "study2":{
+            "_NAN_": 999 
+        }
+    }
+}

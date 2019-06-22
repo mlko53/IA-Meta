@@ -2,6 +2,7 @@
 *.sav
 *.csv
 *.txt
+*.pdf
 *Rhistory
 !preprocess/config/*
 !preprocess/items/*
