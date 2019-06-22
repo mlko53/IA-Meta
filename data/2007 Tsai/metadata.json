@@ -1,0 +1,39 @@
+{
+    "Paper": "2007 Tsai",
+    "Year": 2007,
+    "Title": "Good feelings in christianity and buddhism: religious differences in ideal affect",
+    "Authors": "Tsai, J. L., Miao, F. F., & Seppala, E.",
+    "Journal": "Personality and Social Psychology Bulletin",
+    "Studies": ["study1.sav", "study2.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "European American": 120,
+            "East Asian American": 105
+        }
+    },
+    "Filter":{
+        "study1": {
+            "final": [1],
+            "random": [1]
+        }
+    },
+    "Recode":{
+        "study1": {
+            "group": {
+                "European American": 1,
+                "East Asian American": 2
+            },
+            "sex": {
+                "F": 0,
+                "M": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}
