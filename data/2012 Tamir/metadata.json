@@ -20,9 +20,9 @@
             "ethn": {
                 "African American": 1,
                 "European American": 2,
-                "Latino American":  3,
-                "East Asian American": 4,
-                "Middle Eastern American": 5,
+                "Hispanic":  3,
+                "Asian": 4,
+                "Middle Eastern": 5,
                 "Other": 6
             },
             "gender": {

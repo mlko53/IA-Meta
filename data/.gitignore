@@ -1,0 +1,25 @@
+*.sav
+
+*.xls
+
+*.csv
+
+*.xlsx
+
+*.SPO
+
+*.SPS
+
+*.spo
+
+*.sps
+
+**/2007 Tsai Influence/server/
+
+**/2007 Tsai Socialization/manuscript and final data/
+
+**/2007 Tsai Socialization/study 1 - IA in preschool children/
+
+**/2007 Tsai Socialization/study 2 - IA in Children_s storybooks/
+
+**/2007 Tsai Socialization/study 3 - manipulating IA through exposure to storybooks/

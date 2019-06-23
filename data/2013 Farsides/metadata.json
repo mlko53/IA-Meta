@@ -1,0 +1,32 @@
+{
+    "Paper": "2013 Farsides",
+    "Year": 2013,
+    "Title": "Inspiring altruism: reflecting on the personal relevance of emotionally evocative prosocial media characters",
+    "Authors": "Farsides, T., Pettman, D., & Tourle, L.",
+    "Journal": "Journal of Applied Social Psychology,",
+    "Studies": ["study2.sav"],
+    "Usable": ["study2.sav"],
+    "Manipulation": ["study2.sav"],
+    "Reported": {
+        "study2": {
+            "total": 29
+        }
+    },
+    "Filter":{
+        "study2": {
+        }
+    },
+    "Recode":{
+        "study2": {
+            "SEX":{
+                "M": 1,
+                "F": 2
+            }
+        }
+    },
+    "Replace":{
+        "study2":{
+            "_NAN_": 999
+        }
+    }
+}

@@ -26,7 +26,7 @@
     "Recode":{
         "study2": {
             "consent":{
-                "European American": 1
+                "German + American": 1
             },
             "gender":{
                 "F": 0,
@@ -44,6 +44,10 @@
             }
         },
         "study4a":{
+            "country":{
+                "European American": 1,
+                "German": 2
+            },
             "gender":{
                 "F": 1,
                 "M": 2

@@ -9,10 +9,7 @@
     "Manipulation": [],
     "Reported": {
         "study1": {
-            "total": 136,
-            "European American": 89,
-            "African American": 43,
-            "Other": 4
+            "total": 136
         }
     },
     "Filter":{
@@ -20,14 +17,14 @@
     },
     "Recode":{
         "study1": {
-            "race.3": {
-                "European American": 1,
+            "race.3":{
                 "African American": 2,
+                "European American": 1,
                 "Other": 6
             },
-            "sex": {
-                "F": 2,
-                "M": 1
+            "sex":{
+                "M": 1,
+                "F": 2
             }
         }
     },

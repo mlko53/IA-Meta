@@ -18,12 +18,12 @@
         "study3": {
             "Ehnicity": {
                 "European American": 0,
-                "Hong Kong Chinese": 1,
-                "Latino American": 2,
+                "Asian": 1,
+                "Hispanic": 2,
                 "Native American": 3,
-                "AFrican American": 4,
+                "African American": 4,
                 "Other": 5,
-                "Multi": 6
+                "Multiracial": 6
             },
             "gender": {
                 "F": 0,

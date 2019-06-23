@@ -3,6 +3,8 @@
 *.csv
 *.txt
 *.pdf
+*.xls
+*.xlsx
 *Rhistory
 !preprocess/config/*
 !preprocess/items/*

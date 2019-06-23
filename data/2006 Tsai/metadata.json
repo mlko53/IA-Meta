@@ -14,7 +14,7 @@
         },
         "study2": {
             "European American": 79,
-            "East Asian American": 81,
+            "Chinese American": 81,
             "Hong Kong Chinese": 96
         }
     },
@@ -36,7 +36,7 @@
         "study2": {
             "group5": {
                 "European American": 1,
-                "East Asian American": 2,
+                "Chinese American": 2,
                 "Hong Kong Chinese": 3
             },
             "sex": {

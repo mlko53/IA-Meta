@@ -1,0 +1,44 @@
+{
+    "Paper": "2014 Kumar",
+    "Year": 2014,
+    "Title": "Cultural differences in affective forecasting and the role of ideal affect",
+    "Authors": "Kumar, M. M.",
+    "Journal": "Thesis",
+    "Studies": ["MeenaDataFinal.csv"],
+    "Usable": ["MeenaDataFinal.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "MeenaDataFinal": {
+            "total": 112,
+            "European American": 62,
+            "Chinese": 10,
+            "Japanese": 6,
+            "Korean": 33,
+            "Taiwanese": 1
+        }
+    },
+    "Filter":{
+        "MeenaDataFinal": {
+        }
+    },
+    "Recode":{
+        "MeenaDataFinal": {
+            "BORN":{
+                "European American": "EA",
+                "Japanese": "JP",
+                "Chinese": "CH",
+                "Korean": "SK",
+                "Taiwanese": "TW"
+            },
+            "SEX":{
+                "M": "M",
+                "F": "F"
+            }
+        }
+    },
+    "Replace":{
+        "MeenaDataFinal":{
+            "_NAN_": "."
+        }
+    }
+}

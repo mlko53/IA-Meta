@@ -1,0 +1,39 @@
+{
+    "Paper": "2011 Li",
+    "Year": 2011,
+    "Title": "Cultural Variation in Affect Valuation and its Consumer Behavioral Consequences.",
+    "Authors": "Li, I.",
+    "Journal": "Thesis",
+    "Studies": ["ivanlimturkdata_edited.csv"],
+    "Usable": ["ivanlimturkdata_edited.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "ivanlimturkdata_edited": {
+        	"total": 229,
+            "European American": 126,
+            "Southeast Asian": 70,
+            "East Asian": 33
+        }
+    },
+    "Filter":{
+        "ivanlimturkdata_edited": {}
+    },
+    "Recode":{
+        "ivanlimturkdata_edited": {
+            "Gender": {
+                "F": 2
+            },
+            "Ethnicity /  / Please choose a category that best describes you.":{
+                "European American": 1,
+                "Southeast Asian": 2,
+                "East Asian": 3
+            }
+        }
+    },
+    "Replace":{
+        "ivanlimturkdata_edited":{
+            "_NAN_": 999,
+            "_NAN_": "#DIV/0!"
+        }
+    }
+}

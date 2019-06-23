@@ -10,14 +10,14 @@
     "Reported": {
         "study1": {
             "total": 236,
-            "European American": 78,
-            "Latino": 26,
+            "European Canadian": 78,
+            "Mexican": 26,
             "Hong Kong Chinese": 132
         },
         "study2": {
             "total": 182,
-            "European American": 94,
-            "Latino": 54,
+            "European Canadian": 94,
+            "Mexican": 54,
             "Japanese": 34
         }
     },
@@ -28,8 +28,8 @@
     "Recode":{
         "study1": {
             "ethn": {
-                "European American": 1,
-                "Latino": 2,
+                "European Canadian": 1,
+                "Mexican": 2,
                 "Hong Kong Chinese": 3
             },
             "gender": {
@@ -39,9 +39,9 @@
         },
         "study2": {
             "ethn": {
-                "European American": 1,
+                "European Canadian": 1,
                 "Japanese": 2,
-                "Latino": 3
+                "Mexican": 3
             },
             "gender": {
                 "F": 0,
