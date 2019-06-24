@@ -24,6 +24,8 @@ def compute_ipsatized(df, verbose=False):
 
     actuals = df[raw_actuals].values
     ideals = df[raw_ideals].values
+    actuals = actuals.astype(float)
+    ideals = ideals.astype(float)
 
     # ddof = 1 to compute sample standard deviation
     actuals_mean = np.nanmean(actuals, axis=1, keepdims=True)
