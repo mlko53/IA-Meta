@@ -4,8 +4,8 @@
     "Title": "The grass is not as green as you think: Affect evaluation in people with internalizing disorders",
     "Authors": "Thompson, R. J., Kircanski, K., & Gotlib, I. H.",
     "Journal": "Journal of Affective Disorders",
-    "Studies": ["study1.csv"],
-    "Usable": ["study1.csv"],
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
     "Manipulation": [],
     "Reported": {
         "study1": {
@@ -17,9 +17,14 @@
     },
     "Recode":{
         "study1": {
-            "ethn":{
-                "European American": 1,
-                "East Asian American": 2
+            "race":{
+                "Native American": 1,
+                "Asian American": 2,
+                "African American": 3,
+                "Pacific Islander": 4,
+                "European American": 5,
+                "Hispanic": 6,
+                "Other": 7
             }
         }
     },
