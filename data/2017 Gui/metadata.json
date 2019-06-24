@@ -4,20 +4,20 @@
     "Title": "Hong Kong Chinese workers' ideal affect and actual affect during leisure, and their correspondence: A follow-up to Mannell et al. (2014)",
     "Authors": "Gui, J., Walker, G. J., & Ito, E.",
     "Journal": "Proceedings of the 15th Canadian Congress on Leisure Research, Waterloo, Ontario.",
-    "Studies": ["(Renamed) Gui, Walker, Ito 2017.csv"],
-    "Usable": ["(Renamed) Gui, Walker, Ito 2017.csv"],
+    "Studies": ["study1.csv"],
+    "Usable": ["study1.csv"],
     "Manipulation": [],
     "Reported": {
-        "(Renamed) Gui, Walker, Ito 2017": {
+        "study1": {
             "total": 575
         }
     },
     "Filter":{
-        "(Renamed) Gui, Walker, Ito 2017": {
+        "study1": {
         }
     },
     "Recode":{
-        "(Renamed) Gui, Walker, Ito 2017": {
+        "study1": {
             "gender":{
                 "M": 1,
                 "F": 2
@@ -25,7 +25,7 @@
         }
     },
     "Replace":{
-        "(Renamed) Gui, Walker, Ito 2017":{
+        "study1":{
             "_NAN_": "."
         }
     }
