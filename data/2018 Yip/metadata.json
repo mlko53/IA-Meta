@@ -1,0 +1,42 @@
+{
+    "Paper": "2018 Yip",
+    "Year": 2018,
+    "Title": "Cultural Differences in 'Saving the Best for Last'",
+    "Authors": "Yip, A. P. W., & Lockenhoff, C. E.",
+    "Journal": "Journal of Cross-Cultural Psychology",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 170,
+            "European American": 86,
+            "Chinese American": 52,
+            "Japanese American": 3,
+            "Korean American": 29
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Ethnicity":{
+                "European American": 1,
+                "Chinese American": 2,
+                "Japanese American": 4,
+                "Korean American": 3
+            },
+            "Sex":{
+                "M": 1,
+                "F": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

@@ -36,7 +36,7 @@ def load_var_name_dict(path, verbose=False):
 def load_metadata(path):
     """Loads metadata from paper path"""
     path = path / "metadata.json"
-
+    
     with open(path) as f:
         metadata = json.load(f)
 

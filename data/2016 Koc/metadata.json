@@ -1,0 +1,37 @@
+{
+    "Paper": "2016 Koc",
+    "Year": 2016,
+    "Title": "Global identification predicts gay-male identity integration and well-being among Turkish gay men",
+    "Authors": "Koc, Y., & Vignoles, V. L.",
+    "Journal": "British Journal of Social Psychology",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 219
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "country":{
+                "Turkish": "Turkey",
+                "Swedish": "Sweden",
+                "Belgian": "Belgium",
+                "German": "Germany"
+            },
+            "sex":{
+                "M": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

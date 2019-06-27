@@ -1,0 +1,62 @@
+{
+    "Paper": "2018 Shim",
+    "Year": 2018,
+    "Title": "TO HAVE OR TO DO?TWO ESSAYS ON MATERIAL AND EXPERIENTIAL PURCHASES",
+    "Authors": "Yoonji Shim",
+    "Journal": "Thesis",
+    "Studies": ["study1.sav", "study2.sav"],
+    "Usable": ["study1.sav", "study2.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 384
+        },
+        "study2": {
+            "total": 124
+        }
+    },
+    "Filter":{
+        "study1": {
+        },
+        "study2": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Ethnicity":{
+                "Asian": 1,
+                "African American": 2,
+                "Hispanic": 3,
+                "Multiracial": 5,
+                "Other": 6,
+                "European American": 4
+            },
+            "Gender":{
+                "M": 1,
+                "F": 2
+            }
+        },
+        "study2": {
+            "ethnicity":{
+                "Asian": 1,
+                "African American": 2,
+                "Hispanic": 3,
+                "Multiracial": 5,
+                "Other": 6,
+                "European American": 4
+            },
+            "gender":{
+                "M": 1,
+                "F": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        },
+        "study2":{
+            "_NAN_": 999
+        }
+    }
+}

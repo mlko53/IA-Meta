@@ -1,0 +1,42 @@
+{
+    "Paper": "2018 Koc Identity Integration",
+    "Year": 2018,
+    "Title": "Global identification helps increase identity integration among Turkish gay men",
+    "Authors": "Koc, Y., & Vignoles, V. L.",
+    "Journal": "Psychology & Sexuality",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": ["study1.sav"],
+    "Reported": {
+        "study1": {
+            "total": 220
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "National":{
+                "Bulgarian": "Bulgarian",
+                "Turkish": "Türkiye vatanda??"
+                "Turkish": "Turkish-UK",
+                "Russian": "Russian",
+                "Moldovian": "Moldovian",
+                "Turkish": "Turkish",
+                "Chinese": "Chinese",
+                "Turkish": "Turkish-German"
+            },
+            "Gender":{
+                "M": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999,
+            "_NAN_": "?"
+        }
+    }
+}

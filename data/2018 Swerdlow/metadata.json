@@ -4,16 +4,21 @@
     "Title": "Multivariate associations of ideal affect with clinical symptoms",
     "Authors": "Swerdlow, B. A., Pearlstein, J. G., & Johnson, S. L.",
     "Journal": "Emotion",
-    "Studies": ["study1.csv"],
-    "Usable": ["study1.csv"],
+    "Studies": ["study1.csv", "study2.sav"],
+    "Usable": ["study1.csv", "study2.sav"],
     "Manipulation": [],
     "Reported": {
         "study1": {
             "total": 293
+        },
+        "study2": {
+            "total": 146
         }
     },
     "Filter":{
         "study1": {
+        },
+        "study2": {
         }
     },
     "Recode":{
@@ -32,10 +37,32 @@
                 "M": 2,
                 "F": 1
             }
+        },
+        "study2": {
+            "Ethnicity":{
+                "European American": 1,
+                "Hispanic": 2,
+                "Middle Eastern and Arab": 3,
+                "African and African American": 4,
+                "Carribean": 5,
+                "South Asian": 6,
+                "East Asian": 7,
+                "Multiracial": 8,
+                "Other": 9                
+            },
+            "Gender":{
+                "M": 2,
+                "F": 1,
+                "Non-binary/Genderqueer":3
+            }
         }
     },
     "Replace":{
         "study1":{
+            "_NAN_": 999,
+            "_NAN_": "NA"
+        },
+        "study2":{
             "_NAN_": 999,
             "_NAN_": "NA"
         }

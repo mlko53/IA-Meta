@@ -1,0 +1,39 @@
+{
+    "Paper": "2012 Chen",
+    "Year": 2012,
+    "Title": "Cultural Orientation and Parent Emotion in the Chinese American Immigrant Family: Concurrent and Prospective Relations",
+    "Authors": "Chen, S.H., Zhou, Q.",
+    "Journal": "Thesis",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 210
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "p2dem_n1":{
+                "Chinese": "Chinese",
+                "Chinese": "Chinese American",
+                "Chinese": "",
+                "Chinese": "Chinese America",
+                "Chinese": "999",
+                "Chinese": " Chinese American",
+                "Chinese": "vietnamese Chinese",
+                "Chinese": "Chinese-American",
+                "Chinese": "chiense"
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

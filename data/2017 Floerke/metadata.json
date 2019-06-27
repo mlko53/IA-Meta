@@ -1,0 +1,40 @@
+{
+    "Paper": "2017 Floerke",
+    "Year": 2017,
+    "Title": "Cloudy with a chance of feelings: Affective forecasting as a resource for situation selection across the lifespan.",
+    "Authors": "Floerke, V. A., Sands, M., Isaacowitz, D., Thomas, A. K., & Urry, H. L.",
+    "Journal": "",
+    "Studies": ["study2.csv"],
+    "Usable": ["study2.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study2": {
+            "total": 104
+        }
+    },
+    "Filter":{
+        "study2": {
+        }
+    },
+    "Recode":{
+        "study2": {
+            "Race_Mod":{
+                "Asian": "Asian",
+                "African and African American": "Black",
+                "Hispanic": "Hispanic",
+                "Multiracial": "Multiracial",
+                "European and Middle Eastern and North Africa": "White"
+            },
+            "Gender":{
+                "M": 1,
+                "F": 2
+            }
+        }
+    },
+    "Replace":{
+        "study2":{
+            "_NAN_": 999,
+            "_NAN_": 997
+        }
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "Paper": "2018 Lee",
+    "Year": 2018,
+    "Title": "Do Cultural Differences in Ideal Affect Matter in Online Dating Contexts?",
+    "Authors": "Lee, A. T., Blevins, E., Tsai, J. L., Fung, H. H., & Yeung, D. Y.",
+    "Journal": "Thesis",
+    "Studies": ["study2.csv"],
+    "Usable": ["study2.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study2": {
+            "total": 201,
+            "European American": 71,
+            "Hong Kong Chinese": 66,
+            "East Asian American": 64
+        }
+    },
+    "Filter":{
+        "study2": {
+            "Finished":[1]
+        }
+    },
+    "Recode":{
+        "study2": {
+            "ethn":{
+                "European American": 1,
+                "East Asian American": 2,
+                "Hong Kong Chinese": 3,
+                "Chinese": 4,
+                "Chinese Macau": 5,
+                "Taiwanese": 6,
+                "Japanese": 7,
+                "Korean": 8,
+                "Other": 9             
+            },
+            "gender":{
+                "M": 1,
+                "F": 2
+            }
+        }
+    },
+    "Replace":{
+        "study2":{
+            "_NAN_": 999
+        }
+    }
+}
