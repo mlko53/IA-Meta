@@ -1,0 +1,35 @@
+{
+    "Paper": "2018 Gentzler",
+    "Year": 2018,
+    "Title": "Mothers' Ideal Positive Affect Predicts their Socialization of Children's Positive Affect",
+    "Authors": "Gentzler, Palmer, Yi, Root, & Moran, 2018",
+    "Journal": "Journal of Genetic Psychology",
+    "Studies": ["study1.csv"],
+    "Usable": ["study1.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 96
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Mother_Ethnicity":{
+                "Asian": "Asian",
+                "African and African American": "Black",
+                "Hispanic": "Hispanic",
+                "European and Middle Eastern and North Africa": "White"
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999,
+            "_NAN_": "NA"
+        }
+    }
+}
