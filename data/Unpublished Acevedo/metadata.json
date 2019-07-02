@@ -1,0 +1,73 @@
+{
+    "Paper": "Unpublished Acevedo",
+    "Year": "Unpublished",
+    "Title": "",
+    "Authors": "Acevedo, A.",
+    "Journal": "Unpublished",
+    "Studies": ["study1.sav", "study2.csv"],
+    "Usable": ["study1.sav", "study2.csv"],
+    "Manipulation": ["study1.sav"],
+    "Reported": {
+        "study1": {
+        },
+        "study2": {
+        }
+    },
+    "Filter":{
+        "study1": {
+        },
+        "study2": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Ethnicity":{
+                "European American": 0,
+                "Hispanic": 1, 
+                "Asian and Pacific Islander": 2,
+                "Multiracial": 3,
+                "Other": 4,
+                "African and African American": 5
+            },
+            "Gender":{
+                "M": 1,
+                "F": 0
+            }
+        },
+        "study2": {
+            "Ethnicity_Mod":{
+                "African and African American": "Black",
+                "Chinese": "Chinese",
+                "Hispanic": "Hispanic",
+                "Indian": "Indian",
+                "Italian": "Italian",
+                "Japanese": "Japanese",
+                "Korean": "Korean",
+                "Middle Eastern": "ME",
+                "Mexican": "Mexican",
+                "Multiracial": "Multi",
+                "Native American": "NA",
+                "Pacific Islander": "PacificIslander",
+                "Southeast Asian": "SEA",
+                "Vietnamese": "Viet",
+                "European American": "White"
+            },
+            "sex":{
+                "M": 1,
+                "F": 2,
+                "Other": 3,
+                "Prefer not to answer": 4
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999,
+            "_NAN_": "NA"
+        },
+        "study2":{
+            "_NAN_": 999,
+            "_NAN_": "NA"
+        }
+    }
+}

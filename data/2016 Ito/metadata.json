@@ -1,0 +1,33 @@
+{
+    "Paper": "2016 Ito",
+    "Year": 2016,
+    "Title": "Effects of motivation and constraint on the outdoor recreation participation of late adolescents: cultural similarities and differences between Japan and Canada",
+    "Authors": "Ito et al.",
+    "Journal": "Taiikugaku kenkyu",
+    "Studies": ["study1.csv"],
+    "Usable": ["study1.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1":{
+            "total": 483,
+            "European Canadian": 228,
+            "Japanese": 255
+        }
+    },
+    "Filter":{
+        "study1": {}
+    },
+    "Recode":{
+        "study1": {
+            "SEX":{
+                "M": 1,
+                "F": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999 
+        }
+    }
+}
