@@ -23,6 +23,9 @@
                 "African and African American": "Black",
                 "Hispanic": "Hispanic",
                 "European and Middle Eastern and North Africa": "White"
+            },
+            "Mother_Sex":{
+                "F": 1
             }
         }
     },

@@ -25,6 +25,9 @@
                 "European American": 5,
                 "Hispanic": 6,
                 "Other": 7
+            },
+            "gender":{
+                "F": 1
             }
         }
     },
