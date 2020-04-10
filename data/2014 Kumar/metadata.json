@@ -11,10 +11,10 @@
         "study1": {
             "total": 112,
             "European American": 62,
-            "Chinese American": 10,
-            "Japanese American": 6,
-            "Korean American": 33,
-            "Taiwanese American": 1
+            "Chinese": 10,
+            "Japanese": 6,
+            "Korean": 33,
+            "Taiwanese": 1
         }
     },
     "Filter":{

@@ -1,0 +1,58 @@
+{
+    "Paper": "2017 Park",
+    "Year": 2017,
+    "Title": "Neurocultural evidence that ideal affect match promotes giving",
+    "Authors": "Park, B., Blevins, E., Knutson, B., & Tsai, J. L.",
+    "Journal": "Social Cognitive and Affective Neuroscience",
+    "Studies": ["study1.csv", "study2.csv"],
+    "Usable": ["study1.csv", "study2.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1":{
+            "total": 159,
+            "Korean": 60,
+            "European American": 99
+        },
+        "study2":{
+            "total": 36,
+            "Korean": 18,
+            "European American": 18
+        }
+    },
+    "Filter":{
+        "study1": {},
+        "study2": {}
+    },
+    "Recode":{
+        "study1": {
+            "gender01":{
+                "M": "Male",
+                "F": "Female"
+            },
+            "ethni_r":{
+                "European American": "US",
+                "Korean": "KR"
+            }
+        },
+        "study2": {
+            "gender":{
+                "M": 1,
+                "F": 2
+            },
+            "Culture":{
+                "European American": "EA",
+                "Korean": "KR"
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999,
+            "_NAN_": "NA"
+        },
+        "study2":{
+            "_NAN_": 999,
+            "_NAN_": "NA"
+        }
+    }
+}

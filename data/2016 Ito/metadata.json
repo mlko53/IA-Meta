@@ -1,17 +1,15 @@
 {
     "Paper": "2016 Ito",
     "Year": 2016,
-    "Title": "Effects of motivation and constraint on the outdoor recreation participation of late adolescents: cultural similarities and differences between Japan and Canada",
+    "Title": "Theorizing the Effects of Sports Activities on Ikigai among Late Adolescent Japanese",
     "Authors": "Ito et al.",
-    "Journal": "Taiikugaku kenkyu",
+    "Journal": "Leisure Sciences",
     "Studies": ["study1.csv"],
     "Usable": ["study1.csv"],
     "Manipulation": [],
     "Reported": {
         "study1":{
-            "total": 483,
-            "European Canadian": 228,
-            "Japanese": 255
+            "total": 672
         }
     },
     "Filter":{

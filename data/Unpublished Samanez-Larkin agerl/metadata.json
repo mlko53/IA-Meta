@@ -1,0 +1,42 @@
+{
+    "Paper": "Unpublished Samanez-Larkin agerl",
+    "Year": "Unpublished",
+    "Title": "Unpublished",
+    "Authors": "Greg Samanez-Larkin, Brian Knutson",
+    "Journal": "Unpublished",
+    "Studies": ["study1.csv"],
+    "Usable": ["study1.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1":{
+        }
+    },
+    "Filter":{
+        "study1": {}
+    },
+    "Recode":{
+        "study1": {
+            "Sex":{
+                "M": "M",
+                "F": "F"
+            },
+            "Ethnicity":{
+                "European American": "White",
+                "Asian": "Asian",
+                "Multiracial": "Biracial",
+                "Hispanic": "Hispanic",
+                "African and African American": "Black",
+                "Multiracial": "White/Pacific Islander",
+                "Multiracial": "Hispanic/Caucasian",
+                "Multiracial": "Hispanic/Other"                
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999,
+            "_NAN_": "NA",
+            "_NAN_": "FALSE"
+        }
+    }
+}
