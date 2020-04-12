@@ -1,6 +1,7 @@
 import json
 import numpy as np
 import pandas as pd
+import warnings
 
 import config
 from constants import *
@@ -27,11 +28,13 @@ def compute_ipsatized(df, verbose=False):
     actuals = actuals.astype(float)
     ideals = ideals.astype(float)
 
-    # ddof = 1 to compute sample standard deviation
-    actuals_mean = np.nanmean(actuals, axis=1, keepdims=True)
-    actuals_sd = np.nanstd(actuals, axis=1, keepdims=True, ddof=1)
-    ideals_mean = np.nanmean(ideals, axis=1, keepdims=True)
-    ideals_sd = np.nanstd(ideals, axis=1, keepdims=True, ddof=1)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", category=RuntimeWarning)
+        # ddof = 1 to compute sample standard deviation
+        actuals_mean = np.nanmean(actuals, axis=1, keepdims=True)
+        actuals_sd = np.nanstd(actuals, axis=1, keepdims=True, ddof=1)
+        ideals_mean = np.nanmean(ideals, axis=1, keepdims=True)
+        ideals_sd = np.nanstd(ideals, axis=1, keepdims=True, ddof=1)
 
     if verbose:
         actual_no_vary = (actuals_sd == 0).sum()
