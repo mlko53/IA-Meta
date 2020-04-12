@@ -87,7 +87,9 @@ def compute_affective_states(df, verbose=False):
                 if verbose:
                     print("    Computing {}".format(col))
 
-                with np.errstate(divide='ignore', invalid='ignore'):
-                    df[col] = np.nanmean(df[items].values.astype(float), axis=1)
+                with warnings.catch_warnings():
+                    warnings.simplefilter("ignore", category=RuntimeWarning)
+                    with np.errstate(divide='ignore', invalid='ignore'):
+                        df[col] = np.nanmean(df[items].values.astype(float), axis=1)
 
     return df
