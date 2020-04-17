@@ -36,7 +36,7 @@ def load_var_name_dict(path, verbose=False):
 def load_metadata(path):
     """Loads metadata from paper path"""
     path = path / "metadata.json"
-    
+
     with open(path) as f:
         metadata = json.load(f)
 
@@ -150,7 +150,14 @@ def load_and_merge(meta_df, paper_paths, manipulation, verbose=False):
             if str(df_path).split(".")[-1] == "sav":
                 df = read_sav(df_path)
             elif str(df_path).split(".")[-1] == "csv":
-                df = pd.read_csv(df_path)
+                try:
+                    df = pd.read_csv(df_path)
+                except:
+                    print("Default pandas reading didn't work")
+                    try:
+                        df = pd.read_csv(df_path, encoding='ISO-8859-1')
+                    except:
+                        print("ISO-8859-1 encoding didn't work")
             else:
                 raise ValueError("Invalid data type found in metadata.json")
 
