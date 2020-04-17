@@ -1,0 +1,17 @@
+{
+"Datasets": {
+    "2006": ["Tsai"],
+    "2007": ["Tsai"],
+    "2009": ["Scollon"],
+    "2011": ["Harmon-Jones", "Li"],
+    "2012": ["Chen", "Chow", "Ruby", "Tamir"],
+    "2013": ["Farsides", "Koopman-Holm", "Scheibe"],
+    "2014": ["Ditzfield", "Ditzfield Thesis", "Ford", "Koopman-Holm", "Kumar", "Luong", "Mannell", "Mannell Diss"],
+    "2015": ["Chow", "Sims"],
+    "2016": ["Ito", "Koc", "Tamir", "Thompson", "Tsai"],
+    "2017": ["Chim", "Floerke", "Gui", "Park", "Parker"],
+    "2018": ["Bencharit", "Gentzler", "Ito", "Koc Identity Integration", "Lee", "Lin", "Shim", "Swerdlow", "Tompson", "Yip"],
+    "2019": ["Palmer"],
+    "Unpublished": ["Acevedo", "Cheung", "Ito Kono", "Ito Mika", "Ito Yamaguchi Takamatsu", "Kashima 1", "Kashima 2", "Ossenfort", "Palmer", "Samanez-Larkin agerl", "Yi"]
+    }
+}

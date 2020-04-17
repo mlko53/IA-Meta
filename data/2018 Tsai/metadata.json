@@ -10,7 +10,7 @@
     "Reported": {
         "study1": {
             "European American": 267,
-            "East Asian American": 265,
+            "Chinese American": 265,
             "Hong Kong Chinese": 320
         },
         "study2": {
@@ -26,6 +26,17 @@
         }
     },
     "Recode":{
+        "study1": {
+            "Ethn": {
+            	"European American": 0,
+            	"Chinese American": 1,
+            	"Hong Kong Chinese": 2
+            },
+            "Gender":{
+                "M": 1,
+                "F": 0
+            }
+        },
         "study2": {
             "Ethn": {
             	"European American": 0,
