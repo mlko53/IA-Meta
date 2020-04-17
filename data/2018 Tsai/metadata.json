@@ -5,7 +5,7 @@
     "Authors": "Tsai, J.L., Sims, T., Qu, Y., Jiang, D., Thomas, E., & Fung, H.H.",
     "Journal": "Psychology and Aging",
     "Studies": ["study1.sav", "study2.sav"],
-    "Usable": ["study2.sav"],
+    "Usable": ["study1.sav"],
     "Manipulation": ["study2.sav"],
     "Reported": {
         "study1": {
@@ -26,6 +26,17 @@
         }
     },
     "Recode":{
+        "study1": {
+            "ethnic": {
+                "European American": 0,
+                "Chinese American": 1,
+                "Hong Kong Chinese": 2
+            },
+            "gender": {
+                "M": 1,
+                "F": 0
+            }
+        },
         "study2": {
             "Ethn": {
             	"European American": 0,
@@ -43,6 +54,9 @@
         }
     },
     "Replace":{
+        "study1":{
+            "_NAN_": 999
+        },
         "study2":{
             "_NAN_": 999
         }

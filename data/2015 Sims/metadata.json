@@ -4,10 +4,14 @@
     "Title": "Wanting to maximize the positive and minimize the negative: Implications for mixed affective experience in American and Chinese contexts",
     "Authors": "Sims, T., Tsai, J. L., Jiang, D., Wang, Y., Fung, H. H., & Zhang, X.",
     "Journal": "Journal of Personality and Social Psychology",
-    "Studies": ["study3.sav"],
-    "Usable": ["study3.sav"],
+    "Studies": ["study3.csv"],
+    "Usable": ["study3.csv"],
     "Manipulation": [],
     "Reported": {
+    	"study3": {
+    		"total": 194,
+    		"Hong Kong Chinese": 95
+    	}
     },
     "Filter":{
         "study3": {
@@ -23,7 +27,8 @@
                 "Native American": 3,
                 "African American": 4,
                 "Other": 5,
-                "Multiracial": 6
+                "Multiracial": 6,
+                "Hong Kong Chinese": 7
             },
             "gender": {
                 "F": 0,
