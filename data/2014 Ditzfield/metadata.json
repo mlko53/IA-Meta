@@ -1,0 +1,43 @@
+{
+    "Paper": "2014 Ditzfield",
+    "Year": 2014,
+    "Title": "Self-structure and emotional experience",
+    "Authors": "Ditzfield, C.P., Showers, C.J.",
+    "Journal": "Cognition and Emotion",
+    "Studies": ["study1_sample1.csv"],
+    "Usable": ["study1_sample1.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1_sample1": {
+            "total": 139
+        }
+    },
+    "Filter":{
+        "study1_sample1": {
+        }
+    },
+    "Recode":{
+        "study1_sample1": {
+            "RACE":{
+                "European American": 1,
+                "Hispanic": 6,
+                "African and African American": 2,
+                "Native American": 3,
+                "Pacific Islander": 4,
+                "Asian": 5,
+                "Other": 7
+            },
+            "GENDER":{
+                "M": 1,
+                "F": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1_sample1":{
+            "_NAN_": 999,
+            "_NAN_": "NA",
+            "_NAN_": "#NULL!"
+        }
+    }
+}

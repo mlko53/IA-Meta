@@ -1,0 +1,35 @@
+{
+    "Paper": "2018 Lin",
+    "Year": 2018,
+    "Title": "Cultural orientation moderates the association between desired affect and depressed mood among Chinese international students living in the United States",
+    "Authors": "Lin, J., & Dmitrieva, J.",
+    "Journal": "Emotion",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 151
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Ethnicity":{
+                "Chinese": 2
+            },
+            "Gender":{
+                "M": 1,
+                "F": 0
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "Paper": "Unpublished Kashima 1",
+    "Year": "Unpublished",
+    "Title": "",
+    "Authors": "Kashima, E.",
+    "Journal": "Unpublished",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+        }
+    },
+    "Filter":{
+        "study1": {
+            "Finished":[1]
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Australian":{
+                "Australian": 1
+            },
+            "Gender":{
+                "M": 1,
+                "F": 2,
+                "Other": 3
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

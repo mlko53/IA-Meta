@@ -1,0 +1,40 @@
+{
+    "Paper": "Unpublished Palmer",
+    "Year": "Unpublished",
+    "Title": "",
+    "Authors": "Palmer, C.A. & Gentzler, A.L.",
+    "Journal": "Unpublished",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "DAES_ChildRace_Final":{
+                "Native American": 1,
+                "Asian": 2,
+                "Pacific Islander": 3,
+                "African and African American": 4,
+                "European American": 5,
+                "Other": 6,
+                "Multiracial": 7
+            },
+            "DAES_ChildGender":{
+                "M": 1,
+                "F": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

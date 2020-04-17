@@ -1,0 +1,105 @@
+{
+    "Paper": "2017 Chim",
+    "Year": 2017,
+    "Title": "Valuing calm enhances enjoyment of calming (vs. exciting) amusement park rides and exercise",
+    "Authors": "Chim, L., Hogan, C. L., Fung, H. H., & Tsai, J. L.",
+    "Journal": "Emotion",
+    "Studies": ["study1.csv", "study3.csv", "study4a.csv", "study4b.csv"],
+    "Usable": ["study1.csv", "study3.csv", "study4a.csv", "study4b.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1":{
+            "total": 58
+        },
+        "study3":{
+            "total": 58,
+            "European American": 29,
+            "Hong Kong Chinese": 29
+        },
+        "study4a":{
+            "total": 51
+        },
+        "study4b":{
+            "total": 105
+        }
+        
+    },
+    "Filter":{
+        "study1": {},
+        "study3": {},
+        "study4a": {},
+        "study4b": {}
+    },
+    "Recode":{
+        "study1": {
+            "gender":{
+                "M": "Male",
+                "F": "Female"
+            },
+            "ethni":{
+                "European American": "European American",
+                "East Asian and East Asian American": "East Asian",
+                "Other": "Other"
+            }
+        },
+        "study3": {
+            "gender":{
+                "M": "Male",
+                "F": "Female"
+            },
+            "ethni_all":{
+                "European American": "EA",
+                "Hong Kong Chinese": "HKC"
+            }
+        },
+        "study4a": {
+            "Gender":{
+                "M": "Male",
+                "F": "Female"
+            },
+            "ethni_r":{
+                "African American": "African American",
+                "East Asian American": "East Asian American",
+                "Eastern Europe": "Eastern Europe",
+                "European American": "European American",
+                "Hispanic": "Hispanic",
+                "Middle Eastern": "Middle Eastern",
+                "Multiracial": "Multiracial",
+                "South Asian": "South Asian",
+                "Southeast Asian": "Southeast Asian"
+            }
+        },
+        "study4b": {
+            "Gender":{
+                "M": "Male",
+                "F": "Female"
+            },
+            "Ethni_r":{
+                "African American": "African American",
+                "Asian American": "Asian American",
+                "European American": "European American",
+                "Hispanic": "Hispanic",
+                "Multiracial": "Multiracial",
+                "Native Hawaiian and Pacific Islander": "Native Hawaiian or other pacific islander"
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999,
+            "_NAN_": "NA"
+        },
+        "study3":{
+            "_NAN_": 999,
+            "_NAN_": "NA"
+        },
+        "study4a":{
+            "_NAN_": 999,
+            "_NAN_": "NA"
+        },
+        "study4b":{
+            "_NAN_": 999,
+            "_NAN_": "NA"
+        }
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "Paper": "Unpublished Ito Mika",
+    "Year": "Unpublished",
+    "Title": "",
+    "Authors": "Ito, Mika",
+    "Journal": "Unpublished",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Gender":{
+                "M": 1,
+                "F": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

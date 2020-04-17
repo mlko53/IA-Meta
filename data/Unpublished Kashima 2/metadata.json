@@ -1,0 +1,70 @@
+{
+    "Paper": "Unpublished Kashima 2",
+    "Year": "Unpublished",
+    "Title": "",
+    "Authors": "Kashima, E.",
+    "Journal": "Unpublished",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+        }
+    },
+    "Filter":{
+        "study1": {
+            "Finished":[1]
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Country":{
+                "Mexican": "Mexico",
+                "Hong Kong Chinese": "Hong Kong",
+                "Mauritian": "Mauritius",
+                "Malaysian": "Malaysia",
+                "Nigerian": "Nigeria",
+                "Mexican": "MEXICO",
+                "Indian": "India",
+                "Brazilian": "Brazil",
+                "Filipino": "Philippines",
+                "Canadian": "canada",
+                "Indian": "india",
+                "Nepalese": "Nepal",
+                "Japanese": "Japan",
+                "Sri Lankan": "Sri Lanka",
+                "Vietnamese": "Vietnam",
+                "German": "Germany",
+                "Iranian": "Iran",
+                "New Zealander": "New Zealand",
+                "Vietnamese": "vietnam",
+                "Lebanese": "Lebanon",
+                "Colombian": "Colombia",
+                "Israeli": "Israel",
+                "American": "United States of America",
+                "Chinese": "China",
+                "Dutch": "The Netherlands",
+                "Korean": "South Korea",
+                "Ethiopian": "ETHIOPIA",
+                "Indian": "Indian",
+                "Omani": "Oman",
+                "Bangladeshi": "Bangladesh",
+                "Mauritian": "mauritius",
+                "Peruvian": "Peru",
+                "Other": "-",
+                "Sri Lankan": "Sri lanka",
+                "Guatemalan": "Guatemala"
+            },
+            "Gender":{
+                "M": 1,
+                "F": 2,
+                "Other": 3
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

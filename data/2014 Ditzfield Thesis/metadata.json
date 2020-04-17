@@ -1,0 +1,43 @@
+{
+    "Paper": "2014 Ditzfield Thesis",
+    "Year": 2014,
+    "Title": "EMOTIONALITY AND WORKING MEMORY: FEELINGS TAKE CONTROL",
+    "Authors": "Ditzfield, C.",
+    "Journal": "Thesis",
+    "Studies": ["study3.csv"],
+    "Usable": ["study3.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study3": {
+            "total": 195
+        }
+    },
+    "Filter":{
+        "study3": {
+        }
+    },
+    "Recode":{
+        "study3": {
+            "ETHNICITY":{
+                "European American": 1,
+                "Hispanic": 2,
+                "African and African American": 3,
+                "Native American": 4,
+                "Pacific Islander": 5,
+                "Asian": 6,
+                "Other": 7
+            },
+            "GENDER":{
+                "M": 2,
+                "F": 1
+            }
+        }
+    },
+    "Replace":{
+        "study3":{
+            "_NAN_": 999,
+            "_NAN_": "NA",
+            "_NAN_": "#NULL!"
+        }
+    }
+}

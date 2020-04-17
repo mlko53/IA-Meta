@@ -1,0 +1,40 @@
+{
+    "Paper": "Unpublished Yi",
+    "Year": "Unpublished",
+    "Title": "Emotion Regulation Flexibility and Illicit Substance Use among Adolescents",
+    "Authors": "Yi, Chit",
+    "Journal": "Thesis",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1":{
+            "total": 428
+        }
+    },
+    "Filter":{
+        "study1": {}
+    },
+    "Recode":{
+        "study1": {
+            "Gender":{
+                "M": 1,
+                "F": 2
+            },
+            "Race":{
+                "European American": 1,
+                "African American": 2,
+                "Hispanic": 3,
+                "Asian": 4,
+                "Pacific Islander": 5,
+                "Multiracial": 6,
+                "Other": 7
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999 
+        }
+    }
+}

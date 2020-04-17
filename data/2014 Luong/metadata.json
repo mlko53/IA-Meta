@@ -1,0 +1,49 @@
+{
+    "Paper": "2014 Luong",
+    "Year": 2014,
+    "Title": "Age differences in affective and cardiovascular responses to a negative social interaction: The role of goals, appraisals, and emotion regulation.",
+    "Authors": "Luong, G., & Charles, S. T.",
+    "Journal": "Developmental Psychology",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 159
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "EthnicityCultural":{
+                "African American": 1,
+                "Filipino American": 2,
+                "Chinese American": 3,
+                "Korean American": 4,
+                "Japanese American": 5,
+                "Vietnamese American": 6,
+                "South Asian American": 7,
+                "Mexican American": 8,
+                "Central American": 9,
+                "South American": 10,
+                "Native American": 11,
+                "European American": 12,
+                "Persian American": 13,
+                "Middle Eastern": 14,
+                "Other": 15
+            },
+            "Gender":{
+                "M": 0,
+                "F": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

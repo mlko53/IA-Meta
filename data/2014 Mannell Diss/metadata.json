@@ -1,0 +1,37 @@
+{
+    "Paper": "2014 Mannell Diss",
+    "Year": 2014,
+    "Title": "Culture, ideal affect, and ideal affect-actual affect discrepancies during leisure and non-leisure episodes",
+    "Authors": "Mannell, B.",
+    "Journal": "Doctoral Dissertation, University of Alberta",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 292,
+            "European Canadian": 184,
+            "Chinese": 108
+        }
+    },
+    "Filter":{
+        "study1": {}
+    },
+    "Recode":{
+        "study1": {
+            "sex":{
+                "M": 1,
+                "F": 2
+            },
+            "ethnic_2":{
+                "European Canadian": 1,
+                "Chinese": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

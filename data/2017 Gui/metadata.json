@@ -21,6 +21,9 @@
             "gender":{
                 "M": 1,
                 "F": 2
+            },
+            "ethn":{
+                "Hong Kong Chinese": 1
             }
         }
     },
