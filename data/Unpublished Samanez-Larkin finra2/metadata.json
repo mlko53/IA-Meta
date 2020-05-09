@@ -1,0 +1,35 @@
+{
+    "Paper": "Unpublished Samanez-Larkin finra2",
+    "Year": "Unpublished",
+    "Title": "Unpublished",
+    "Authors": "Greg Samanez-Larkin, Brian Knutson",
+    "Journal": "Unpublished",
+    "Studies": ["study1.csv"],
+    "Usable": ["study1.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1":{
+        }
+    },
+    "Filter":{
+        "study1": {}
+    },
+    "Recode":{
+        "study1": {
+            "sex":{
+                "M": "m",
+                "F": "f"
+            },
+            "race":{
+                "European American": "w"
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999,
+            "_NAN_": "NA",
+            "_NAN_": "FALSE"
+        }
+    }
+}

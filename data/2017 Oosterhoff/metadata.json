@@ -4,21 +4,26 @@
     "Title": "From drug laws to recreational substance use: The adaptationist role of disgust sensitivity.",
     "Authors": "Oosterhoff, B. & Shook, N.J.",
     "Journal": "Personality and Individual Differences",
-    "Studies": ["study1.csv"],
-    "Usable": ["study1.csv"],
+    "Studies": ["study1.sav", "study3.sav"],
+    "Usable": ["study1.sav", "study3.sav"],
     "Manipulation": [],
     "Reported": {
         "study1": {
             "total": 249
+        },
+        "study3": {
+            "total": 136
         }
     },
     "Filter":{
         "study1": {
+        },
+        "study3": {
         }
     },
     "Recode":{
         "study1": {
-            "BORN":{
+            "q0204":{
                 "European American": 1,
                 "Prefer not to answer": 6,
                 "Hispanic": 2,
@@ -31,11 +36,28 @@
                 "F": 2,
                 "Prefer not to answer": 3
             }
+        },
+        "study3": {
+            "Race":{
+                "European American": 1,
+                "Other": 6,
+                "Hispanic": 2,
+                "Asian": 4,
+                "African and African American": 3,
+                "Native American": 5
+            },
+            "Gender":{
+                "M": 1,
+                "F": 2
+            }
         }
     },
     "Replace":{
         "study1":{
-            "_NAN_": "."
+            "_NAN_": "NA"
+        },
+        "study3":{
+            "_NAN_": "NA"
         }
     }
 }
