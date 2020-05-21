@@ -1,0 +1,69 @@
+{
+	"Paper": "2016 Da Jiang LTP",
+    "Year": 2016,
+    "Title": "Limited Time Perspective Increases the Value of Calm",
+    "Authors": "Jiang, D., Fung, H. H., Sims, T., Tsai, J. L., & Zhang, F.",
+    "Journal": "Emotion",
+    "Studies": ["study11.sav", "study12.sav", "study2.sav"],
+    "Usable": ["study11.sav", "study12.sav", "study2.sav"],
+    "Manipulation": [],
+    "Reported":{
+        "study11":{
+            "Hong Kong Chinese": 299
+        },
+        "study12":{
+            "Hong Kong Chinese": 106
+        },
+        "study2":{
+             "Hong Kong Chinese": 258
+        }
+    },
+    "Filter":{
+        "study11":{
+        },
+        "study12":{
+        },
+        "study2":{
+        }
+    },
+    "Recode":{
+        "study11":{
+            "ethnicity": {
+                "Hong Kong Chinese": 2
+            },
+            "gender": {
+                "F": 0,
+                "M": 1
+            }
+        },
+        "study12":{
+            "ethnicity": {
+                "Hong Kong Chinese": 2
+            },
+            "gender": {
+                "F": 0,
+                "M": 1
+            }
+        },
+        "study2":{
+            "Ethnicity": {
+                "Hong Kong Chinese": 1
+            },
+            "gender_recode": {
+                "F": 0,
+                "M": 1
+            }
+        }
+    },
+    "Replace":{
+        "study11":{
+            "_NAN_": 999
+        },
+        "study12":{
+            "_NAN_": 999
+        },
+        "study2":{
+            "_NAN_": 999
+        }
+    }
+}

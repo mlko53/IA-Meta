@@ -1,0 +1,38 @@
+{
+	"Paper": "2014 Mortazavi",
+    "Year": 2014,
+    "Title": "Positive Emotion, Drinking Motivation, and Problematic Drinking: A Case for Cultural Variations",
+    "Authors": "Mortazavi A.",
+    "Journal": "",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported":{
+        "study1":{
+            "European American": 39,
+            "Latino American": 41,
+            "Asian American": 26,
+        }
+    },
+    "Filter":{
+        "study1":{}
+    },
+    "Recode":{
+        "study1":{
+            "Ethnicity": {
+                "European American": 1,
+                "Latino American": 2,
+                "Asian American": 3,
+            },
+            "Sex": {
+                "M": 0,
+                "F": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}
