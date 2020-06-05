@@ -1,0 +1,44 @@
+{
+    "Paper": "2018 Yamada",
+    "Year": 2018,
+    "Title": "Examining the Cross-Cultural Differences in Affect Valuation: Whites, East Asians, and Third Culture Kids",
+    "Authors": "Yamada, J.",
+    "Journal": "Thesis",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 239
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Q6": {
+            	"European American": 1,
+                "African and African American": 2,
+                "Native American": 3,
+                "Asian": 4,
+                "Asian American": 5,
+                "Native Hawaiian and Pacific Islander": 6,
+                "Other": 7,
+                "Hispanic": 8,
+            	"Multiracial": 14
+            },
+            "Gender":{
+                "M": 1,
+                "F": 2,
+                "Other": 3
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": "NA"
+        }
+    }
+}
