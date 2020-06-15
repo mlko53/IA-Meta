@@ -8,11 +8,35 @@
     "Usable": ["study1.sav", "study2.sav", "study3.sav"],
     "Manipulation": [],
     "Reported":{
+    	"study1":{
+    		"Hong Kong Chinese": 299
+    	},
+    	"study2":{
+    		"Hong Kong Chinese": 109
+    	},
     	"study3":{
              "Hong Kong Chinese": 253
         }
     },
     "Filter":{
+    	"study1":{
+            "Ethnicity": {
+                "Hong Kong Chinese": 2,
+            },
+            "Sex": {
+                "F": 0,
+                "M": 1
+            }
+    	},
+    	"study2":{
+            "Ethnicity": {
+                "Hong Kong Chinese": 2,
+            },
+            "Sex": {
+                "F": 0,
+                "M": 1
+            }
+    	},
     	"study3":{
             "Ethnicity": {
                 "Hong Kong Chinese": 1,
@@ -26,10 +50,20 @@
     	}
     },
     "Recode":{
+    	"study1":{
+    	},
+    	"study2":{
+    	},
     	"study3":{
     	}
     },
     "Replace":{
+    	"study1":{
+            "_NAN_": 999
+    	},
+    	"study2":{
+            "_NAN_": 999
+    	},
     	"study3":{
             "_NAN_": 999
     	}
