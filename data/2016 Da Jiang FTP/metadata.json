@@ -1,0 +1,71 @@
+{
+	"Paper": "2016 Da Jiang FTP",
+    "Year": 2016,
+    "Title": "Future Time Perspective and Ideal Affect",
+    "Authors": "Jiang, D.",
+    "Journal": "",
+    "Studies": ["study1.sav", "study2.sav", "study3.sav"],
+    "Usable": ["study1.sav", "study2.sav", "study3.sav"],
+    "Manipulation": [],
+    "Reported":{
+    	"study1":{
+    		"Hong Kong Chinese": 299
+    	},
+    	"study2":{
+    		"Hong Kong Chinese": 109
+    	},
+    	"study3":{
+             "Hong Kong Chinese": 253
+        }
+    },
+    "Filter":{
+    	"study1":{
+            "Ethnicity": {
+                "Hong Kong Chinese": 2,
+            },
+            "Sex": {
+                "F": 0,
+                "M": 1
+            }
+    	},
+    	"study2":{
+            "Ethnicity": {
+                "Hong Kong Chinese": 2,
+            },
+            "Sex": {
+                "F": 0,
+                "M": 1
+            }
+    	},
+    	"study3":{
+            "Ethnicity": {
+                "Hong Kong Chinese": 1,
+                "Chinese American": 2,
+                "Other": 3
+            },
+            "Sex": {
+                "F": 2,
+                "M": 1
+            }
+    	}
+    },
+    "Recode":{
+    	"study1":{
+    	},
+    	"study2":{
+    	},
+    	"study3":{
+    	}
+    },
+    "Replace":{
+    	"study1":{
+            "_NAN_": 999
+    	},
+    	"study2":{
+            "_NAN_": 999
+    	},
+    	"study3":{
+            "_NAN_": 999
+    	}
+    }
+}
