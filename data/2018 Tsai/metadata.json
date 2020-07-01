@@ -27,12 +27,12 @@
     },
     "Recode":{
         "study1": {
-            "Ethn": {
+            "ethnic": {
             	"European American": 0,
             	"Chinese American": 1,
             	"Hong Kong Chinese": 2
             },
-            "Gender":{
+            "gender":{
                 "M": 1,
                 "F": 0
             }

@@ -1,0 +1,41 @@
+{
+    "Paper": "2017 Sands",
+    "Year": 2017,
+    "Title": "",
+    "Authors": "Sands",
+    "Journal": "Thesis",
+    "Studies": ["study1.csv"],
+    "Usable": ["study1.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 111
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Race_Mod":{
+                "Asian": "Asian",
+                "Asian and Pacific Islander": "AsianPacificIslander",
+                "African American": "Black",
+                "Hispanic": "Hispanic",
+                "Multiracial": "Multiracial",
+                "Other": "Other",
+                "European American": "White"
+            },
+            "Sex":{
+                "M": 1,
+                "F": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}
