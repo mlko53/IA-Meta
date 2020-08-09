@@ -14,6 +14,9 @@ def read_sav(path):
     columns = [s.decode('utf-8') for s in columns]
     df.columns = columns
     df = df.iloc[1:].reset_index(drop=True) # sets column name to the first row
+    for col in columns:
+        if type(df[col][0]) == bytes:
+            df[col] = df[col].map(lambda x: x.decode('utf-8'))
 
     return df
 
