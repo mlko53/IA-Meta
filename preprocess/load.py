@@ -59,8 +59,13 @@ def recode(df, study, metadata):
     """Recodes columns of df"""
     recode_map = metadata['Recode'][study]
     for col, recode_col_map in recode_map.items():
-        recode_col_map = {v:k for k, v in recode_col_map.items()}
-        df[col] = df[col].replace(recode_col_map)
+        inverse_map = {}
+        for k, v in recode_col_map.items():
+            if isinstance(v, list):
+                inverse_map.update(dict.fromkeys(v, k))
+            else:
+                inverse_map.update({v: k})
+        df[col] = df[col].replace(inverse_map)
 
     return df
 
