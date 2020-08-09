@@ -60,12 +60,21 @@ def recode(df, study, metadata):
     recode_map = metadata['Recode'][study]
     for col, recode_col_map in recode_map.items():
         inverse_map = {}
+        isIntCol = False
         for k, v in recode_col_map.items():
             if isinstance(v, list):
-                inverse_map.update(dict.fromkeys(v, k))
+                if isinstance(v[0], int):
+                    isIntCol=True
+                inverse_map.update(dict.fromkeys([str(x) for x in v], k))
             else:
-                inverse_map.update({v: k})
+                if isinstance(v, int):
+                    isIntCol=True
+                inverse_map.update({str(v): k})
+        df[col] = df[col].fillna(-999)
+        if isIntCol:
+            df[col] = df[col].astype(int).astype(str)
         df[col] = df[col].replace(inverse_map)
+        df[col] = df[col].replace({"-999": np.nan})
 
     return df
 
@@ -73,6 +82,7 @@ def recode(df, study, metadata):
 def replace(df, study, metadata):
     """Replace values of df"""
     replace_map = metadata['Replace'][study]
+    # look at recode, might need to cast to list
     replace_map = {v:(np.nan if k==NAN else k) for k, v in replace_map.items()}
 
     return df.replace(replace_map)
@@ -171,9 +181,9 @@ def load_and_merge(meta_df, paper_paths, manipulation, verbose=False):
 
             # basic preprocessing
             df = filter(df, study, metadata)
+            df = replace(df, study, metadata)
             df = recode(df, study, metadata)
             df = rename_and_drop(df, name, var_name_dict, verbose=verbose)
-            df = replace(df, study, metadata)
 
             df = df.reset_index(drop=True)
 
