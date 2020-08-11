@@ -16,7 +16,10 @@ def read_sav(path):
     df = df.iloc[1:].reset_index(drop=True) # sets column name to the first row
     for col in columns:
         if type(df[col][0]) == bytes:
-            df[col] = df[col].map(lambda x: x.decode('utf-8'))
+            try:
+                df[col] = df[col].map(lambda x: x if x is None else x.decode('utf-8'))
+            except:
+                print("failed to convert {} column to strings".format(col))
 
     return df
 
