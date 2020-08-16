@@ -23,12 +23,9 @@
             "Ethnicity":{
                 "European American": "White",
                 "Asian": "Asian",
-                "Multiracial": "Biracial",
+                "Multiracial": ["Biracial", "White/Pacific Islander", "Hispanic/Caucasian", "Hispanic/Other"],
                 "Hispanic": "Hispanic",
                 "African and African American": "Black",
-                "Multiracial": "White/Pacific Islander",
-                "Multiracial": "Hispanic/Caucasian",
-                "Multiracial": "Hispanic/Other"                
             }
         }
     },

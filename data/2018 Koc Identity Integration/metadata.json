@@ -19,17 +19,15 @@
     "Recode":{
         "study1": {
             "National":{
-                "Bulgarian": "Bulgarian",
-                "Turkish": "Turkish",
-                "Turkish": "Turkish-UK",
-                "Russian": "Russian",
-                "Moldovian": "Moldovian",
-                "Turkish": "Turkish",
-                "Chinese": "Chinese",
-                "Turkish": "Turkish-German"
+                "Bulgarian": ["Bulgarian"],
+                "Turkish": ["Turkish", "Turkish-UK", "Turkish", "Turkish-German"],
+                "Russian": ["Russian"],
+                "Moldovian": ["Moldovian"],
+                "Chinese": ["Chinese"]
             },
             "Gender":{
-                "M": 1
+                "M": 1,
+                "-999": 3
             }
         }
     },

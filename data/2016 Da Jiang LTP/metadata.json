@@ -47,7 +47,8 @@
         },
         "study2":{
             "Ethnicity": {
-                "Hong Kong Chinese": 1
+                "Hong Kong Chinese": 1,
+                "-999": [2, 3]
             },
             "gender_recode": {
                 "F": 0,

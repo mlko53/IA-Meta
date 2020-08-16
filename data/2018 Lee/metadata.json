@@ -31,11 +31,12 @@
                 "Taiwanese": 6,
                 "Japanese": 7,
                 "Korean": 8,
-                "Other": 9             
+                "Other": 9
             },
             "gender":{
                 "M": 1,
-                "F": 2
+                "F": 2,
+                "-999": 3
             }
         }
     },
