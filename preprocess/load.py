@@ -205,4 +205,8 @@ def load_and_merge(meta_df, paper_paths, manipulation, verbose=False):
     # compute affective states
     meta_df = compute_affective_states(meta_df, verbose=verbose)
 
+    # replace with nan values
+    values = [-999, "-999", "", 999, "#DIV/0!", 9999, "NA", "#NULL!", ".", 997, "?", " ", "FALSE"]
+    meta_df = meta_df.replace({v: np.nan for v in values})
+
     return meta_df
