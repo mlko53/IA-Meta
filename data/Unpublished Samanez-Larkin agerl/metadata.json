@@ -25,7 +25,7 @@
                 "Asian": "Asian",
                 "Multiracial": ["Biracial", "White/Pacific Islander", "Hispanic/Caucasian", "Hispanic/Other"],
                 "Hispanic": "Hispanic",
-                "African and African American": "Black",
+                "African and African American": "Black"
             }
         }
     },
