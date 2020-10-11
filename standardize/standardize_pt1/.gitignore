@@ -1,0 +1,29 @@
+# Any data files
+*.sav
+*.csv
+*.txt
+*.pdf
+*.xls
+*.xlsx
+*Rhistory
+!preprocess/config/*
+!preprocess/items/*
+
+# Folders that aren't ready
+analysis/
+results/
+scripts/
+temporary/
+papers/
+preprocessed/
+
+# pycache files
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+
+# exceptions
+!earliest_pub_year.csv
+!year_collection.csv
+!Notes.txt
