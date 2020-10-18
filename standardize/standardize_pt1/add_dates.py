@@ -105,7 +105,7 @@ def recalc_collection_date(row):
         return row['collected_year']
     
 
-def main(fname):
+def main(fname, custom=None):
     collected = pd.read_csv("year_collection.csv")
     collected = collected.filter(regex=("_mod")).dropna()
     earlypub = pd.read_csv("earliest_pub_year.csv")
@@ -191,7 +191,12 @@ def main(fname):
 
     print(stdzd_data)
     #stdzd_data.to_csv('dates_added.csv')
-    stdzd_data.to_csv("dates+"+fname)
+    #stdzd_data.to_csv("dates+"+fname)
+    if (custom is None):
+        stdzd_data.to_csv("dates+"+fname)
+    else:
+        stdzd_data.to_csv(custom)
+    
 
 if __name__ == "__main__":
     import sys

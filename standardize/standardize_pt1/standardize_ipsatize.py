@@ -110,7 +110,7 @@ def ipsatize(df, cols):
     
     
     
-def main(fname):
+def main(fname, custom=None):
     #data = pd.read_csv('meta_df_8_17.csv.csv')
     data = pd.read_csv(fname)
     data['paper_study'] = data.apply(lambda x: x['paper']+" "+x['study'], axis=1)
@@ -257,7 +257,10 @@ def main(fname):
 
     # writing it out
     #data.to_csv('standardized_affect_data_test.csv')
-    data.to_csv('standardized_'+fname)
+    if (custom is None):
+        data.to_csv('standardized_'+fname)
+    else:
+        data.to_csv(custom)
     
 if __name__ == "__main__":
     import sys
