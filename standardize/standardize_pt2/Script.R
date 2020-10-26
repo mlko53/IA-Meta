@@ -2,11 +2,11 @@
 df <- read.csv("./std_pt1_data.csv", fileEncoding="latin1")
 
 # GDP per capita, PPP, year, country
-df1 <- read.csv("./World Bank/API_NY.GDP.PCAP.PP.CD_DS2_en_csv_v2_1345144.csv", skip = 4)
+df1 <- read.csv("./GDP.csv", skip = 4)
 # Unemployment
-df2 <- read.csv("./World Bank Unemployment/API_SL.UEM.TOTL.ZS_DS2_en_csv_v2_1429165.csv", skip = 4)
+df2 <- read.csv("./Unemployment.csv", skip = 4)
 # Consumer price index
-df3 <- read.csv("./World Bank Consumer price index/API_FP.CPI.TOTL_DS2_en_csv_v2_1429287.csv", skip = 4)
+df3 <- read.csv("./CPI.csv", skip = 4)
 
 # SES
 # famSES, famincome, finanindep, indSES, indincome, educ
