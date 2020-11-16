@@ -27,3 +27,6 @@ __pycache__/
 !earliest_pub_year.csv
 !year_collection.csv
 !Notes.txt
+!ages/ages_edit.csv
+!ages/correct_studies.txt
+!ages/incorrect_studies.txt

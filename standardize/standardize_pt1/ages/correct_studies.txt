@@ -1,0 +1,50 @@
+2006 Tsai study1
+2007 Tsai study1
+2009 Scollon study1
+2012 Chow study1
+2012 Ruby study1
+2012 Ruby study2
+2012 Tamir study1
+2013 Koopman-Holm study1
+2013 Scheibe study1
+2014 Ditzfield study1_sample1
+2014 Koopman-Holm study3
+2014 Kumar study1
+2014 Luong study1
+2014 Mannell Diss study1
+2015 Sims study3
+2016 Da Jiang LTP study11
+2016 Da Jiang LTP study12
+2016 Da Jiang LTP study2
+2016 Ito study1
+2016 Tamir study1
+2016 Thompson study1
+2016 Tsai study3
+2017 Chim study1
+2017 Chim study3
+2017 Chim study4a
+2017 Chim study4b
+2017 Floerke study2
+2017 Park study1
+2017 Park study2
+2017 Parker study3
+2018 Bencharit study1
+2018 Bencharit study2
+2018 Bencharit study3
+2018 Gentzler study1
+2018 Koc Identity Integration study1
+2018 Lin study1
+2018 Shim study1
+2018 Shim study2
+2018 Swerdlow study1
+2018 Tompson study1
+2018 Tsai study1
+2018 Yamada study1
+2018 Yip study1
+Unpublished Cheung study1
+Unpublished Ito Kono study1
+Unpublished Ito Yamaguchi Takamatsu study1
+Unpublished Kashima 1 study1
+Unpublished Kashima 2 study1
+Unpublished Samanez-Larkin agerl study1
+Unpublished Yi study1

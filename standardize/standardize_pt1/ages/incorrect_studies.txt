@@ -1,0 +1,55 @@
+FIXED Unpublished Palmer study1
+BROKEN Unpublished Ito Mika study1		
+BROKEN 2018 Bencharit study4a
+
+
+
+
+2006 Tsai study2                            1.0                     1
+2011 Li study1 					weird - should be at least 18 (MTurk)
+2014 Ditzfield Thesis study3                1.0                     1
+2014 Koopman-Holm study2                    0.0                     1
+2014 Mannell study1                         1.0                     8
+                                            2.0                    33
+                                            3.0                    97
+                                            4.0                   104
+                                            5.0                    15
+1 18-19 -> 19
+2 20-34 -> 27.5
+3 35-49 -> 42.5
+4 50-64 -> 57.5
+5 65-79 -> 72.5
+
+2015 Chow study1                            10.0                    1
+2016 Koc study1                             99.0                    1
+2017 Gui study1                             1.0                    67
+                                            2.0                   114
+                                            3.0                   256
+                                            4.0                   147
+                                            5.0                     5
+1 18-19 -> 19
+2 20-34 -> 27.5
+3 35-49 -> 42.5
+4 50-64 -> 57.5
+5 65-79 -> 72.5
+
+2017 Oosterhoff study1 			    252.0                   1
+2017 Oosterhoff study3                      1.0                     1
+2018 Bencharit study4a                      2.0                     4
+                                            3.0                   112
+                                            4.0                    10
+2018 Ito study1                             1990.0                  1
+                                            1991.0                  2
+                                            1992.0                 11
+                                            1993.0                 26
+                                            1994.0                  1
+2018 Lee study2                             26 years old            1
+                                            ２２                      1
+2018 Swerdlow study2                        1992.0                  1
+Unpublished Acevedo study2                  45.0                    1
+Unpublished Ito Mika study1                 weird
+Unpublished Palmer study1                   13.0                    5
+                                            14.0                   11
+                                            15.0                   18
+                                            16.0                   12
+                                            17.0                   12
