@@ -1,0 +1,43 @@
+{
+    "Paper": "2019 Li",
+    "Year": 2019,
+    "Title": "Differential emotional abnormalities among schizotypy clusters",
+    "Authors": "Li, L.Y., Fung, C.K., Moore, M.M., Martin, E.A.",
+    "Journal": "Schizophrenia Research",
+    "Studies": ["study1.csv"],
+    "Usable": ["study1.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+        	"total": 2637
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Race/Ethnicity": {
+            	"African American": 1,
+            	"East Asian and East Asian American": 2,
+                "South Asian and South Asian American": 3,
+                "Southeast Asian and Southeast Asian American": 4,
+                "European American": 5,
+                "Hispanic": 6,
+                "Pacific Islander": 7,
+                "Native American": 8,
+                "Multiracial": 9
+            },
+            "Gender":{
+                "M": 0,
+                "F": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": "NA"
+        }
+    }
+}
