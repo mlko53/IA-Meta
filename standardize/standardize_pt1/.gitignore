@@ -30,3 +30,4 @@ __pycache__/
 !ages/ages_edit.csv
 !ages/correct_studies.txt
 !ages/incorrect_studies.txt
+!nonAVI.csv
