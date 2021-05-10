@@ -1,0 +1,129 @@
+{
+	"Paper": "2020 Koopmann-Holm 1",
+    "Year": 2020,
+    "Title": "Seeing the Whole Picture? Avoided Negative Affect and Processing of Others’ Suffering",
+    "Authors": "Koopmann-Holm, B., Bartel, K., Meshar, M. B., Yang, H. E.",
+    "Journal": "Personality and Social Psychology Bulletin",
+    "Studies": ["study1.sav", "study2.sav", "study3.sav"],
+    "Usable": ["study1.sav", "study2.sav", "study3.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+        	"total": 60,
+        	"European American": 25,
+        	"Asian American": 12,
+        	"Multiracial": 9,
+        	"African American": 3,
+        	"Latino American": 6,
+        	"Middle Eastern": 2,
+        	"Other": 3,
+        },
+        "study2": {
+        	"total": 182,
+    		"European American": 84,
+    		"Latino American": 23,
+    		"South Asian American": 4,
+    		"Multiracial": 12,
+    		"Asian American": 8,
+    		"Chinese American": 2,
+    		"Vietnamese American": 3,
+    		"African American": 7,
+    		"Middle Eastern": 4,
+    		"Filipino American": 4,
+    		"Other": 31
+        }
+        },
+        "study3": {
+        	"total": 468,
+        	"German": 316,
+        	"European American": 99,
+        	"African American": 1,
+        	"Asian American": 10,
+        	"Chinese American": 3,
+        	"Filipino American": 3,
+        	"Vietnamese American": 1,
+        	"Korean American": 2,
+        	"Latino American": 15,
+        	"South Asian American": 6,
+        	"Middle Eastern": 2,
+        	"Multiracial": 4,
+        	"Other": 6,
+        }
+    },
+    "Filter":{
+        "study1": {
+        },
+        "study2": {
+        },
+        "study3": {
+        }
+    },
+    "Recode":{
+        "study1": {
+        	"Ethnicityrec": {
+        		"European American": "Caucasia",
+        		"Multiracial": ["Biracial", "Multi"],
+        		"African American": "African",
+        		"Asian American": "Asian",
+        		"Middle Eastern": "Middle E",
+        		"Latino American": "Hispanic",
+        		"Other": ""
+        	},
+        	"gender": {
+        		"F": 1,
+        		"M": 2,
+        	}
+        },
+        "study2":{
+        	"ethn": {
+        		"European American": "European American",
+        		"Latino American": "Latino American",
+        		"South Asian American": "South Asian American",
+        		"Multiracial": "Multiracial",
+        		"Asian American": "Asian American",
+        		"Chinese American": "Chinese American",
+        		"Vietnamese American": "Vietnamese American",
+        		"African American": "African American",
+        		"Middle Eastern": "Middle Eastern",
+        		"Filipino American": "Filipino American",
+        		"Other": "Other"
+        	},
+        	"gender": {
+        		"F": 1,
+        		"M": 2,
+        	}
+        },
+        "study3":{
+        	"ethn": {
+        		"German": "German",
+        		"European American": "European American",
+        		"Latino American": "Latino American",
+        		"South Asian American": "South Asian American",
+        		"Multiracial": "Multiracial",
+        		"Asian American": "Asian American",
+        		"Chinese American": "Chinese American",
+        		"Vietnamese American": "Vietnamese American",
+        		"African American": "African American",
+        		"Middle Eastern": "Middle Eastern",
+        		"Filipino American": "Filipino American",
+	        	"Korean American": "Korean American",
+        		"Other": "Other"
+        	},
+        	"gender": {
+        		"F": 1,
+        		"M": 2
+        	}
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": ["999", "NA", "EMPTY"]
+        },
+        "study2":{
+            "_NAN_": ["999", "NA", "EMPTY"]
+        },
+        "study3":{
+            "_NAN_": ["999", "NA", "EMPTY"]
+        }
+    }
+}
