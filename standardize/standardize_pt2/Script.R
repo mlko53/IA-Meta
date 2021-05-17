@@ -1,48 +1,55 @@
+# This is organized into 4 sections: GDP per capita, individual SES, individual income, and family income. Each of those sections are organized into preparing data, demographics, and analyses.
+
 ### Packages
-library(lme4)
+library(tidyverse)
 library(lmerTest) # Analyses using lmer
+library(scales) # Rescaling y axis for AVI demographics plots
+library(pander) # Create tables
+library(knitr)
+library(lme4)
+library("ggpubr") # For correlation graphs
+library(sjPlot) #for plotting lmer and glmer mods
 
 ### Meta-analysis data
-df <- read.csv("./std_pt1_data.csv", fileEncoding="latin1")
+df <- read.csv("std_pt1_meta_df_11_15.csv", fileEncoding="latin1")
 
-### Macroeconomic analyses
+### GDP per capita
+
+## Prepare data
 
 # GDP per capita, PPP, year, country
 df1 <- read.csv("./GDP.csv", skip = 4)
-# Unemployment
-df2 <- read.csv("./Unemployment.csv", skip = 4)
-# Consumer price index
-df3 <- read.csv("./CPI.csv", skip = 4)
 
+# Get country from ethnicity
 df$country = as.character(df$ethn)
 
 df$country[df$country == "Other" |
-                   df$country == "" |
-                   df$country == "Asian" |
-                   df$country == "Hispanic" |
-                   df$country == "African and African American" |
-                   df$country == "German + American" |
-                   df$country == "Multiracial" |
-                   df$country == "Eastern Europe" |
-                   df$country == "Native Hawaiian and Pacific Islander" |
-                   df$country == "East Asian and East Asian American" |
-                   df$country == "European and Middle Eastern and North Africa" |
-                   df$country == "Prefer not to answer" |
-                   df$country == "Asian and Pacific Islander"] = "Not included"
+             df$country == "" |
+             df$country == "Asian" |
+             df$country == "Hispanic" |
+             df$country == "African and African American" |
+             df$country == "German + American" |
+             df$country == "Multiracial" |
+             df$country == "Eastern Europe" |
+             df$country == "Native Hawaiian and Pacific Islander" |
+             df$country == "East Asian and East Asian American" |
+             df$country == "European and Middle Eastern and North Africa" |
+             df$country == "Prefer not to answer" |
+             df$country == "Asian and Pacific Islander"] = "Not included"
 
 df$country[df$country == "European American" |
-                   df$country == "East Asian American" |
-                   df$country == "Chinese American" |
-                   df$country == "Latino American" |
-                   df$country == "African American" |
-                   df$country == "Asian American" |
-                   df$country == "Native American" |
-                   df$country == "American" |
-                   df$country == "Korean American" |
-                   df$country == "Japanese American"] = "United States"
+             df$country == "East Asian American" |
+             df$country == "Chinese American" |
+             df$country == "Latino American" |
+             df$country == "African American" |
+             df$country == "Asian American" |
+             df$country == "Native American" |
+             df$country == "American" |
+             df$country == "Korean American" |
+             df$country == "Japanese American"] = "United States"
 
 df$country[df$country == "European Canadian" | 
-                   df$country == "Canadian"] = "Canada"
+             df$country == "Canadian"] = "Canada"
 
 df$country[df$country == "Mexican"] = "Mexico"
 
@@ -55,7 +62,7 @@ df$country[df$country == "Peruvian"] = "Peru"
 df$country[df$country == "Hong Kong Chinese"] = "Hong Kong SAR, China"
 
 df$country[df$country == "Chinese" |
-                   df$country == "Taiwanese"] = "China"
+             df$country == "Taiwanese"] = "China"
 
 df$country[df$country == "Japanese"] = "Japan"
 
@@ -74,7 +81,7 @@ df$country[df$country == "Filipino"] = "Philippines"
 df$country[df$country == "Sri Lankan"] = "Sri Lanka"
 
 df$country[df$country == "East Asian" |
-                   df$country == "Southeast Asian"] = "East Asia & Pacific"
+             df$country == "Southeast Asian"] = "East Asia & Pacific"
 
 df$country[df$country == "Pacific Islander"] = "Pacific island small states"
 
@@ -111,7 +118,7 @@ df$country[df$country == "Bulgarian"] = "Bulgaria"
 df$country[df$country == "Turkish"] = "Turkey"
 
 df$country[df$country == "Middle Eastern" |
-                   df$country == "Middle Eastern and Arab"] = "Middle East & North Africa"
+             df$country == "Middle Eastern and Arab"] = "Middle East & North Africa"
 
 df$country[df$country == "Israeli"] = "Israel"
 
@@ -127,75 +134,113 @@ df$country[df$country == "Ethiopian"] = "Ethiopia"
 
 df$country[df$country == "Omani"] = "Oman"
 
+# Create new data frame
 df1_new <- df1[, c(1, 45:64)]
 colnames(df1_new)[1] <- "country"
-df2_new <- df2[, c(1, 45:64)]
-colnames(df2_new)[1] <- "country"
-df3_new <- df3[, c(1, 45:64)]
-colnames(df3_new)[1] <- "country"
 
+# Merge data frames into df_final
 df_final <- merge(df, df1_new, by=c("country"))
-df_final <- merge(df_final, df2_new, by=c("country"))
-df_final <- merge(df_final, df3_new, by=c("country"))
+# Create new collected year variable by truncating collected_year
 df_final$collected_year_new <- trunc(df_final$collected_year)
+# When new collected year variable is NA, make it 0
 df_final$collected_year_new[is.na(df_final$collected_year_new)] <- 0
 
 df_final$year_GDP_per_capita <- NA
-df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2002", df_final$X2002.x, df_final$year_GDP_per_capita)
-df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2003", df_final$X2003.x, df_final$year_GDP_per_capita)
-df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2004", df_final$X2004.x, df_final$year_GDP_per_capita)
-df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2005", df_final$X2005.x, df_final$year_GDP_per_capita)
-df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2006", df_final$X2006.x, df_final$year_GDP_per_capita)
-df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2007", df_final$X2007.x, df_final$year_GDP_per_capita)
-df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2008", df_final$X2008.x, df_final$year_GDP_per_capita)
-df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2009", df_final$X2009.x, df_final$year_GDP_per_capita)
-df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2010", df_final$X2010.x, df_final$year_GDP_per_capita)
-df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2011", df_final$X2011.x, df_final$year_GDP_per_capita)
-df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2012", df_final$X2012.x, df_final$year_GDP_per_capita)
-df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2013", df_final$X2013.x, df_final$year_GDP_per_capita)
-df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2014", df_final$X2014.x, df_final$year_GDP_per_capita)
-df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2015", df_final$X2015.x, df_final$year_GDP_per_capita)
-df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2016", df_final$X2016.x, df_final$year_GDP_per_capita)
-df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2017", df_final$X2017.x, df_final$year_GDP_per_capita)
-df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2018", df_final$X2018.x, df_final$year_GDP_per_capita)
+df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2002", df_final$X2002, df_final$year_GDP_per_capita)
+df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2003", df_final$X2003, df_final$year_GDP_per_capita)
+df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2004", df_final$X2004, df_final$year_GDP_per_capita)
+df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2005", df_final$X2005, df_final$year_GDP_per_capita)
+df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2006", df_final$X2006, df_final$year_GDP_per_capita)
+df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2007", df_final$X2007, df_final$year_GDP_per_capita)
+df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2008", df_final$X2008, df_final$year_GDP_per_capita)
+df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2009", df_final$X2009, df_final$year_GDP_per_capita)
+df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2010", df_final$X2010, df_final$year_GDP_per_capita)
+df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2011", df_final$X2011, df_final$year_GDP_per_capita)
+df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2012", df_final$X2012, df_final$year_GDP_per_capita)
+df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2013", df_final$X2013, df_final$year_GDP_per_capita)
+df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2014", df_final$X2014, df_final$year_GDP_per_capita)
+df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2015", df_final$X2015, df_final$year_GDP_per_capita)
+df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2016", df_final$X2016, df_final$year_GDP_per_capita)
+df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2017", df_final$X2017, df_final$year_GDP_per_capita)
+df_final$year_GDP_per_capita <- ifelse(df_final$collected_year_new == "2018", df_final$X2018, df_final$year_GDP_per_capita)
+df_final$year_GDP_per_capita <- df_final$year_GDP_per_capita / 10000
 
-df_final$year_unemployment <- NA
-df_final$year_unemployment <- ifelse(df_final$collected_year_new == "2002", df_final$X2002.y, df_final$year_unemployment)
-df_final$year_unemployment <- ifelse(df_final$collected_year_new == "2003", df_final$X2003.y, df_final$year_unemployment)
-df_final$year_unemployment <- ifelse(df_final$collected_year_new == "2004", df_final$X2004.y, df_final$year_unemployment)
-df_final$year_unemployment <- ifelse(df_final$collected_year_new == "2005", df_final$X2005.y, df_final$year_unemployment)
-df_final$year_unemployment <- ifelse(df_final$collected_year_new == "2006", df_final$X2006.y, df_final$year_unemployment)
-df_final$year_unemployment <- ifelse(df_final$collected_year_new == "2007", df_final$X2007.y, df_final$year_unemployment)
-df_final$year_unemployment <- ifelse(df_final$collected_year_new == "2008", df_final$X2008.y, df_final$year_unemployment)
-df_final$year_unemployment <- ifelse(df_final$collected_year_new == "2009", df_final$X2009.y, df_final$year_unemployment)
-df_final$year_unemployment <- ifelse(df_final$collected_year_new == "2010", df_final$X2010.y, df_final$year_unemployment)
-df_final$year_unemployment <- ifelse(df_final$collected_year_new == "2011", df_final$X2011.y, df_final$year_unemployment)
-df_final$year_unemployment <- ifelse(df_final$collected_year_new == "2012", df_final$X2012.y, df_final$year_unemployment)
-df_final$year_unemployment <- ifelse(df_final$collected_year_new == "2013", df_final$X2013.y, df_final$year_unemployment)
-df_final$year_unemployment <- ifelse(df_final$collected_year_new == "2014", df_final$X2014.y, df_final$year_unemployment)
-df_final$year_unemployment <- ifelse(df_final$collected_year_new == "2015", df_final$X2015.y, df_final$year_unemployment)
-df_final$year_unemployment <- ifelse(df_final$collected_year_new == "2016", df_final$X2016.y, df_final$year_unemployment)
-df_final$year_unemployment <- ifelse(df_final$collected_year_new == "2017", df_final$X2017.y, df_final$year_unemployment)
-df_final$year_unemployment <- ifelse(df_final$collected_year_new == "2018", df_final$X2018.y, df_final$year_unemployment)
+# Write to csv
+write.csv(df_final, "std_pt2_data.csv", row.names = FALSE)
 
-df_final$year_CPI <- NA
-df_final$year_CPI <- ifelse(df_final$collected_year_new == "2002", df_final$X2002, df_final$year_CPI)
-df_final$year_CPI <- ifelse(df_final$collected_year_new == "2003", df_final$X2003, df_final$year_CPI)
-df_final$year_CPI <- ifelse(df_final$collected_year_new == "2004", df_final$X2004, df_final$year_CPI)
-df_final$year_CPI <- ifelse(df_final$collected_year_new == "2005", df_final$X2005, df_final$year_CPI)
-df_final$year_CPI <- ifelse(df_final$collected_year_new == "2006", df_final$X2006, df_final$year_CPI)
-df_final$year_CPI <- ifelse(df_final$collected_year_new == "2007", df_final$X2007, df_final$year_CPI)
-df_final$year_CPI <- ifelse(df_final$collected_year_new == "2008", df_final$X2008, df_final$year_CPI)
-df_final$year_CPI <- ifelse(df_final$collected_year_new == "2009", df_final$X2009, df_final$year_CPI)
-df_final$year_CPI <- ifelse(df_final$collected_year_new == "2010", df_final$X2010, df_final$year_CPI)
-df_final$year_CPI <- ifelse(df_final$collected_year_new == "2011", df_final$X2011, df_final$year_CPI)
-df_final$year_CPI <- ifelse(df_final$collected_year_new == "2012", df_final$X2012, df_final$year_CPI)
-df_final$year_CPI <- ifelse(df_final$collected_year_new == "2013", df_final$X2013, df_final$year_CPI)
-df_final$year_CPI <- ifelse(df_final$collected_year_new == "2014", df_final$X2014, df_final$year_CPI)
-df_final$year_CPI <- ifelse(df_final$collected_year_new == "2015", df_final$X2015, df_final$year_CPI)
-df_final$year_CPI <- ifelse(df_final$collected_year_new == "2016", df_final$X2016, df_final$year_CPI)
-df_final$year_CPI <- ifelse(df_final$collected_year_new == "2017", df_final$X2017, df_final$year_CPI)
-df_final$year_CPI <- ifelse(df_final$collected_year_new == "2018", df_final$X2018, df_final$year_CPI)
+## Demographics
+
+# Total number of participants
+sum(!is.na(df_final$year_GDP_per_capita))
+
+# Affect participant number
+sum(!is.na(df_final$i.HAP[!is.na(df_final$year_GDP_per_capita)]))
+sum(!is.na(df_final$i.LAP[!is.na(df_final$year_GDP_per_capita)]))
+sum(!is.na(df_final$i.HAN[!is.na(df_final$year_GDP_per_capita)]))
+sum(!is.na(df_final$i.LAN[!is.na(df_final$year_GDP_per_capita)]))
+sum(!is.na(df_final$r.HAP[!is.na(df_final$year_GDP_per_capita)]))
+sum(!is.na(df_final$r.LAP[!is.na(df_final$year_GDP_per_capita)]))
+sum(!is.na(df_final$r.HAN[!is.na(df_final$year_GDP_per_capita)]))
+sum(!is.na(df_final$r.LAN[!is.na(df_final$year_GDP_per_capita)]))
+
+# Country list
+unique(df_final$country[!is.na(df_final$year_GDP_per_capita)])
+country_list <- list("Australia", "Belgium", "Bulgaria", "Canada", "China", "Colombia", "East Asia & Pacific", "Ethiopia", "France", "Germany", "Hong Kong SAR, China", "India", "Israel", "Japan", "Korea, Rep.", "Malaysia", "Mauritius", "Mexico", "Middle East & North Africa", "Moldova", "Nepal", "Netherlands", "New Zealand", "Nigeria", "Oman", "Pacific island small states", "Peru", "Philippines", "Russian Federation", "South Asia", "Sri Lanka", "Sweden", "Turkey", "United Kingdom", "United States", "Vietnam")
+
+# Number of participants for each country
+for (i in country_list) {
+  print(i)
+  print(sum(!is.na(df_final$year_GDP_per_capita[df_final$country == i])))
+}
+rm(i)
+
+# Gender distribution
+sum((df_final$gender == "M") & !is.na(df_final$year_GDP_per_capita))
+sum((df_final$gender == "F") & !is.na(df_final$year_GDP_per_capita))
+
+# Age distribution
+unique(df_final$age[!is.na(df_final$year_GDP_per_capita)])
+mean(df_final$age[!is.na(df_final$year_GDP_per_capita)], na.rm=TRUE)
+median(df_final$age[!is.na(df_final$year_GDP_per_capita)], na.rm=TRUE)
+sd(df_final$age[!is.na(df_final$year_GDP_per_capita)], na.rm=TRUE)
+min(df_final$age[!is.na(df_final$year_GDP_per_capita)], na.rm=TRUE)
+max(df_final$age[!is.na(df_final$year_GDP_per_capita)], na.rm=TRUE)
+
+## Analysis
+
+fit1 <- lmer(r.HAP ~ year_GDP_per_capita + i.HAP + (1 | study), data=df_final)
+summary(fit1)
+fit2 <- lmer(r.LAP ~ year_GDP_per_capita + i.LAP + (1 | study), data=df_final)
+summary(fit2)
+fit3 <- lmer(r.HAN ~ year_GDP_per_capita + i.HAN + (1 | study), data=df_final)
+summary(fit3)
+fit4 <- lmer(r.LAN ~ year_GDP_per_capita + i.LAN + (1 | study), data=df_final)
+summary(fit4)
+fit5 <- lmer(i.HAP ~ year_GDP_per_capita + r.HAP + (1 | study), data=df_final)
+summary(fit5)
+fit6 <- lmer(i.LAP ~ year_GDP_per_capita + r.LAP + (1 | study), data=df_final)
+summary(fit6)
+fit7 <- lmer(i.HAN ~ year_GDP_per_capita + r.HAN + (1 | study), data=df_final)
+summary(fit7)
+fit8 <- lmer(i.LAN ~ year_GDP_per_capita + r.LAN + (1 | study), data=df_final)
+summary(fit8)
+
+fit1 <- lmer(r.HAP.ips.us ~ year_GDP_per_capita + i.HAP.ips.us + (1 | study), data=df_final)
+summary(fit1)
+fit2 <- lmer(r.LAP.ips.us ~ year_GDP_per_capita + i.LAP.ips.us + (1 | study), data=df_final)
+summary(fit2)
+fit3 <- lmer(r.HAN.ips.us ~ year_GDP_per_capita + i.HAN.ips.us + (1 | study), data=df_final)
+summary(fit3)
+fit4 <- lmer(r.LAN.ips.us ~ year_GDP_per_capita + i.LAN.ips.us + (1 | study), data=df_final)
+summary(fit4)
+fit5 <- lmer(i.HAP.ips.us ~ year_GDP_per_capita + r.HAP.ips.us + (1 | study), data=df_final)
+summary(fit5)
+fit6 <- lmer(i.LAP.ips.us ~ year_GDP_per_capita + r.LAP.ips.us + (1 | study), data=df_final)
+summary(fit6)
+fit7 <- lmer(i.HAN.ips.us ~ year_GDP_per_capita + r.HAN.ips.us + (1 | study), data=df_final)
+summary(fit7)
+fit8 <- lmer(i.LAN.ips.us ~ year_GDP_per_capita + r.LAN.ips.us + (1 | study), data=df_final)
+summary(fit8)
 
 
 
@@ -204,7 +249,6 @@ df_final$year_CPI <- ifelse(df_final$collected_year_new == "2018", df_final$X201
 ## Create new variables indSES_new and ethn_new_indSES for analysis
 
 # indSES studies with values:
-
 # 2006 Tsai study1 (1 - 5)
 # 2006 Tsai study2 (1 - 5)
 # 2014 Koopman-Holm study2 (1 - 5)
@@ -216,18 +260,27 @@ df_final$year_CPI <- ifelse(df_final$collected_year_new == "2018", df_final$X201
 # 2016 Tsai study3 (1 - 5)
 # 2018 Koc Identity Integration study1 (1 - 10)
 # Unpublished Yi study1 (1 - 10)
+# All are 1-5 (lower income to upper income), 6, 333, 888, 999 being idk or NA
+
+# Create new column "paper_study"
+#df <- transform(df, paper_study=paste(paper, study, sep=" "))
 
 # Create new variables for analysis
 df$indSES_new <- df$indSES
 df$indincome_new <- df$indincome
+
 # Convert to numeric
 df$indSES_new <- as.numeric(as.character(df$indSES_new))
 df$indincome_new <- as.numeric(as.character(df$indincome_new))
+
 # Add 2013 Scheibe study1 to indSES
 df$indSES_new[df$paper_study == "2013 Scheibe study1"] <- df$indincome_new[df$paper_study == "2013 Scheibe study1"]
+
 # Convert appropriate values to NA
-df$indSES_new[df$indSES_new == 6 | df$indSES_new == 333 | df$indSES_new == 888] <- NA
-# Standardize values 0.2 - 1
+df$indSES_new[df$indSES_new == 6 & (df$paper_study == "2006 Tsai study2" | df$paper_study == "2014 Koopman-Holm study3" | df$paper_study == "2018 Bencharit study3" | df$paper_study == "2018 Bencharit study4a")] <- NA
+df$indSES_new[df$indSES_new == 333 | df$indSES_new == 888] <- NA
+
+# Standardize values 1 - 5
 df$indSES_new <- ifelse(df$paper_study == "2006 Tsai study1", df$indSES_new, df$indSES_new)
 df$indSES_new <- ifelse(df$paper_study == "2006 Tsai study2", df$indSES_new, df$indSES_new)
 df$indSES_new <- ifelse(df$paper_study == "2013 Scheibe study1", df$indSES_new, df$indSES_new)
@@ -239,6 +292,7 @@ df$indSES_new <- ifelse(df$paper_study == "2018 Koc Identity Integration study1"
 df$indSES_new <- ifelse(df$paper_study == "Unpublished Yi study1", df$indSES_new / 2, df$indSES_new)
 df$indSES_new <- ifelse(df$paper_study == "2014 Koopman-Holm study2", df$indSES_new, df$indSES_new)
 df$indSES_new <- ifelse(df$paper_study == "2014 Koopman-Holm study3", df$indSES_new, df$indSES_new)
+
 # Create ethn_new_indSES to categorize the studies' ethnicities for analysis
 df$ethn_new_indSES <- "Other"
 df$ethn_new_indSES[df$ethn == "European American"] = "European American"
@@ -250,11 +304,13 @@ X_indSES <- split(df, df$ethn_new_indSES)
 
 ## Demographics
 
-# Studies having indSES
+# indSES studies
 unique(df$paper_study[!is.na(df$indSES_new)])
-# Values in indSES
+
+# indSES values
 unique(df$indSES_new)
-# Total number of participants
+
+# Total # of participants
 sum(!is.na(df$indSES_new))
 
 # Mean and SD of indSES
@@ -262,32 +318,43 @@ mean(df$indSES_new, na.rm=TRUE)
 sd(df$indSES_new, na.rm=TRUE)
 median(df$indSES_new, na.rm=TRUE)
 
-# All ethnicities and for each studies
+# All ethnicities
 unique(df$ethn[!is.na(df$indSES_new)])
-unique(df$ethn[df$paper_study == "2006 Tsai study1"])
-unique(df$ethn[df$paper_study == "2006 Tsai study2"])
-unique(df$ethn[df$paper_study == "2013 Scheibe study1"])
-unique(df$ethn[df$paper_study == "2016 Koc study1"])
-unique(df$ethn[df$paper_study == "2016 Tsai study3"])
-unique(df$ethn[df$paper_study == "2018 Bencharit study3"])
-unique(df$ethn[df$paper_study == "2018 Bencharit study4a"])
-unique(df$ethn[df$paper_study == "2018 Koc Identity Integration study1"])
-unique(df$ethn[df$paper_study == "Unpublished Yi study1"])
-unique(df$ethn[df$paper_study == "2014 Koopman-Holm study2"])
-unique(df$ethn[df$paper_study == "2014 Koopman-Holm study3"])
 
-# Number of participants from each study
-sum(!is.na(df$indSES_new) & (df$paper_study == "2006 Tsai study1"))
-sum(!is.na(df$indSES_new) & (df$paper_study == "2006 Tsai study2"))
-sum(!is.na(df$indSES_new) & (df$paper_study == "2013 Scheibe study1"))
-sum(!is.na(df$indSES_new) & (df$paper_study == "2016 Koc study1"))
-sum(!is.na(df$indSES_new) & (df$paper_study == "2016 Tsai study3"))
-sum(!is.na(df$indSES_new) & (df$paper_study == "2018 Bencharit study3"))
-sum(!is.na(df$indSES_new) & (df$paper_study == "2018 Bencharit study4a"))
-sum(!is.na(df$indSES_new) & (df$paper_study == "2018 Koc Identity Integration study1"))
-sum(!is.na(df$indSES_new) & (df$paper_study == "Unpublished Yi study1"))
-sum(!is.na(df$indSES_new) & (df$paper_study == "2014 Koopman-Holm study2"))
-sum(!is.na(df$indSES_new) & (df$paper_study == "2014 Koopman-Holm study3"))
+# Create list of studies
+indSES_studies <- list("2006 Tsai study1", "2006 Tsai study2", "2013 Scheibe study1", "2016 Koc study1", "2016 Tsai study3", "2018 Bencharit study3", "2018 Bencharit study4a", "2018 Koc Identity Integration study1", "Unpublished Yi study1", "2014 Koopman-Holm study2", "2014 Koopman-Holm study3")
+
+for (i in indSES_studies) {
+  # Study
+  print(i)
+  
+  #print(unique(df$indSES_new[df$paper_study == i]))
+  
+  # Ethnicities for each study
+  #print(unique(df$ethn[df$paper_study == i]))
+  
+  # Number of participants from each study
+  #print(sum(!is.na(df$indSES_new) & (df$paper_study == i)))
+  
+  # Age data
+  #print(unique(df$age[df$paper_study == i]))
+  #print(median(df$age[df$paper_study == i], na.rm=TRUE))
+  #print(sd(df$age[df$paper_study == i], na.rm=TRUE))
+  
+  # Sum of number of entries for actual and ideal HAP for each study
+  print(sum(!is.na(df$r.HAP[df$paper_study == i])))
+  print(sum(!is.na(df$i.HAP[df$paper_study == i])))
+}
+
+# Sum of number of entries for affect
+sum(!is.na(df$i.HAP[!is.na(df$indSES_new)]))
+sum(!is.na(df$i.LAP[!is.na(df$indSES_new)]))
+sum(!is.na(df$i.HAN[!is.na(df$indSES_new)]))
+sum(!is.na(df$i.LAN[!is.na(df$indSES_new)]))
+sum(!is.na(df$r.HAP[!is.na(df$indSES_new)]))
+sum(!is.na(df$r.LAP[!is.na(df$indSES_new)]))
+sum(!is.na(df$r.HAN[!is.na(df$indSES_new)]))
+sum(!is.na(df$r.LAN[!is.na(df$indSES_new)]))
 
 # Number of participants for indSES from each ethnicity
 sum(!is.na(df$indSES_new) & (df$ethn == "European American"))
@@ -322,70 +389,13 @@ sum((df$gender == "M") & !is.na(df$indSES_new))
 sum((df$gender == "F") & !is.na(df$indSES_new))
 sum((df$gender == "") & !is.na(df$indSES_new))
 
-# Age distribution
+# Age data
 unique(df$age[!is.na(df$indSES_new)])
 mean(df$age[!is.na(df$indSES_new)], na.rm=TRUE)
 median(df$age[!is.na(df$indSES_new)], na.rm=TRUE)
 sd(df$age[!is.na(df$indSES_new) & df$paper_study != "2018 Bencharit study4a"], na.rm=TRUE)
 min(df$age[!is.na(df$indSES_new) & df$paper_study != "2018 Bencharit study4a"], na.rm=TRUE)
 max(df$age[!is.na(df$indSES_new) & df$paper_study != "2018 Bencharit study4a"], na.rm=TRUE)
-unique(df$age[df$paper_study == "2006 Tsai study1"])
-unique(df$age[df$paper_study == "2006 Tsai study2"])
-unique(df$age[df$paper_study == "2013 Scheibe study1"])
-unique(df$age[df$paper_study == "2016 Koc study1"])
-unique(df$age[df$paper_study == "2016 Tsai study3"])
-unique(df$age[df$paper_study == "2018 Bencharit study3"])
-unique(df$age[df$paper_study == "2018 Bencharit study4a"])
-unique(df$age[df$paper_study == "2018 Koc Identity Integration study1"])
-unique(df$age[df$paper_study == "Unpublished Yi study1"])
-unique(df$age[df$paper_study == "2014 Koopman-Holm study2"])
-unique(df$age[df$paper_study == "2014 Koopman-Holm study3"])
-median(df$age[df$paper_study == "2006 Tsai study1"], na.rm = TRUE)
-median(df$age[df$paper_study == "2006 Tsai study2"], na.rm = TRUE)
-median(df$age[df$paper_study == "2013 Scheibe study1"], na.rm = TRUE)
-median(df$age[df$paper_study == "2016 Koc study1"], na.rm = TRUE)
-median(df$age[df$paper_study == "2016 Tsai study3"], na.rm = TRUE)
-median(df$age[df$paper_study == "2018 Bencharit study3"], na.rm = TRUE)
-median(df$age[df$paper_study == "2018 Bencharit study4a"], na.rm = TRUE)
-median(df$age[df$paper_study == "2018 Koc Identity Integration study1"], na.rm = TRUE)
-median(df$age[df$paper_study == "Unpublished Yi study1"], na.rm = TRUE)
-median(df$age[df$paper_study == "2014 Koopman-Holm study2"], na.rm = TRUE)
-median(df$age[df$paper_study == "2014 Koopman-Holm study3"], na.rm = TRUE)
-sd(df$age[df$paper_study == "2006 Tsai study1"], na.rm = TRUE)
-sd(df$age[df$paper_study == "2006 Tsai study2"], na.rm = TRUE)
-sd(df$age[df$paper_study == "2013 Scheibe study1"], na.rm = TRUE)
-sd(df$age[df$paper_study == "2016 Koc study1"], na.rm = TRUE)
-sd(df$age[df$paper_study == "2016 Tsai study3"], na.rm = TRUE)
-sd(df$age[df$paper_study == "2018 Bencharit study3"], na.rm = TRUE)
-sd(df$age[df$paper_study == "2018 Bencharit study4a"], na.rm = TRUE)
-sd(df$age[df$paper_study == "2018 Koc Identity Integration study1"], na.rm = TRUE)
-sd(df$age[df$paper_study == "Unpublished Yi study1"], na.rm = TRUE)
-sd(df$age[df$paper_study == "2014 Koopman-Holm study2"], na.rm = TRUE)
-sd(df$age[df$paper_study == "2014 Koopman-Holm study3"], na.rm = TRUE)
-
-# Sum of number of entries for actual and ideal affect for each study
-sum(!is.na(df$r.HAP[df$paper_study == "2006 Tsai study1"]))
-sum(!is.na(df$i.HAP[df$paper_study == "2006 Tsai study1"]))
-sum(!is.na(df$r.HAP[df$paper_study == "2006 Tsai study2"]))
-sum(!is.na(df$i.HAP[df$paper_study == "2006 Tsai study2"]))
-sum(!is.na(df$r.HAP[df$paper_study == "2013 Scheibe study1"]))
-sum(!is.na(df$i.HAP[df$paper_study == "2013 Scheibe study1"]))
-sum(!is.na(df$r.HAP[df$paper_study == "2016 Koc study1"]))
-sum(!is.na(df$i.HAP[df$paper_study == "2016 Koc study1"]))
-sum(!is.na(df$r.HAP[df$paper_study == "2016 Tsai study3"]))
-sum(!is.na(df$i.HAP[df$paper_study == "2016 Tsai study3"]))
-sum(!is.na(df$r.HAP[df$paper_study == "2018 Bencharit study3"]))
-sum(!is.na(df$i.HAP[df$paper_study == "2018 Bencharit study3"]))
-sum(!is.na(df$r.HAP[df$paper_study == "2018 Bencharit study4a"]))
-sum(!is.na(df$i.HAP[df$paper_study == "2018 Bencharit study4a"]))
-sum(!is.na(df$r.HAP[df$paper_study == "2018 Koc Identity Integration study1"]))
-sum(!is.na(df$i.HAP[df$paper_study == "2018 Koc Identity Integration study1"]))
-sum(!is.na(df$r.HAP[df$paper_study == "Unpublished Yi study1"]))
-sum(!is.na(df$i.HAP[df$paper_study == "Unpublished Yi study1"]))
-sum(!is.na(df$r.HAP[df$paper_study == "2014 Koopman-Holm study2"]))
-sum(!is.na(df$i.HAP[df$paper_study == "2014 Koopman-Holm study2"]))
-sum(!is.na(df$r.HAP[df$paper_study == "2014 Koopman-Holm study3"]))
-sum(!is.na(df$i.HAP[df$paper_study == "2014 Koopman-Holm study3"]))
 
 # Sum of each ethnicity
 sum(!is.na(X_indSES$`European American`$indSES_new))
@@ -396,234 +406,142 @@ sum(!is.na(X_indSES$European$indSES_new))
 
 ## Analyses
 
-cor.test(df$indSES_new, df$r.HAP)
-cor.test(df$indSES_new, df$r.LAP)
-cor.test(df$indSES_new, df$r.HAN)
-cor.test(df$indSES_new, df$r.LAN)
-cor.test(df$indSES_new, df$i.HAP)
-cor.test(df$indSES_new, df$i.LAP)
-cor.test(df$indSES_new, df$i.HAN)
-cor.test(df$indSES_new, df$i.LAN)
+# Create list of studies
+affects <- list("r.HAP", "r.LAP", "r.HAN", "r.LAN", "i.HAP", "i.LAP", "i.HAN", "i.LAN", "r.HAP.ips.us", "r.LAP.ips.us", "r.HAN.ips.us", "r.LAN.ips.us", "i.HAP.ips.us", "i.LAP.ips.us", "i.HAN.ips.us", "i.LAN.ips.us")
 
-cor.test(df$indSES_new, df$r.HAP.ips.us)
-cor.test(df$indSES_new, df$r.LAP.ips.us)
-cor.test(df$indSES_new, df$r.HAN.ips.us)
-cor.test(df$indSES_new, df$r.LAN.ips.us)
-cor.test(df$indSES_new, df$i.HAP.ips.us)
-cor.test(df$indSES_new, df$i.LAP.ips.us)
-cor.test(df$indSES_new, df$i.HAN.ips.us)
-cor.test(df$indSES_new, df$i.LAN.ips.us)
+j = 0
+for (i in affects) {
+  j = j + 1
+  if (j <= 4 | (j >= 9 & j <= 12)) {
+    k = j + 4
+  } else {
+    k = j - 4
+  }
+  l = affects[[k]]
+  
+  # Affect
+  for (a in 1:10) {
+    print("")
+  }
+  print(i)
+  for (a in 1:10) {
+    print("")
+  }
+  #
+  # Correlation test
+  #print("Correlation test")
+  #print(cor.test(df$indSES_new, df[, i]))
+  
+  # Regression
+  for (a in 1:3) {
+    print("")
+  }
+  #print("Regression test")
+  #print(summary(lmer(df[, i] ~ indSES_new + (1 | study), data=df)))
+  #for (a in 1:3) {
+  #  print("")
+  #}
+  print("Regression test with affect control")
+  reg <- lmer(df[, i] ~ indSES_new + df[, l] + (1 | study), data=df)
+  print(summary(reg))
+  
+  #print("Ethnicity")
+  #print(summary(lmer(X_indSES$`European American`[, i] ~ indSES_new + (1 | study), data=X_indSES$`European American`)))
+  #print(summary(lmer(X_indSES$`European American`[, i] ~ indSES_new + X_indSES$`European American`[, l] + (1 | study), data=X_indSES$`European American`)))
+  # print(summary(lmer(X_indSES$`Asian American`[, i] ~ indSES_new + (1 | study), data=X_indSES$`Asian American`)))
+  # print(summary(lmer(X_indSES$`Asian American`[, i] ~ indSES_new + X_indSES$`Asian American`[, l] + (1 | study), data=X_indSES$`Asian American`)))
+  # print(summary(lm(X_indSES$`East Asian`[, i] ~ indSES_new, data=X_indSES$`East Asian`)))
+  # print(summary(lm(X_indSES$`East Asian`[, i] ~ indSES_new + X_indSES$`East Asian`[, l], data=X_indSES$`East Asian`)))
+  # print(summary(lmer(X_indSES$`Hong Kong Chinese`[, i] ~ indSES_new + (1 | study), data=X_indSES$`Hong Kong Chinese`)))
+  # print(summary(lmer(X_indSES$`Hong Kong Chinese`[, i] ~ indSES_new + X_indSES$`Hong Kong Chinese`[, l] + (1 | study), data=X_indSES$`Hong Kong Chinese`)))
+}
+rm(a, i, j, k, l, affects)
 
-fit1 <- lmer(r.HAP ~ indSES_new + i.HAP + (1 | study), data=df)
-summary(fit1)
-fit2 <- lmer(r.LAP ~ indSES_new + i.LAP + (1 | study), data=df)
-summary(fit2)
-fit3 <- lmer(r.HAN ~ indSES_new + i.HAN + (1 | study), data=df)
-summary(fit3)
-fit4 <- lmer(r.LAN ~ indSES_new + i.LAN + (1 | study), data=df)
-summary(fit4)
-fit5 <- lmer(i.HAP ~ indSES_new + r.HAP + (1 | study), data=df)
-summary(fit5)
-fit6 <- lmer(i.LAP ~ indSES_new + r.LAP + (1 | study), data=df)
-summary(fit6)
-fit7 <- lmer(i.HAN ~ indSES_new + r.HAN + (1 | study), data=df)
-summary(fit7)
-fit8 <- lmer(i.LAN ~ indSES_new + r.LAN + (1 | study), data=df)
-summary(fit8)
+# Tables
+reg1 <- lmer(i.HAP ~ indSES_new + r.HAP + (1 | study), data=df)
+# sjPlot:: tab_model(reg)
 
-fit1 <- lmer(r.HAP ~ indSES_new + (1 | study), data=df)
-summary(fit1)
-fit2 <- lmer(r.LAP ~ indSES_new + (1 | study), data=df)
-summary(fit2)
-fit3 <- lmer(r.HAN ~ indSES_new + (1 | study), data=df)
-summary(fit3)
-fit4 <- lmer(r.LAN ~ indSES_new + (1 | study), data=df)
-summary(fit4)
-fit5 <- lmer(i.HAP ~ indSES_new + (1 | study), data=df)
-summary(fit5)
-fit6 <- lmer(i.LAP ~ indSES_new + (1 | study), data=df)
-summary(fit6)
-fit7 <- lmer(i.HAN ~ indSES_new + (1 | study), data=df)
-summary(fit7)
-fit8 <- lmer(i.LAN ~ indSES_new + (1 | study), data=df)
-summary(fit8)
+reg2 <- lmer(i.LAP ~ indSES_new + r.LAP + (1 | study), data=df)
 
-fit1 <- lmer(r.HAP.ips.us ~ indSES_new + i.HAP.ips.us + (1 | study), data=df)
-summary(fit1)
-fit2 <- lmer(r.LAP.ips.us ~ indSES_new + i.LAP.ips.us + (1 | study), data=df)
-summary(fit2)
-fit3 <- lmer(r.HAN.ips.us ~ indSES_new + i.HAN.ips.us + (1 | study), data=df)
-summary(fit3)
-fit4 <- lmer(r.LAN.ips.us ~ indSES_new + i.LAN.ips.us + (1 | study), data=df)
-summary(fit4)
-fit5 <- lmer(i.HAP.ips.us ~ indSES_new + r.HAP.ips.us + (1 | study), data=df)
-summary(fit5)
-fit6 <- lmer(i.LAP.ips.us ~ indSES_new + r.LAP.ips.us + (1 | study), data=df)
-summary(fit6)
-fit7 <- lmer(i.HAN.ips.us ~ indSES_new + r.HAN.ips.us + (1 | study), data=df)
-summary(fit7)
-fit8 <- lmer(i.LAN.ips.us ~ indSES_new + r.LAN.ips.us + (1 | study), data=df)
-summary(fit8)
+reg3 <- lmer(i.HAN ~ indSES_new + r.HAN + (1 | study), data=df)
 
-fit1 <- lmer(r.HAP.ips.us ~ indSES_new + (1 | study), data=df)
-summary(fit1)
-fit2 <- lmer(r.LAP.ips.us ~ indSES_new + (1 | study), data=df)
-summary(fit2)
-fit3 <- lmer(r.HAN.ips.us ~ indSES_new + (1 | study), data=df)
-summary(fit3)
-fit4 <- lmer(r.LAN.ips.us ~ indSES_new + (1 | study), data=df)
-summary(fit4)
-fit5 <- lmer(i.HAP.ips.us ~ indSES_new + (1 | study), data=df)
-summary(fit5)
-fit6 <- lmer(i.LAP.ips.us ~ indSES_new + (1 | study), data=df)
-summary(fit6)
-fit7 <- lmer(i.HAN.ips.us ~ indSES_new + (1 | study), data=df)
-summary(fit7)
-fit8 <- lmer(i.LAN.ips.us ~ indSES_new + (1 | study), data=df)
-summary(fit8)
+reg4 <- lmer(i.LAN ~ indSES_new + r.LAN + (1 | study), data=df)
 
-fit1 <- lmer(r.HAP ~ indSES_new + i.HAP + (1 | study), data=X_indSES$`European American`)
-summary(fit1)
-fit2 <- lmer(r.LAP ~ indSES_new + i.LAP + (1 | study), data=X_indSES$`European American`)
-summary(fit2)
-fit3 <- lmer(r.HAN ~ indSES_new + i.HAN + (1 | study), data=X_indSES$`European American`)
-summary(fit3)
-fit4 <- lmer(r.LAN ~ indSES_new + i.LAN + (1 | study), data=X_indSES$`European American`)
-summary(fit4)
-fit5 <- lmer(i.HAP ~ indSES_new + r.HAP + (1 | study), data=X_indSES$`European American`)
-summary(fit5)
-fit6 <- lmer(i.LAP ~ indSES_new + r.LAP + (1 | study), data=X_indSES$`European American`)
-summary(fit6)
-fit7 <- lmer(i.HAN ~ indSES_new + r.HAN + (1 | study), data=X_indSES$`European American`)
-summary(fit7)
-fit8 <- lmer(i.LAN ~ indSES_new + r.LAN + (1 | study), data=X_indSES$`European American`)
-summary(fit8)
+tab_model(reg1, reg2, reg3, reg4,
+          pred.labels = c("Intercept", "SES", "Actual HAP", "Actual LAP", "Actual HAN", "Actual LAN"),
+          dv.labels = c("Ideal HAP", "Ideal LAP", "Ideal HAN", "Ideal LAN")
+)
 
-fit1 <- lmer(r.HAP ~ indSES_new + (1 | study), data=X_indSES$`European American`)
-summary(fit1)
-fit2 <- lmer(r.LAP ~ indSES_new + (1 | study), data=X_indSES$`European American`)
-summary(fit2)
-fit3 <- lmer(r.HAN ~ indSES_new + (1 | study), data=X_indSES$`European American`)
-summary(fit3)
-fit4 <- lmer(r.LAN ~ indSES_new + (1 | study), data=X_indSES$`European American`)
-summary(fit4)
-fit5 <- lmer(i.HAP ~ indSES_new + (1 | study), data=X_indSES$`European American`)
-summary(fit5)
-fit6 <- lmer(i.LAP ~ indSES_new + (1 | study), data=X_indSES$`European American`)
-summary(fit6)
-fit7 <- lmer(i.HAN ~ indSES_new + (1 | study), data=X_indSES$`European American`)
-summary(fit7)
-fit8 <- lmer(i.LAN ~ indSES_new + (1 | study), data=X_indSES$`European American`)
-summary(fit8)
+reg1 <- lmer(i.HAP ~ indSES_new + (1 | study), data=df)
+# sjPlot:: tab_model(reg)
 
-fit1 <- lmer(r.HAP ~ indSES_new + i.HAP + (1 | study), data=X_indSES$`Asian American`)
-summary(fit1)
-fit2 <- lmer(r.LAP ~ indSES_new + i.LAP + (1 | study), data=X_indSES$`Asian American`)
-summary(fit2)
-fit3 <- lmer(r.HAN ~ indSES_new + i.HAN + (1 | study), data=X_indSES$`Asian American`)
-summary(fit3)
-fit4 <- lmer(r.LAN ~ indSES_new + i.LAN + (1 | study), data=X_indSES$`Asian American`)
-summary(fit4)
-fit5 <- lmer(i.HAP ~ indSES_new + r.HAP + (1 | study), data=X_indSES$`Asian American`)
-summary(fit5)
-fit6 <- lmer(i.LAP ~ indSES_new + r.LAP + (1 | study), data=X_indSES$`Asian American`)
-summary(fit6)
-fit7 <- lmer(i.HAN ~ indSES_new + r.HAN + (1 | study), data=X_indSES$`Asian American`)
-summary(fit7)
-fit8 <- lmer(i.LAN ~ indSES_new + r.LAN + (1 | study), data=X_indSES$`Asian American`)
-summary(fit8)
+reg2 <- lmer(i.LAP ~ indSES_new + (1 | study), data=df)
 
-fit1 <- lmer(r.HAP ~ indSES_new + (1 | study), data=X_indSES$`Asian American`)
-summary(fit1)
-fit2 <- lmer(r.LAP ~ indSES_new + (1 | study), data=X_indSES$`Asian American`)
-summary(fit2)
-fit3 <- lmer(r.HAN ~ indSES_new + (1 | study), data=X_indSES$`Asian American`)
-summary(fit3)
-fit4 <- lmer(r.LAN ~ indSES_new + (1 | study), data=X_indSES$`Asian American`)
-summary(fit4)
-fit5 <- lmer(i.HAP ~ indSES_new + (1 | study), data=X_indSES$`Asian American`)
-summary(fit5)
-fit6 <- lmer(i.LAP ~ indSES_new + (1 | study), data=X_indSES$`Asian American`)
-summary(fit6)
-fit7 <- lmer(i.HAN ~ indSES_new + (1 | study), data=X_indSES$`Asian American`)
-summary(fit7)
-fit8 <- lmer(i.LAN ~ indSES_new + (1 | study), data=X_indSES$`Asian American`)
-summary(fit8)
+reg3 <- lmer(i.HAN ~ indSES_new + (1 | study), data=df)
 
-fit1 <- lm(r.HAP ~ indSES_new + i.HAP, data=X_indSES$`East Asian`)
-summary(fit1)
-fit2 <- lm(r.LAP ~ indSES_new + i.LAP, data=X_indSES$`East Asian`)
-summary(fit2)
-fit3 <- lm(r.HAN ~ indSES_new + i.HAN, data=X_indSES$`East Asian`)
-summary(fit3)
-fit4 <- lm(r.LAN ~ indSES_new + i.LAN, data=X_indSES$`East Asian`)
-summary(fit4)
-fit5 <- lm(i.HAP ~ indSES_new + r.HAP, data=X_indSES$`East Asian`)
-summary(fit5)
-fit6 <- lm(i.LAP ~ indSES_new + r.LAP, data=X_indSES$`East Asian`)
-summary(fit6)
-fit7 <- lm(i.HAN ~ indSES_new + r.HAN, data=X_indSES$`East Asian`)
-summary(fit7)
-fit8 <- lm(i.LAN ~ indSES_new + r.LAN, data=X_indSES$`East Asian`)
-summary(fit8)
+reg4 <- lmer(i.LAN ~ indSES_new + (1 | study), data=df)
 
-fit1 <- lm(r.HAP ~ indSES_new, data=X_indSES$`East Asian`)
-summary(fit1)
-fit2 <- lm(r.LAP ~ indSES_new, data=X_indSES$`East Asian`)
-summary(fit2)
-fit3 <- lm(r.HAN ~ indSES_new, data=X_indSES$`East Asian`)
-summary(fit3)
-fit4 <- lm(r.LAN ~ indSES_new, data=X_indSES$`East Asian`)
-summary(fit4)
-fit5 <- lm(i.HAP ~ indSES_new, data=X_indSES$`East Asian`)
-summary(fit5)
-fit6 <- lm(i.LAP ~ indSES_new, data=X_indSES$`East Asian`)
-summary(fit6)
-fit7 <- lm(i.HAN ~ indSES_new, data=X_indSES$`East Asian`)
-summary(fit7)
-fit8 <- lm(i.LAN ~ indSES_new, data=X_indSES$`East Asian`)
-summary(fit8)
+tab_model(reg1, reg2, reg3, reg4,
+          pred.labels = c("Intercept", "SES"),
+          dv.labels = c("Ideal HAP", "Ideal LAP", "Ideal HAN", "Ideal LAN")
+)
 
-fit1 <- lmer(r.HAP ~ indSES_new + i.HAP + (1 | study), data=X_indSES$`Hong Kong Chinese`)
-summary(fit1)
-fit2 <- lmer(r.LAP ~ indSES_new + i.LAP + (1 | study), data=X_indSES$`Hong Kong Chinese`)
-summary(fit2)
-fit3 <- lmer(r.HAN ~ indSES_new + i.HAN + (1 | study), data=X_indSES$`Hong Kong Chinese`)
-summary(fit3)
-fit4 <- lmer(r.LAN ~ indSES_new + i.LAN + (1 | study), data=X_indSES$`Hong Kong Chinese`)
-summary(fit4)
-fit5 <- lmer(i.HAP ~ indSES_new + r.HAP + (1 | study), data=X_indSES$`Hong Kong Chinese`)
-summary(fit5)
-fit6 <- lmer(i.LAP ~ indSES_new + r.LAP + (1 | study), data=X_indSES$`Hong Kong Chinese`)
-summary(fit6)
-fit7 <- lmer(i.HAN ~ indSES_new + r.HAN + (1 | study), data=X_indSES$`Hong Kong Chinese`)
-summary(fit7)
-fit8 <- lmer(i.LAN ~ indSES_new + r.LAN + (1 | study), data=X_indSES$`Hong Kong Chinese`)
-summary(fit8)
+reg1 <- lmer(r.HAP ~ indSES_new + i.HAP + (1 | study), data=df)
+# sjPlot:: tab_model(reg)
 
-fit1 <- lmer(r.HAP ~ indSES_new + (1 | study), data=X_indSES$`Hong Kong Chinese`)
-summary(fit1)
-fit2 <- lmer(r.LAP ~ indSES_new + (1 | study), data=X_indSES$`Hong Kong Chinese`)
-summary(fit2)
-fit3 <- lmer(r.HAN ~ indSES_new + (1 | study), data=X_indSES$`Hong Kong Chinese`)
-summary(fit3)
-fit4 <- lmer(r.LAN ~ indSES_new + (1 | study), data=X_indSES$`Hong Kong Chinese`)
-summary(fit4)
-fit5 <- lmer(i.HAP ~ indSES_new + (1 | study), data=X_indSES$`Hong Kong Chinese`)
-summary(fit5)
-fit6 <- lmer(i.LAP ~ indSES_new + (1 | study), data=X_indSES$`Hong Kong Chinese`)
-summary(fit6)
-fit7 <- lmer(i.HAN ~ indSES_new + (1 | study), data=X_indSES$`Hong Kong Chinese`)
-summary(fit7)
-fit8 <- lmer(i.LAN ~ indSES_new + (1 | study), data=X_indSES$`Hong Kong Chinese`)
-summary(fit8)
+reg2 <- lmer(r.LAP ~ indSES_new + i.LAP + (1 | study), data=df)
+
+reg3 <- lmer(r.HAN ~ indSES_new + i.HAN + (1 | study), data=df)
+
+reg4 <- lmer(r.LAN ~ indSES_new + i.LAN + (1 | study), data=df)
+
+tab_model(reg1, reg2, reg3, reg4,
+          pred.labels = c("Intercept", "SES", "Ideal HAP", "Ideal LAP", "Ideal HAN", "Ideal LAN"),
+          dv.labels = c("Actual HAP", "Actual LAP", "Actual HAN", "Actual LAN")
+)
+
+reg1 <- lmer(r.HAP ~ indSES_new + (1 | study), data=df)
+# sjPlot:: tab_model(reg)
+
+reg2 <- lmer(r.LAP ~ indSES_new + (1 | study), data=df)
+
+reg3 <- lmer(r.HAN ~ indSES_new + (1 | study), data=df)
+
+reg4 <- lmer(r.LAN ~ indSES_new + (1 | study), data=df)
+
+tab_model(reg1, reg2, reg3, reg4,
+          pred.labels = c("Intercept", "SES"),
+          dv.labels = c("Actual HAP", "Actual LAP", "Actual HAN", "Actual LAN")
+)
+
+rm(reg, reg1, reg2, reg3, reg4)
+
+# Plots
+a <- ggplot(data = df, aes(x = indSES_new, y = i.HAP))
+a + geom_jitter(height = 0.5, width = 0.5) + geom_smooth(method = lm) + xlab("Individual SES") + ylab("Ideal HAP")
+a + geom_smooth(method = lm) + xlab("Individual SES") + ylab("Ideal HAP")
+
+b <- ggplot(data = df, aes(x = indSES_new, y = i.LAN))
+b + geom_jitter(height = 0.5, width = 0.5) + geom_smooth(method = lm) + xlab("Individual SES") + ylab("Ideal LAN")
+b + geom_smooth(method = lm) + xlab("Individual SES") + ylab("Ideal HAP")
+
+c <- ggplot(data = df, aes(x = indSES_new, y = i.LAP))
+c + geom_jitter(height = 0.5, width = 0.5) + geom_smooth(method = lm) + xlab("Individual SES") + ylab("Ideal LAP")
+c + geom_smooth(method = lm) + xlab("Individual SES") + ylab("Ideal LAP")
+
+d <- ggplot(data = df, aes(x = indSES_new, y = i.HAN))
+d + geom_jitter(height = 0.5, width = 0.5) + geom_smooth(method = lm) + xlab("Individual SES") + ylab("Ideal HAN")
+d + geom_smooth(method = lm) + xlab("Individual SES") + ylab("Ideal HAN")
+
+rm(a, b, c, d, affects)
 
 
 
 ### indincome
 
-# indincome studies with values:
+## Create new variables indincome_new and ethn_new_indincome for analysis
 
+# indincome studies with values:
 # 2014 Koopman-Holm study2 (USD: 1 - 0-10,000; 2 - 10,001-20,000; 3 - 20,001-30,000; 4 - 30,001-40,000; 5 - 40,0001-50,000; 6 - 50,001-75,000; 7 - 75,001-100,000; 8 - 100,000+)
 # 2014 Mannell study1 (Canadian dollars: 1 - 0-50,000; 2 - 50,000-99,999; 3 - 100,000+)
 # 2018 Ito study1 (Japanese yen: 0 - 0-2,500,00; 1 - 2,500,000-7,500,000; 2 - 7,500,000+)
@@ -641,30 +559,26 @@ summary(fit8)
 # 2016 Da Jiang FTP study3 - (HKD; 1 - 0-5,000; 2 - 5,000-10,000; 3 - 10,001-20,000; 4 - 20,001-30,000; 5 - 30,001+)
 # 2016 Da Jiang FTP study1 - (unsure currency; 1 - 80,000; 2 - 80,001-160,000; 3 - 160,001-240,000; 4 - 240,001-320,000; 5 - 320,001-400,000; 6 - 400,001-600,000; 7 - 600,0001+)
 
-## Create new variables indincome_new and ethn_new_indincome for analysis
+# Create new column "paper_study"
+#df <- transform(df, paper_study=paste(paper, study, sep=" "))
 
 # Create new variable for analysis
 df$indincome_new <- df$indincome
+
 # Remove commas
-df$indincome_new <- gsub(",","",df$indincome_new)
+df$indincome_new <- gsub(",", "", df$indincome_new)
+
 # Regex to just keep numbers and decimals
 df$indincome_new <- unlist(sapply(regmatches(df$indincome_new, gregexpr("[[:digit:]]+\\.*[[:digit:]]*", df$indincome_new)), function(x) { ifelse(identical(character(0), x), NA, x)}))
+
 # Convert to numeric
 df$indincome_new <- as.numeric(as.character(df$indincome_new))
+
 # Exclude 2013 Scheibe study1 as it's actually indSES
 df$indincome_new[df$paper_study == "2013 Scheibe study1"] <- NA
-# Create ethn_new_indincome to categorize the studies' ethnicities for analysis
-df$ethn_new_indincome <- "Other"
-df$ethn_new_indincome[df$ethn == "European American"] = "European American"
-df$ethn_new_indincome[df$ethn == "Chinese American"  | df$ethn == "East Asian American"] = "Asian American"
-df$ethn_new_indincome[df$ethn == "Japanese" | df$ethn == "Korean" | df$ethn == "Taiwanese" | df$ethn == "Chinese"] = "East Asian"
-df$ethn_new_indincome[df$ethn == "Hong Kong Chinese"] = "Hong Kong Chinese"
-df$ethn_new_indincome[df$ethn == "Turkish" | df$ethn == "Swedish" | df$ethn == "German" | df$ethn == "British" | df$ethn == "French" | df$ethn == "Bulgarian" | df$ethn == "Russian" | df$ethn == "Moldovian"] = "European"
-X_indincome <- split(df, df$ethn_new_indincome)
 
-# NOTE: Still missing 2018 Bencharit study 3 and 4a
-## Convert all to USD by PPP in 2015, use midpoints
-
+# Still missing 2018 Bencharit study 3 and 4a
+# Convert all to USD by PPP in 2015, use midpoints
 df$indincome_new <- ifelse((df$indincome_new == 1 & df$paper_study == "2014 Koopman-Holm study2"), 5000, df$indincome_new)
 df$indincome_new <- ifelse((df$indincome_new == 2 & df$paper_study == "2014 Koopman-Holm study2"), 15000, df$indincome_new)
 df$indincome_new <- ifelse((df$indincome_new == 3 & df$paper_study == "2014 Koopman-Holm study2"), 25000, df$indincome_new)
@@ -760,12 +674,23 @@ df$indincome_new <- ifelse((df$indincome_new == 8 & df$paper_study == "Unpublish
 df$indincome_new <- ifelse((df$indincome_new == 9 & df$paper_study == "Unpublished Ito Kono study1"), 40000000*(1/103.449739), df$indincome_new)
 df$indincome_new <- ifelse((df$indincome_new == 10 & df$paper_study == "Unpublished Ito Kono study1"), NA, df$indincome_new)
 
+# Create ethn_new_indincome to categorize the studies' ethnicities for analysis
+df$ethn_new_indincome <- "Other"
+df$ethn_new_indincome[df$ethn == "European American"] = "European American"
+df$ethn_new_indincome[df$ethn == "Chinese American" | df$ethn == "East Asian American"] = "Asian American"
+df$ethn_new_indincome[df$ethn == "Japanese" | df$ethn == "Korean" | df$ethn == "Taiwanese" | df$ethn == "Chinese"] = "East Asian"
+df$ethn_new_indincome[df$ethn == "Hong Kong Chinese"] = "Hong Kong Chinese"
+df$ethn_new_indincome[df$ethn == "Turkish" | df$ethn == "Swedish" | df$ethn == "German" | df$ethn == "British" | df$ethn == "French" | df$ethn == "Bulgarian" | df$ethn == "Russian" | df$ethn == "Moldovian"] = "European"
+X_indincome <- split(df, df$ethn_new_indincome)
+
 ## Demographics
 
 # Studies having indincome
 unique(df$paper_study[!is.na(df$indincome_new)])
+
 # Values in indincome
 unique(df$indincome_new)
+
 # Total number of participants
 sum(!is.na(df$indincome_new))
 
@@ -779,63 +704,38 @@ sum((df$gender == "M") & !is.na(df$indincome_new))
 sum((df$gender == "F") & !is.na(df$indincome_new))
 sum((df$gender == "") & !is.na(df$indincome_new))
 
+indincome_studies <- list("2014 Luong study1", "2014 Mannell study1", "2014 Koopman-Holm study2", "2016 Da Jiang LTP study11", "2016 Da Jiang LTP study2", "2016 Ito study1", "2018 Ito study1", "2019 Palmer study1", "Unpublished Ito Kono study1")
+
+for (i in indincome_studies) {
+  # Study
+  print(i)
+  
+  # Age distribution
+  #print(unique(df$age[df$paper_study == i][which(!is.na(df$age[df$paper_study == i]))]))
+  #print(median(df$age[df$paper_study == i][which(!is.na(df$age[df$paper_study == i]))]))
+  #print(mean(df$age[df$paper_study == i][which(!is.na(df$age[df$paper_study == i]))]))
+  
+  # Ethnicities
+  #print(unique(df$ethn[df$paper_study == i]))
+  
+  # Number of participants
+  #print(sum(!is.na(df$indincome_new) & (df$paper_study == i)))
+  
+  # Sum of number of entries for actual and ideal HAP for each study
+  #print(sum(!is.na(df$r.HAP[df$paper_study == i])))
+  #print(sum(!is.na(df$i.HAP[df$paper_study == i])))
+}
+
 # Age distribution
 unique(df$age[!is.na(df$indincome_new)])
-unique(df$age[df$paper_study == "2014 Koopman-Holm study2"][which(!is.na(df$age[df$paper_study == "2014 Koopman-Holm study2"]))])
-unique(df$age[df$paper_study == "2014 Mannell study1"])
-unique(df$age[df$paper_study == "2018 Ito study1"])
-unique(df$age[df$paper_study == "2014 Luong study1"])
-unique(df$age[df$paper_study == "2016 Da Jiang LTP study11"])
-unique(df$age[df$paper_study == "2016 Da Jiang LTP study2"])
-unique(df$age[df$paper_study == "2016 Ito study1"])
-unique(df$age[df$paper_study == "Unpublished Ito Kono study1"])
-median(df$age[df$paper_study == "2014 Koopman-Holm study2"][which(!is.na(df$age[df$paper_study == "2014 Koopman-Holm study2"]))])
-median(df$age[df$paper_study == "2014 Mannell study1"])
-median(df$age[df$paper_study == "2018 Ito study1"])
-median(df$age[df$paper_study == "2014 Luong study1"])
-median(df$age[df$paper_study == "2016 Da Jiang LTP study11"])
-median(df$age[df$paper_study == "2016 Da Jiang LTP study2"])
-median(df$age[df$paper_study == "2016 Ito study1"])
-median(df$age[df$paper_study == "Unpublished Ito Kono study1"])
-mean(df$age[df$paper_study == "2014 Koopman-Holm study2"][which(!is.na(df$age[df$paper_study == "2014 Koopman-Holm study2"]))])
-mean(df$age[df$paper_study == "2014 Mannell study1"])
-mean(df$age[df$paper_study == "2018 Ito study1"])
-mean(df$age[df$paper_study == "2014 Luong study1"])
-mean(df$age[df$paper_study == "2016 Da Jiang LTP study11"])
-mean(df$age[df$paper_study == "2016 Da Jiang LTP study2"])
-mean(df$age[df$paper_study == "2016 Ito study1"])
-mean(df$age[df$paper_study == "Unpublished Ito Kono study1"])
+mean(df$age[!is.na(df$indincome_new)], na.rm=TRUE)
+median(df$age[!is.na(df$indincome_new)], na.rm=TRUE)
+sd(df$age[!is.na(df$indincome_new)], na.rm=TRUE)
+min(df$age[!is.na(df$indincome_new)], na.rm=TRUE)
+max(df$age[!is.na(df$indincome_new)], na.rm=TRUE)
 
-# All ethnicities and for each studies
+# All ethnicities
 unique(df$ethn[!is.na(df$indincome_new)])
-unique(df$ethn[df$paper_study == "2014 Koopman-Holm study2"])
-unique(df$ethn[df$paper_study == "2014 Mannell study1"])
-unique(df$ethn[df$paper_study == "2018 Ito study1"])
-unique(df$ethn[df$paper_study == "2014 Luong study1"])
-unique(df$ethn[df$paper_study == "2016 Da Jiang LTP study11"])
-unique(df$ethn[df$paper_study == "2016 Da Jiang LTP study2"])
-unique(df$ethn[df$paper_study == "2016 Ito study1"])
-unique(df$ethn[df$paper_study == "Unpublished Ito Kono study1"])
-unique(df$ethn[df$paper_study == "2019 Palmer study1"])
-
-# Number of participants from each study
-sum(!is.na(df$indincome_new) & (df$paper_study == "2014 Koopman-Holm study2"))
-sum(!is.na(df$indincome_new) & (df$paper_study == "2014 Mannell study1"))
-sum(!is.na(df$indincome_new) & (df$paper_study == "2018 Ito study1"))
-sum(!is.na(df$indincome_new) & (df$paper_study == "2014 Luong study1"))
-sum(!is.na(df$indincome_new) & (df$paper_study == "2016 Da Jiang LTP study11"))
-sum(!is.na(df$indincome_new) & (df$paper_study == "2016 Da Jiang LTP study2"))
-sum(!is.na(df$indincome_new) & (df$paper_study == "2016 Ito study1"))
-sum(!is.na(df$indincome_new) & (df$paper_study == "Unpublished Ito Kono study1"))
-
-# Number of participants for indSES from each ethnicity
-sum(!is.na(df$indincome_new) & (df$ethn == "European American"))
-sum(!is.na(df$indincome_new) & (df$ethn == "Chinese American"))
-sum(!is.na(df$indincome_new) & (df$ethn == "Hong Kong Chinese"))
-sum(!is.na(df$indincome_new) & (df$ethn == "Other"))
-sum(!is.na(df$indincome_new) & (df$ethn == "German + American"))
-sum(!is.na(df$indincome_new) & (df$ethn == ""))
-sum(!is.na(df$indincome_new) & (df$ethn == "Japanese"))
 
 # Sum of each ethnicity
 sum(!is.na(X_indincome$`European American`$indincome_new))
@@ -846,132 +746,61 @@ sum(!is.na(X_indincome$European$indincome_new))
 
 ## Analyses
 
-cor.test(df$indincome_new, df$r.HAP)
-cor.test(df$indincome_new, df$r.LAP)
-cor.test(df$indincome_new, df$r.HAN)
-cor.test(df$indincome_new, df$r.LAN)
-cor.test(df$indincome_new, df$i.HAP)
-cor.test(df$indincome_new, df$i.LAP)
-cor.test(df$indincome_new, df$i.HAN)
-cor.test(df$indincome_new, df$i.LAN)
+# Create list of studies
+affects <- list("r.HAP", "r.LAP", "r.HAN", "r.LAN", "i.HAP", "i.LAP", "i.HAN", "i.LAN", "r.HAP.ips.us", "r.LAP.ips.us", "r.HAN.ips.us", "r.LAN.ips.us", "i.HAP.ips.us", "i.LAP.ips.us", "i.HAN.ips.us", "i.LAN.ips.us")
 
-cor.test(df$indincome_new, df$r.HAP.ips.us)
-cor.test(df$indincome_new, df$r.LAP.ips.us)
-cor.test(df$indincome_new, df$r.HAN.ips.us)
-cor.test(df$indincome_new, df$r.LAN.ips.us)
-cor.test(df$indincome_new, df$i.HAP.ips.us)
-cor.test(df$indincome_new, df$i.LAP.ips.us)
-cor.test(df$indincome_new, df$i.HAN.ips.us)
-cor.test(df$indincome_new, df$i.LAN.ips.us)
-
-fit1 <- lmer(r.HAP ~ indincome_new + i.HAP + (1 | study), data=df)
-summary(fit1)
-fit2 <- lmer(r.LAP ~ indincome_new + i.LAP + (1 | study), data=df)
-summary(fit2)
-fit3 <- lmer(r.HAN ~ indincome_new + i.HAN + (1 | study), data=df)
-summary(fit3)
-fit4 <- lmer(r.LAN ~ indincome_new + i.LAN + (1 | study), data=df)
-summary(fit4)
-fit5 <- lmer(i.HAP ~ indincome_new + r.HAP + (1 | study), data=df)
-summary(fit5)
-fit6 <- lmer(i.LAP ~ indincome_new + r.LAP + (1 | study), data=df)
-summary(fit6)
-fit7 <- lmer(i.HAN ~ indincome_new + r.HAN + (1 | study), data=df)
-summary(fit7)
-fit8 <- lmer(i.LAN ~ indincome_new + r.LAN + (1 | study), data=df)
-summary(fit8)
-
-fit1 <- lmer(r.HAP.ips.us ~ indincome_new + i.HAP.ips.us + (1 | study), data=df)
-summary(fit1)
-fit2 <- lmer(r.LAP.ips.us ~ indincome_new + i.LAP.ips.us + (1 | study), data=df)
-summary(fit2)
-fit3 <- lmer(r.HAN.ips.us ~ indincome_new + i.HAN.ips.us + (1 | study), data=df)
-summary(fit3)
-fit4 <- lmer(r.LAN.ips.us ~ indincome_new + i.LAN.ips.us + (1 | study), data=df)
-summary(fit4)
-fit5 <- lmer(i.HAP.ips.us ~ indincome_new + r.HAP.ips.us + (1 | study), data=df)
-summary(fit5)
-fit6 <- lmer(i.LAP.ips.us ~ indincome_new + r.LAP.ips.us + (1 | study), data=df)
-summary(fit6)
-fit7 <- lmer(i.HAN.ips.us ~ indincome_new + r.HAN.ips.us + (1 | study), data=df)
-summary(fit7)
-fit8 <- lmer(i.LAN.ips.us ~ indincome_new + r.LAN.ips.us + (1 | study), data=df)
-summary(fit8)
-
-fit1 <- lmer(r.HAP ~ indincome_new + i.HAP + (1 | study), data=X_indincome$`European American`)
-summary(fit1)
-fit2 <- lmer(r.LAP ~ indincome_new + i.LAP + (1 | study), data=X_indincome$`European American`)
-summary(fit2)
-fit3 <- lmer(r.HAN ~ indincome_new + i.HAN + (1 | study), data=X_indincome$`European American`)
-summary(fit3)
-fit4 <- lmer(r.LAN ~ indincome_new + i.LAN + (1 | study), data=X_indincome$`European American`)
-summary(fit4)
-fit5 <- lmer(i.HAP ~ indincome_new + r.HAP + (1 | study), data=X_indincome$`European American`)
-summary(fit5)
-fit6 <- lmer(i.LAP ~ indincome_new + r.LAP + (1 | study), data=X_indincome$`European American`)
-summary(fit6)
-fit7 <- lmer(i.HAN ~ indincome_new + r.HAN + (1 | study), data=X_indincome$`European American`)
-summary(fit7)
-fit8 <- lmer(i.LAN ~ indincome_new + r.LAN + (1 | study), data=X_indincome$`European American`)
-summary(fit8)
-
-fit1 <- lmer(r.HAP ~ indincome_new + i.HAP + (1 | study), data=X_indincome$`Asian American`)
-summary(fit1)
-fit2 <- lmer(r.LAP ~ indincome_new + i.LAP + (1 | study), data=X_indincome$`Asian American`)
-summary(fit2)
-fit3 <- lmer(r.HAN ~ indincome_new + i.HAN + (1 | study), data=X_indincome$`Asian American`)
-summary(fit3)
-fit4 <- lmer(r.LAN ~ indincome_new + i.LAN + (1 | study), data=X_indincome$`Asian American`)
-summary(fit4)
-fit5 <- lmer(i.HAP ~ indincome_new + r.HAP + (1 | study), data=X_indincome$`Asian American`)
-summary(fit5)
-fit6 <- lmer(i.LAP ~ indincome_new + r.LAP + (1 | study), data=X_indincome$`Asian American`)
-summary(fit6)
-fit7 <- lmer(i.HAN ~ indincome_new + r.HAN + (1 | study), data=X_indincome$`Asian American`)
-summary(fit7)
-fit8 <- lmer(i.LAN ~ indincome_new + r.LAN + (1 | study), data=X_indincome$`Asian American`)
-summary(fit8)
-
-fit1 <- lm(r.HAP ~ indincome_new + i.HAP, data=X_indincome$`East Asian`)
-summary(fit1)
-fit2 <- lm(r.LAP ~ indincome_new + i.LAP, data=X_indincome$`East Asian`)
-summary(fit2)
-fit3 <- lm(r.HAN ~ indincome_new + i.HAN, data=X_indincome$`East Asian`)
-summary(fit3)
-fit4 <- lm(r.LAN ~ indincome_new + i.LAN, data=X_indincome$`East Asian`)
-summary(fit4)
-fit5 <- lm(i.HAP ~ indincome_new + r.HAP, data=X_indincome$`East Asian`)
-summary(fit5)
-fit6 <- lm(i.LAP ~ indincome_new + r.LAP, data=X_indincome$`East Asian`)
-summary(fit6)
-fit7 <- lm(i.HAN ~ indincome_new + r.HAN, data=X_indincome$`East Asian`)
-summary(fit7)
-fit8 <- lm(i.LAN ~ indincome_new + r.LAN, data=X_indincome$`East Asian`)
-summary(fit8)
-
-fit1 <- lmer(r.HAP ~ indincome_new + i.HAP + (1 | study), data=X_indincome$`Hong Kong Chinese`)
-summary(fit1)
-fit2 <- lmer(r.LAP ~ indincome_new + i.LAP + (1 | study), data=X_indincome$`Hong Kong Chinese`)
-summary(fit2)
-fit3 <- lmer(r.HAN ~ indincome_new + i.HAN + (1 | study), data=X_indincome$`Hong Kong Chinese`)
-summary(fit3)
-fit4 <- lmer(r.LAN ~ indincome_new + i.LAN + (1 | study), data=X_indincome$`Hong Kong Chinese`)
-summary(fit4)
-fit5 <- lmer(i.HAP ~ indincome_new + r.HAP + (1 | study), data=X_indincome$`Hong Kong Chinese`)
-summary(fit5)
-fit6 <- lmer(i.LAP ~ indincome_new + r.LAP + (1 | study), data=X_indincome$`Hong Kong Chinese`)
-summary(fit6)
-fit7 <- lmer(i.HAN ~ indincome_new + r.HAN + (1 | study), data=X_indincome$`Hong Kong Chinese`)
-summary(fit7)
-fit8 <- lmer(i.LAN ~ indincome_new + r.LAN + (1 | study), data=X_indincome$`Hong Kong Chinese`)
-summary(fit8)
+j = 0
+for (i in affects) {
+  j = j + 1
+  if (j <= 4 | (j >= 9 & j <= 12)) {
+    k = j + 4
+  } else {
+    k = j - 4
+  }
+  l = affects[[k]]
+  
+  # Affect
+  for (a in 1:10) {
+    print("")
+  }
+  print(i)
+  for (a in 1:10) {
+    print("")
+  }
+  
+  # # Correlation test
+  print("Correlation test")
+  print(cor.test(df$indincome_new, df[, i]))
+  
+  # # Regression
+  # for (a in 1:3) {
+  #   print("")
+  # }
+  # print("Regression test")
+  # print(summary(lmer(df[, i] ~ indincome_new + (1 | study), data=df)))
+  # for (a in 1:3) {
+  #   print("")
+  # }
+  # print("Regression test with affect control")
+  # print(summary(lmer(df[, i] ~ indincome_new + df[, l] + (1 | study), data=df)))
+  # for (a in 1:3) {
+  #   print("")
+  # }
+  print("Ethnicity")
+  #print(summary(lm(X_indincome$`European American`[, i] ~ indincome_new, data=X_indincome$`European American`)))
+  #print(summary(lm(X_indincome$`European American`[, i] ~ indincome_new + X_indincome$`European American`[, l], data=X_indincome$`European American`)))
+  #print(summary(lmer(X_indincome$`Hong Kong Chinese`[, i] ~ indincome_new + (1 | study), data=X_indincome$`Hong Kong Chinese`)))
+  #print(summary(lmer(X_indincome$`Hong Kong Chinese`[, i] ~ indincome_new + X_indincome$`Hong Kong Chinese`[, l] + (1 | study), data=X_indincome$`Hong Kong Chinese`)))
+}
+rm(a, i, j, k, l)
 
 
 
 ### famincome
 
-# famincome studies with respective values:
+## Create new variables famincome_new and ethn_new_famincome for analysis
 
+# famincome studies with values:
 # 2013 Koopman-Holm study2 (USD: 1 - 0-10,000; 2 - 10,001-20,000; 3 - 20,001-30,000; 4 - 30,001-40,000; 5 - 40,001-50,000; 6 - 50,001-75,000; 8 - 100,000+; 999 - idk)
 # 2014 Koopman-Holm study2 (USD: 1 - 0-10,000; 2 - 10,001-20,000; 3 - 20,001-30,000; 4 - 30,001-40,000; 5 - 40,001-50,000; 6 - 50,001-75,000; 8 - 100,000+; 999 - idk)
 # 2018 Tompson study1 (USD: 1=<40K, 2=40K-60K, 3=60K-80K, 4=80K-100K, 5=100K-120K, 6=120K-140K, 7=140K-160K, 8=>$60K)
@@ -991,27 +820,22 @@ summary(fit8)
 # 2016 Da Jiang FTP study3 - (HKD; 1 - 0-5,000; 2 - 5,000-10,000; 3 - 10,001-20,000; 4 - 20,001-30,000; 5 - 30,001+)
 # 2016 Da Jiang FTP study1 - (unsure currency; 1 - 80,000; 2 - 80,001-160,000; 3 - 160,001-240,000; 4 - 240,001-320,000; 5 - 320,001-400,000; 6 - 400,001-600,000; 7 - 600,0001+)
 
-## Create new variables famincome_new and ethn_new_famincome for analysis
+# Create new column "paper_study"
+#df <- transform(df, paper_study=paste(paper, study, sep=" "))
 
 # Create new variable for analysis
 df$famincome_new <- df$famincome
+
 # Remove commas
 df$famincome_new <- gsub(",","",df$famincome_new)
+
 # Regex to just keep numbers and decimals
 df$famincome_new <- unlist(sapply(regmatches(df$famincome_new, gregexpr("[[:digit:]]+\\.*[[:digit:]]*", df$famincome_new)), function(x) { ifelse(identical(character(0), x), NA, x)}))
+
 # Convert to numeric
 df$famincome_new <- as.numeric(as.character(df$famincome_new))
-# Create ethn_new_famincome to categorize the studies' ethnicities for analysis
-df$ethn_new_famincome <- "Other"
-df$ethn_new_famincome[df$ethn == "European American"] = "European American"
-df$ethn_new_famincome[df$ethn == "Chinese American"  | df$ethn == "East Asian American"] = "Asian American"
-df$ethn_new_famincome[df$ethn == "Japanese" | df$ethn == "Korean" | df$ethn == "Taiwanese" | df$ethn == "Chinese"] = "East Asian"
-df$ethn_new_famincome[df$ethn == "Hong Kong Chinese"] = "Hong Kong Chinese"
-df$ethn_new_famincome[df$ethn == "Turkish" | df$ethn == "Swedish" | df$ethn == "German" | df$ethn == "British" | df$ethn == "French" | df$ethn == "Bulgarian" | df$ethn == "Russian" | df$ethn == "Moldovian"] = "European"
-X_famincome <- split(df, df$ethn_new_famincome)
 
-## Convert all to USD by PPP in 2015, use midpoints
-
+# Convert all to USD by PPP in 2015, use midpoints
 df$famincome_new <- ifelse((df$famincome_new == 1 & df$paper_study == "2014 Koopman-Holm study2"), 5000, df$famincome_new)
 df$famincome_new <- ifelse((df$famincome_new == 2 & df$paper_study == "2014 Koopman-Holm study2"), 15000, df$famincome_new)
 df$famincome_new <- ifelse((df$famincome_new == 3 & df$paper_study == "2014 Koopman-Holm study2"), 25000, df$famincome_new)
@@ -1131,12 +955,25 @@ df$famincome_new <- ifelse((df$famincome_new == 6 & df$paper_study == "Unpublish
 df$famincome_new <- ifelse((df$famincome_new == 7 & df$paper_study == "Unpublished Palmer study1"), 200000, df$famincome_new)
 df$famincome_new <- ifelse((df$famincome_new == 8 & df$paper_study == "Unpublished Palmer study1"), NA, df$famincome_new)
 
+# Create ethn_new_famincome to categorize the studies' ethnicities for analysis
+df$ethn_new_famincome <- "Other"
+df$ethn_new_famincome[df$ethn == "European American"] = "European American"
+df$ethn_new_famincome[df$ethn == "Chinese American"  | df$ethn == "East Asian American"] = "Asian American"
+df$ethn_new_famincome[df$ethn == "Japanese" | df$ethn == "Korean" | df$ethn == "Taiwanese" | df$ethn == "Chinese" | df$ethn == "East Asian"] = "East Asian"
+df$ethn_new_famincome[df$ethn == "Hong Kong Chinese"] = "Hong Kong Chinese"
+X_famincome <- split(df, df$ethn_new_famincome)
+
+# Divide family income by 1,000
+df$famincome_new <- df$famincome_new / 10000
+
 ## Demographics
 
 # Studies having famincome
 unique(df$paper_study[!is.na(df$famincome_new)])
+
 # Values in famincome
 unique(df$famincome_new)
+
 # Total number of participants
 sum(!is.na(df$famincome_new))
 
@@ -1150,214 +987,148 @@ sum((df$gender == "M") & !is.na(df$famincome_new))
 sum((df$gender == "F") & !is.na(df$famincome_new))
 sum((df$gender == "") & !is.na(df$famincome_new))
 
+famincome_studies <- list("2014 Koopman-Holm study2", "2016 Da Jiang LTP study11", "2016 Da Jiang LTP study2", "2016 Ito study1", "2017 Oosterhoff study1", "2018 Gentzler study1", "2018 Swerdlow study2", "2018 Tompson study1", "2019 Palmer study1", "Unpublished Ito Kono study1", "Unpublished Ito Mika study1", "Unpublished Ito Yamaguchi Takamatsu study1", "Unpublished Palmer study1", "Unpublished Samanez-Larkin agerl study1")
+
+for (i in famincome_studies) {
+  # Study
+  print(i)
+  
+  # Age distribution
+  #print(unique(df$age[df$paper_study == i][which(!is.na(df$age[df$paper_study == i]))]))
+  #print(median(df$age[df$paper_study == i][which(!is.na(df$age[df$paper_study == i]))]))
+  #print(mean(df$age[df$paper_study == i][which(!is.na(df$age[df$paper_study == i]))]))
+  
+  # Ethnicities
+  print(unique(df$ethn[df$paper_study == i]))
+  
+  # Number of participants
+  #print(sum(!is.na(df$famincome_new) & (df$paper_study == i)))
+  
+  # Sum of number of entries for actual and ideal HAP for each study
+  #print(sum(!is.na(df$r.HAP[df$paper_study == i])))
+  #print(sum(!is.na(df$i.HAP[df$paper_study == i])))
+}
+
 # Age distribution
 unique(df$age[!is.na(df$famincome_new)])
-unique(df$age[df$paper_study == "2014 Koopman-Holm study2"][which(!is.na(df$age[df$paper_study == "2014 Koopman-Holm study2"]))])
-unique(df$age[df$paper_study == "2016 Da Jiang LTP study11"])
-unique(df$age[df$paper_study == "2016 Da Jiang LTP study2"])
-unique(df$age[df$paper_study == "2016 Ito study1"])
-unique(df$age[df$paper_study == "2017 Oosterhoff study1"][which(!is.na(df$age[df$paper_study == "2017 Oosterhoff study1"]))])
-unique(df$age[df$paper_study == "2018 Gentzler study1"][which(!is.na(df$age[df$paper_study == "2018 Gentzler study1"]))])
-unique(df$age[df$paper_study == "2018 Swerdlow study2"][which(!is.na(df$age[df$paper_study == "2018 Swerdlow study2"]))])
-unique(df$age[df$paper_study == "2018 Tompson study1"][which(!is.na(df$age[df$paper_study == "2018 Tompson study1"]))])
-unique(df$age[df$paper_study == "Unpublished Ito Kono study1"])
-unique(df$age[df$paper_study == "Unpublished Ito Mika study1"][which(!is.na(df$age[df$paper_study == "Unpublished Ito Mika study1"]))])
-unique(df$age[df$paper_study == "Unpublished Ito Yamaguchi Takamatsu study1"][which(!is.na(df$age[df$paper_study == "Unpublished Ito Yamaguchi Takamatsu study1"]))])
-unique(df$age[df$paper_study == "Unpublished Palmer study1"])
-median(df$age[df$paper_study == "2014 Koopman-Holm study2"][which(!is.na(df$age[df$paper_study == "2014 Koopman-Holm study2"]))])
-median(df$age[df$paper_study == "2016 Da Jiang LTP study11"])
-median(df$age[df$paper_study == "2016 Da Jiang LTP study2"])
-median(df$age[df$paper_study == "2016 Ito study1"])
-median(df$age[df$paper_study == "2017 Oosterhoff study1"][which(!is.na(df$age[df$paper_study == "2017 Oosterhoff study1"]))])
-median(df$age[df$paper_study == "2018 Gentzler study1"][which(!is.na(df$age[df$paper_study == "2018 Gentzler study1"]))])
-median(df$age[df$paper_study == "2018 Swerdlow study2"][which(!is.na(df$age[df$paper_study == "2018 Swerdlow study2"]))])
-median(df$age[df$paper_study == "2018 Tompson study1"][which(!is.na(df$age[df$paper_study == "2018 Tompson study1"]))])
-median(df$age[df$paper_study == "Unpublished Ito Kono study1"])
-median(df$age[df$paper_study == "Unpublished Ito Mika study1"][which(!is.na(df$age[df$paper_study == "Unpublished Ito Mika study1"]))])
-median(df$age[df$paper_study == "Unpublished Ito Yamaguchi Takamatsu study1"][which(!is.na(df$age[df$paper_study == "Unpublished Ito Yamaguchi Takamatsu study1"]))])
-median(df$age[df$paper_study == "Unpublished Palmer study1"])
-mean(df$age[df$paper_study == "2014 Koopman-Holm study2"][which(!is.na(df$age[df$paper_study == "2014 Koopman-Holm study2"]))])
-mean(df$age[df$paper_study == "2016 Da Jiang LTP study11"])
-mean(df$age[df$paper_study == "2016 Da Jiang LTP study2"])
-mean(df$age[df$paper_study == "2016 Ito study1"])
-mean(df$age[df$paper_study == "2017 Oosterhoff study1"][which(!is.na(df$age[df$paper_study == "2017 Oosterhoff study1"]))])
-mean(df$age[df$paper_study == "2018 Gentzler study1"][which(!is.na(df$age[df$paper_study == "2018 Gentzler study1"]))])
-mean(df$age[df$paper_study == "2018 Swerdlow study2"][which(!is.na(df$age[df$paper_study == "2018 Swerdlow study2"]))])
-mean(df$age[df$paper_study == "2018 Tompson study1"][which(!is.na(df$age[df$paper_study == "2018 Tompson study1"]))])
-mean(df$age[df$paper_study == "Unpublished Ito Kono study1"])
-mean(df$age[df$paper_study == "Unpublished Ito Mika study1"][which(!is.na(df$age[df$paper_study == "Unpublished Ito Mika study1"]))])
-mean(df$age[df$paper_study == "Unpublished Ito Yamaguchi Takamatsu study1"][which(!is.na(df$age[df$paper_study == "Unpublished Ito Yamaguchi Takamatsu study1"]))])
-mean(df$age[df$paper_study == "Unpublished Palmer study1"])
+mean(df$age[!is.na(df$famincome_new)], na.rm=TRUE)
+median(df$age[!is.na(df$famincome_new)], na.rm=TRUE)
+sd(df$age[!is.na(df$famincome_new)], na.rm=TRUE)
+min(df$age[!is.na(df$famincome_new)], na.rm=TRUE)
+max(df$age[!is.na(df$famincome_new)], na.rm=TRUE)
 
-# All ethnicities and for each studies
+# All ethnicities
 unique(df$ethn[!is.na(df$famincome_new)])
-unique(df$ethn[df$paper_study == "2014 Koopman-Holm study2"])
-unique(df$ethn[df$paper_study == "2016 Da Jiang LTP study11"])
-unique(df$ethn[df$paper_study == "2016 Da Jiang LTP study2"])
-unique(df$ethn[df$paper_study == "2016 Ito study1"])
-unique(df$ethn[df$paper_study == "2017 Oosterhoff study1"])
-unique(df$ethn[df$paper_study == "2018 Gentzler study1"])
-unique(df$ethn[df$paper_study == "2018 Swerdlow study2"])
-unique(df$ethn[df$paper_study == "2018 Tompson study1"])
-unique(df$ethn[df$paper_study == "2019 Palmer study1"])
-unique(df$ethn[df$paper_study == "Unpublished Ito Kono study1"])
-unique(df$ethn[df$paper_study == "Unpublished Ito Mika study1"])
-unique(df$ethn[df$paper_study == "Unpublished Ito Yamaguchi Takamatsu study1"])
-unique(df$ethn[df$paper_study == "Unpublished Palmer study1"])
-unique(df$ethn[df$paper_study == "Unpublished Samanez-Larkin agerl study1"])
 
-# Number of participants from each study
-sum(!is.na(df$famincome_new) & (df$paper_study == "2014 Koopman-Holm study2"))
-sum(!is.na(df$famincome_new) & (df$paper_study == "2018 Swerdlow study2"))
-sum(!is.na(df$famincome_new) & (df$paper_study == "2016 Ito study1"))
-sum(!is.na(df$famincome_new) & (df$paper_study == "2017 Oosterhoff study1"))
-sum(!is.na(df$famincome_new) & (df$paper_study == "2016 Da Jiang LTP study11"))
-sum(!is.na(df$famincome_new) & (df$paper_study == "2016 Da Jiang LTP study2"))
-sum(!is.na(df$famincome_new) & (df$paper_study == "2018 Gentzler study11"))
-sum(!is.na(df$famincome_new) & (df$paper_study == "2018 Tompson study1"))
-sum(!is.na(df$famincome_new) & (df$paper_study == "Unpublished Ito Kono study1"))
-sum(!is.na(df$famincome_new) & (df$paper_study == "Unpublished Ito Mika study1"))
-sum(!is.na(df$famincome_new) & (df$paper_study == "Unpublished Ito Yamaguchi Takamatsu study1"))
-sum(!is.na(df$famincome_new) & (df$paper_study == "Unpublished Palmer study1"))
-sum(!is.na(df$famincome_new) & (df$paper_study == "Unpublished Samanez-Larkin agerl study1"))
-
-# Number of participants for indSES from each ethnicity
-sum(!is.na(df$famincome_new) & (df$ethn == "European American"))
-sum(!is.na(df$famincome_new) & (df$ethn == "Hong Kong Chinese"))
-sum(!is.na(df$famincome_new) & (df$ethn == "Japanese"))
-sum(!is.na(df$famincome_new) & (df$ethn == "East Asian"))
-
-# Sum of ethnicities
+# Sum of each ethnicity
 sum(!is.na(X_famincome$`European American`$famincome_new))
 sum(!is.na(X_famincome$`Asian American`$famincome_new))
 sum(!is.na(X_famincome$`East Asian`$famincome_new))
 sum(!is.na(X_famincome$`Hong Kong Chinese`$famincome_new))
-sum(!is.na(X_famincome$European$famincome_new))
 
 ## Analyses
 
-cor.test(df$famincome_new, df$r.HAP)
-cor.test(df$famincome_new, df$r.LAP)
-cor.test(df$famincome_new, df$r.HAN)
-cor.test(df$famincome_new, df$r.LAN)
-cor.test(df$famincome_new, df$i.HAP)
-cor.test(df$famincome_new, df$i.LAP)
-cor.test(df$famincome_new, df$i.HAN)
-cor.test(df$famincome_new, df$i.LAN)
+# Create list of studies
+affects <- list("r.HAP", "r.LAP", "r.HAN", "r.LAN", "i.HAP", "i.LAP", "i.HAN", "i.LAN", "r.HAP.ips.us", "r.LAP.ips.us", "r.HAN.ips.us", "r.LAN.ips.us", "i.HAP.ips.us", "i.LAP.ips.us", "i.HAN.ips.us", "i.LAN.ips.us")
 
-cor.test(df$famincome_new, df$r.HAP.ips.us)
-cor.test(df$famincome_new, df$r.LAP.ips.us)
-cor.test(df$famincome_new, df$r.HAN.ips.us)
-cor.test(df$famincome_new, df$r.LAN.ips.us)
-cor.test(df$famincome_new, df$i.HAP.ips.us)
-cor.test(df$famincome_new, df$i.LAP.ips.us)
-cor.test(df$famincome_new, df$i.HAN.ips.us)
-cor.test(df$famincome_new, df$i.LAN.ips.us)
+j = 0
+for (i in affects) {
+  j = j + 1
+  if (j <= 4 | (j >= 9 & j <= 12)) {
+    k = j + 4
+  } else {
+    k = j - 4
+  }
+  l = affects[[k]]
+  
+  # Affect
+  for (a in 1:10) {
+    print("")
+  }
+  print(i)
+  for (a in 1:10) {
+    print("")
+  }
+  
+  # Correlation test
+  #print("Correlation test")
+  #print(cor.test(df$famincome_new, df[, i]))
+  
+  # Regression
+  for (a in 1:3) {
+    print("")
+  }
+  print("Regression test")
+  print(summary(lmer(df[, i] ~ famincome_new + (1 | study), data=df)))
+  for (a in 1:3) {
+    print("")
+  }
+  # print("Regression test with affect control")
+  #print(summary(lmer(df[, i] ~ famincome_new + df[, l] + (1 | study), data=df)))
+  #for (a in 1:3) {
+  #   print("")
+  #}
+  #print("Ethnicity")
+  #print(summary(lm(X_famincome$`European American`[, i] ~ famincome_new, data=X_famincome$`European American`)))
+  #print(summary(lm(X_famincome$`European American`[, i] ~ famincome_new + X_famincome$`European American`[, l] , data=X_famincome$`European American`)))
+  #print(summary(lmer(X_famincome$`Hong Kong Chinese`[, i] ~ famincome_new + (1 | study), data=X_famincome$`Hong Kong Chinese`)))
+  #print(summary(lm(X_famincome$`Hong Kong Chinese`[, i] ~ famincome_new + X_famincome$`Hong Kong Chinese`[, l], data=X_famincome$`Hong Kong Chinese`)))
+  #print(summary(lmer(X_famincome$`East Asian`[, i] ~ famincome_new + (1 | study), data=X_famincome$`East Asian`)))
+  #print(summary(lmer(X_famincome$`East Asian`[, i] ~ famincome_new + X_famincome$`East Asian`[, l] + (1 | study), data=X_famincome$`East Asian`)))
+}
+rm(a, i, j, k, l)
 
-fit1 <- lmer(r.HAP ~ famincome_new + i.HAP + (1 | study), data=df)
-summary(fit1)
-fit2 <- lmer(r.LAP ~ famincome_new + i.LAP + (1 | study), data=df)
-summary(fit2)
-fit3 <- lmer(r.HAN ~ famincome_new + i.HAN + (1 | study), data=df)
-summary(fit3)
-fit4 <- lmer(r.LAN ~ famincome_new + i.LAN + (1 | study), data=df)
-summary(fit4)
-fit5 <- lmer(i.HAP ~ famincome_new + r.HAP + (1 | study), data=df)
-summary(fit5)
-fit6 <- lmer(i.LAP ~ famincome_new + r.LAP + (1 | study), data=df)
-summary(fit6)
-fit7 <- lmer(i.HAN ~ famincome_new + r.HAN + (1 | study), data=df)
-summary(fit7)
-fit8 <- lmer(i.LAN ~ famincome_new + r.LAN + (1 | study), data=df)
-summary(fit8)
+# Tables
+reg1 <- lmer(i.HAP ~ famincome_new + r.HAP + (1 | study), data=df)
 
-fit1 <- lmer(r.HAP.ips.us ~ famincome_new + i.HAP.ips.us + (1 | study), data=df)
-summary(fit1)
-fit2 <- lmer(r.LAP.ips.us ~ famincome_new + i.LAP.ips.us + (1 | study), data=df)
-summary(fit2)
-fit3 <- lmer(r.HAN.ips.us ~ famincome_new + i.HAN.ips.us + (1 | study), data=df)
-summary(fit3)
-fit4 <- lmer(r.LAN.ips.us ~ famincome_new + i.LAN.ips.us + (1 | study), data=df)
-summary(fit4)
-fit5 <- lmer(i.HAP.ips.us ~ famincome_new + r.HAP.ips.us + (1 | study), data=df)
-summary(fit5)
-fit6 <- lmer(i.LAP.ips.us ~ famincome_new + r.LAP.ips.us + (1 | study), data=df)
-summary(fit6)
-fit7 <- lmer(i.HAN.ips.us ~ famincome_new + r.HAN.ips.us + (1 | study), data=df)
-summary(fit7)
-fit8 <- lmer(i.LAN.ips.us ~ famincome_new + r.LAN.ips.us + (1 | study), data=df)
-summary(fit8)
+reg2 <- lmer(i.LAP ~ famincome_new + r.LAP + (1 | study), data=df)
 
-fit1 <- lmer(r.HAP ~ famincome_new + i.HAP + (1 | study), data=X_famincome$`European American`)
-summary(fit1)
-fit2 <- lmer(r.LAP ~ famincome_new + i.LAP + (1 | study), data=X_famincome$`European American`)
-summary(fit2)
-fit3 <- lmer(r.HAN ~ famincome_new + i.HAN + (1 | study), data=X_famincome$`European American`)
-summary(fit3)
-fit4 <- lmer(r.LAN ~ famincome_new + i.LAN + (1 | study), data=X_famincome$`European American`)
-summary(fit4)
-fit5 <- lmer(i.HAP ~ famincome_new + r.HAP + (1 | study), data=X_famincome$`European American`)
-summary(fit5)
-fit6 <- lmer(i.LAP ~ famincome_new + r.LAP + (1 | study), data=X_famincome$`European American`)
-summary(fit6)
-fit7 <- lmer(i.HAN ~ famincome_new + r.HAN + (1 | study), data=X_famincome$`European American`)
-summary(fit7)
-fit8 <- lmer(i.LAN ~ famincome_new + r.LAN + (1 | study), data=X_famincome$`European American`)
-summary(fit8)
+reg3 <- lmer(i.HAN ~ famincome_new + r.HAN + (1 | study), data=df)
 
-fit1 <- lmer(r.HAP ~ famincome_new + i.HAP + (1 | study), data=X_famincome$`Asian American`)
-summary(fit1)
-fit2 <- lmer(r.LAP ~ famincome_new + i.LAP + (1 | study), data=X_famincome$`Asian American`)
-summary(fit2)
-fit3 <- lmer(r.HAN ~ famincome_new + i.HAN + (1 | study), data=X_famincome$`Asian American`)
-summary(fit3)
-fit4 <- lmer(r.LAN ~ famincome_new + i.LAN + (1 | study), data=X_famincome$`Asian American`)
-summary(fit4)
-fit5 <- lmer(i.HAP ~ famincome_new + r.HAP + (1 | study), data=X_famincome$`Asian American`)
-summary(fit5)
-fit6 <- lmer(i.LAP ~ famincome_new + r.LAP + (1 | study), data=X_famincome$`Asian American`)
-summary(fit6)
-fit7 <- lmer(i.HAN ~ famincome_new + r.HAN + (1 | study), data=X_famincome$`Asian American`)
-summary(fit7)
-fit8 <- lmer(i.LAN ~ famincome_new + r.LAN + (1 | study), data=X_famincome$`Asian American`)
-summary(fit8)
+reg4 <- lmer(i.LAN ~ famincome_new + r.LAN + (1 | study), data=df)
 
-fit1 <- lmer(r.HAP ~ famincome_new + i.HAP + (1 |), data=X_famincome$`East Asian`)
-summary(fit1)
-fit2 <- lm(r.LAP ~ famincome_new + i.LAP, data=X_famincome$`East Asian`)
-summary(fit2)
-fit3 <- lm(r.HAN ~ famincome_new + i.HAN, data=X_famincome$`East Asian`)
-summary(fit3)
-fit4 <- lm(r.LAN ~ famincome_new + i.LAN, data=X_famincome$`East Asian`)
-summary(fit4)
-fit5 <- lm(i.HAP ~ famincome_new + r.HAP, data=X_famincome$`East Asian`)
-summary(fit5)
-fit6 <- lm(i.LAP ~ famincome_new + r.LAP, data=X_famincome$`East Asian`)
-summary(fit6)
-fit7 <- lm(i.HAN ~ famincome_new + r.HAN, data=X_famincome$`East Asian`)
-summary(fit7)
-fit8 <- lm(i.LAN ~ famincome_new + r.LAN, data=X_famincome$`East Asian`)
-summary(fit8)
+tab_model(reg1, reg2, reg3, reg4,
+          pred.labels = c("Intercept", "Family Income", "Actual HAP", "Actual LAP", "Actual HAN", "Actual LAN"),
+          dv.labels = c("Ideal HAP", "Ideal LAP", "Ideal HAN", "Ideal LAN")
+)
 
-fit1 <- lmer(r.HAP ~ famincome_new + i.HAP + (1 | study), data=X_famincome$`Hong Kong Chinese`)
-summary(fit1)
-fit2 <- lmer(r.LAP ~ famincome_new + i.LAP + (1 | study), data=X_famincome$`Hong Kong Chinese`)
-summary(fit2)
-fit3 <- lmer(r.HAN ~ famincome_new + i.HAN + (1 | study), data=X_famincome$`Hong Kong Chinese`)
-summary(fit3)
-fit4 <- lmer(r.LAN ~ famincome_new + i.LAN + (1 | study), data=X_famincome$`Hong Kong Chinese`)
-summary(fit4)
-fit5 <- lmer(i.HAP ~ famincome_new + r.HAP + (1 | study), data=X_famincome$`Hong Kong Chinese`)
-summary(fit5)
-fit6 <- lmer(i.LAP ~ famincome_new + r.LAP + (1 | study), data=X_famincome$`Hong Kong Chinese`)
-summary(fit6)
-fit7 <- lmer(i.HAN ~ famincome_new + r.HAN + (1 | study), data=X_famincome$`Hong Kong Chinese`)
-summary(fit7)
-fit8 <- lmer(i.LAN ~ famincome_new + r.LAN + (1 | study), data=X_famincome$`Hong Kong Chinese`)
-summary(fit8)
+reg1 <- lmer(i.HAP ~ indSES_new + (1 | study), data=df)
 
+reg2 <- lmer(i.LAP ~ indSES_new + (1 | study), data=df)
 
+reg3 <- lmer(i.HAN ~ indSES_new + (1 | study), data=df)
 
+reg4 <- lmer(i.LAN ~ indSES_new + (1 | study), data=df)
 
+tab_model(reg1, reg2, reg3, reg4,
+          pred.labels = c("Intercept", "SES"),
+          dv.labels = c("Ideal HAP", "Ideal LAP", "Ideal HAN", "Ideal LAN")
+)
 
-write.csv(df_final, "std_pt2_data.csv", row.names = FALSE)
+reg1 <- lmer(r.HAP ~ indSES_new + i.HAP + (1 | study), data=df)
+
+reg2 <- lmer(r.LAP ~ indSES_new + i.LAP + (1 | study), data=df)
+
+reg3 <- lmer(r.HAN ~ indSES_new + i.HAN + (1 | study), data=df)
+
+reg4 <- lmer(r.LAN ~ indSES_new + i.LAN + (1 | study), data=df)
+
+tab_model(reg1, reg2, reg3, reg4,
+          pred.labels = c("Intercept", "SES", "Ideal HAP", "Ideal LAP", "Ideal HAN", "Ideal LAN"),
+          dv.labels = c("Actual HAP", "Actual LAP", "Actual HAN", "Actual LAN")
+)
+
+reg1 <- lmer(r.HAP ~ indSES_new + (1 | study), data=df)
+
+reg2 <- lmer(r.LAP ~ indSES_new + (1 | study), data=df)
+
+reg3 <- lmer(r.HAN ~ indSES_new + (1 | study), data=df)
+
+reg4 <- lmer(r.LAN ~ indSES_new + (1 | study), data=df)
+
+tab_model(reg1, reg2, reg3, reg4,
+          pred.labels = c("Intercept", "SES"),
+          dv.labels = c("Actual HAP", "Actual LAP", "Actual HAN", "Actual LAN")
+)
+
+rm(reg1, reg2, reg3, reg4, affects)
