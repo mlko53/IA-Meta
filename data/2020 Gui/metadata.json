@@ -1,3 +1,38 @@
 {
-	
+	"Paper": "2020 Gui",
+    "Year": 2020,
+    "Title": "Culture, Leisure Interpretation, and Ideal Affect during Leisure: A Situation Sampling Approach",
+    "Authors": "Jingjing, G., Howard, W. H., Gordon, J. W., Huimei, L.",
+    "Journal": "Leisure Sciences",
+    "Studies": ["study1"],
+    "Usable": [],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+        	"Chinese": 228,
+        	"European Canadian": 203
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+        	"Nationality": {
+        		"Chinese": "Chinese",
+        		"European Canadian": "Canadian"
+        	},
+        	"gender": {
+        		"M": 2,
+        		"F": 1,
+        		"Other": 3
+        	}
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": ["999", "NA", "EMPTY"]
+        }
+    }
 }
