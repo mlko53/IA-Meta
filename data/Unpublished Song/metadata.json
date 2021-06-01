@@ -1,0 +1,46 @@
+{
+    "Paper": "Unpublished Song",
+    "Year": "Unpublished",
+    "Title": "Anger and Sadness Expressions Situated in Both Positive and Negative Contexts: An Investigation in South Korea and the United States",
+    "Authors": "Song, S. Y., Curtis, A. M., & Aragón, O. R.",
+    "Journal": "Frontiers in Psychology",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1":{
+            "Latino American": 14,
+            "Pacific Islander": 1,
+            "European American": 314,
+            "African American": 13,
+            "Native American": 1,
+            "Korean": 247,
+            "Other": 8
+        }
+    },
+    "Filter":{
+        "study1": {}
+    },
+    "Recode":{
+        "study1": {
+            "Sex":{
+            	"M": 1,
+            	"F": 2
+            },
+            "RaceEth":{
+	            "Latino American": 1,
+	            "Pacific Islander": 2,
+	            "European American": 3,
+	            "African American": 4,
+	            "Native American": 5,
+	            "Korean": 6,
+	            "Other": 7
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": "" 
+        }
+    }
+}
