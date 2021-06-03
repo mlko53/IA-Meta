@@ -1,0 +1,34 @@
+{
+    "Paper": "Unpublished Ito",
+    "Year": "Unpublished",
+    "Title": "Tourism Ideal Affect as Tourism Motivation",
+    "Authors": "Ito, E.",
+    "Journal": "Tourism Planning & Development",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "Japanese": 418
+        }
+    },
+    "Filter": {
+        "study1": {}
+    },
+    "Recode":{
+        "study1": {
+            "Gender": {
+                "M": 1,
+                "F": 2
+            },
+            "Race": {
+                "Japanese": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": "" 
+        }
+    }
+}
