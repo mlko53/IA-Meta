@@ -1,0 +1,34 @@
+{
+    "Paper": "2020 Hu",
+    "Year": "2020",
+    "Title": "Ideal and Tourism Affect among Mainland Chinese Tourists in Hokkaido, Japan: A Comparison between Tourists with and without Ski Experience",
+    "Authors": "Hu, R. & Ito, E.",
+    "Journal": "International Journal of Sport and Health Science",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "Chinese": 80
+        }
+    },
+    "Filter": {
+        "study1": {}
+    },
+    "Recode":{
+        "study1": {
+            "Gender": {
+                "M": 1,
+                "F": 2
+            },
+            "Race": {
+                "Chinese": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": "" 
+        }
+    }
+}
