@@ -4,8 +4,8 @@
     "Title": "Expressive Interdependence in Latin America: A Colombia, U.S., and Japan Comparison",
     "Authors": "Salvador, C.E., Idovro Carlier, S., Ishii, K., Torres Castillo, C., Nanakdewa, K., Savani, K., San Martin, A. & Kitayama, S.",
     "Journal": "",
-    "Studies": ["study1.sav"],
-    "Usable": ["study1.sav"],
+    "Studies": ["study1.csv"],
+    "Usable": ["study1.csv"],
     "Manipulation": [],
     "Reported": {
         "study1":{
@@ -13,7 +13,7 @@
             "Japanese": 175,
             "European American": 204,
             "Pacific Islander": 2,
-            "Other": 4,
+            "Other": 4
         }
     },
     "Filter":{
@@ -30,7 +30,7 @@
                 "Japanese": 3,
                 "European American": 4,
                 "Pacific Islander": 5,
-                "Other": 8,
+                "Other": 8
             }
         }
     },

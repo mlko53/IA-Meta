@@ -15,7 +15,7 @@ df[1] <- NULL #removing a weird extra column from step 1
 df[2] <- NULL #removing other weird column from edited standardizing
 
 NROW(df)
-df
+#df
 ```
 
 
@@ -236,6 +236,367 @@ df_final$year_CPI <- ifelse(df_final$collected_year_new == "2016", df_final$X201
 df_final$year_CPI <- ifelse(df_final$collected_year_new == "2017", df_final$X2017, df_final$year_CPI)
 df_final$year_CPI <- ifelse(df_final$collected_year_new == "2018", df_final$X2018, df_final$year_CPI)
 ```
+
+
+```{r}
+### indSES
+
+## Create new variables indSES_new and ethn_new_indSES for analysis
+
+# indSES studies with values:
+
+# 2006 Tsai study1 (1 - 5)
+# 2006 Tsai study2 (1 - 5)
+# 2014 Koopman-Holm study2 (1 - 5)
+# 2014 Koopman-Holm study3 (1 - 5)
+# 2018 Bencharit study3 (1 - 5)
+# 2018 Bencharit study4a (1 - 5)
+# 2013 Scheibe study1 (1 - 5)
+# 2016 Koc study1 (1 - 10)
+# 2016 Tsai study3 (1 - 5)
+# 2018 Koc Identity Integration study1 (1 - 10)
+# Unpublished Yi study1 (1 - 10)
+
+# Create new variables for analysis
+df_final$indSES_new <- df_final$indSES
+df_final$indincome_new <- df_final$indincome
+# Convert to numeric
+df_final$indSES_new <- as.numeric(as.character(df_final$indSES_new))
+df_final$indincome_new <- as.numeric(as.character(df_final$indincome_new))
+# Add 2013 Scheibe study1 to indSES ####NOTE REMOVE THIS AFTER NEW FILE UPDATE
+df_final$indSES_new[df_final$paper_study == "2013 Scheibe study1"] <- df_final$indincome_new[df_final$paper_study == "2013 Scheibe study1"]
+# Convert appropriate values to NA
+df_final$indSES_new[df_final$indSES_new == 6 | df_final$indSES_new == 333 | df_final$indSES_new == 888] <- NA
+# Standardize values 0.2 - 1
+
+df_final$indSES_new <- ifelse(df_final$paper_study == "2016 Koc study1", 1+4/9*(df_final$indSES_new-1), df_final$indSES_new)
+df_final$indSES_new <- ifelse(df_final$paper_study == "2018 Koc Identity Integration study1", 1+4/9*(df_final$indSES_new-1), df_final$indSES_new)
+df_final$indSES_new <- ifelse(df_final$paper_study == "Unpublished Yi study1", 1+4/9*(df_final$indSES_new-1), df_final$indSES_new)
+
+
+
+# Create ethn_new_indSES to categorize the studies' ethnicities for analysis
+df_final$ethn_new_indSES <- "Other"
+df_final$ethn_new_indSES[df_final$ethn == "European American"] = "European American"
+df_final$ethn_new_indSES[df_final$ethn == "Chinese American"  | df_final$ethn == "East Asian American"] = "Asian American"
+df_final$ethn_new_indSES[df_final$ethn == "Japanese" | df_final$ethn == "Korean" | df_final$ethn == "Taiwanese" | df_final$ethn == "Chinese"] = "East Asian"
+df_final$ethn_new_indSES[df_final$ethn == "Hong Kong Chinese"] = "Hong Kong Chinese"
+df_final$ethn_new_indSES[df_final$ethn == "Turkish" | df_final$ethn == "Swedish" | df_final$ethn == "German" | df_final$ethn == "British" | df_final$ethn == "French" | df_final$ethn == "Bulgarian" | df_final$ethn == "Russian" | df_final$ethn == "Moldovian"] = "European"
+
+unique(df_final$indSES_new)
+
+```
+
+
+```{r}
+# indincome studies with values:
+
+# 2014 Koopman-Holm study2 (USD: 1 - 0-10,000; 2 - 10,001-20,000; 3 - 20,001-30,000; 4 - 30,001-40,000; 5 - 40,0001-50,000; 6 - 50,001-75,000; 7 - 75,001-100,000; 8 - 100,000+)
+# 2014 Mannell study1 (Canadian dollars: 1 - 0-50,000; 2 - 50,000-99,999; 3 - 100,000+)
+# 2018 Ito study1 (Japanese yen: 0 - 0-2,500,00; 1 - 2,500,000-7,500,000; 2 - 7,500,000+)
+# 2018 Bencharit study3 (1 - 9)
+# 2018 Bencharit study4a (1 - 12)
+# 2013 Koopman-Holm study2 (USD: 1 - 0-10,000; 2 - 10,001-20,000; 3 - 20,001-30,000; 4 - 30,001-40,000; 5 - 40,001-50,000; 6 - 50,001-75,000; 8 - 100,000+; 999 - idk)
+# 2013 Scheibe study1 (1 - 5 SES scale)
+# 2014 Luong study1 (USD: 1 - 0-10,000; 2 - 10,000-19,999; 3 - 20,000-29,999; 4 - 30,000-39,999; 5 - 40,000-49,999; 6 - 50,000-59,999; 7 - 60,000-69,999; 8 - 70,000-79,999; 9 - 80,000-89,999; 10 - 90,000-99,999; 11 - 100,000+)
+# 2019 Palmer study1 (USD input)
+# 2016 Ito study1 (1 = under 1,999,999 yen, 2 = 2,000,000 yen - 3,999,999 yen, 3 = 4,000,000 yen - 5,999,999 yen, 4 = 6,000,000 yen - 7,999,999 yen, 5 = 8,000,000 yen - 9,999,999 yen, 6 = 10,000,000 yen - 11,999,999 yen, 7 = 12,000,000 yen - 14,999,999 yen, 8 = 15,000,000 yen - 19,999,999 yen, 9 = Over 20,000,000 yen, 10 = Don't know.)
+# Unpublished Ito Kono study1 (1 = under 1,999,999 yen, 2 = 2,000,000 yen - 3,999,999 yen, 3 = 4,000,000 yen - 5,999,999 yen, 4 = 6,000,000 yen - 7,999,999 yen, 5 = 8,000,000 yen - 9,999,999 yen, 6 = 10,000,000 yen - 11,999,999 yen, 7 = 12,000,000 yen - 14,999,999 yen, 8 = 15,000,000 yen - 19,999,999 yen, 9 = Over 20,000,000 yen, 10 = Don't know.)
+# 2019 Tsai
+# 2016 Da Jiang LTP study11 - (unsure currency; 1 - 80,000; 2 - 80,001-160,000; 3 - 160,001-240,000; 4 - 240,001-320,000; 5 - 320,001-400,000; 6 - 400,001-600,000; 7 - 600,0001+)
+# 2016 Da Jiang LTP study2 - (HKD; 1 - 0-5,000; 2 - 5,000-10,000; 3 - 10,001-20,000; 4 - 20,001-30,000; 5 - 30,001+)
+# 2016 Da Jiang FTP study3 - (HKD; 1 - 0-5,000; 2 - 5,000-10,000; 3 - 10,001-20,000; 4 - 20,001-30,000; 5 - 30,001+)
+# 2016 Da Jiang FTP study1 - (unsure currency; 1 - 80,000; 2 - 80,001-160,000; 3 - 160,001-240,000; 4 - 240,001-320,000; 5 - 320,001-400,000; 6 - 400,001-600,000; 7 - 600,0001+)
+
+## Create new variables indincome_new and ethn_new_indincome for analysis
+
+# Create new variable for analysis
+df_final$indincome_new <- df_final$indincome
+# Remove commas
+df_final$indincome_new <- gsub(",","",df_final$indincome_new)
+# Regex to just keep numbers and decimals
+df_final$indincome_new <- unlist(sapply(regmatches(df_final$indincome_new, gregexpr("[[:digit:]]+\\.*[[:digit:]]*", df_final$indincome_new)), function(x) { ifelse(identical(character(0), x), NA, x)}))
+# Convert to numeric
+df_final$indincome_new <- as.numeric(as.character(df_final$indincome_new))
+# Exclude 2013 Scheibe study1 as it's actually indSES - NOTE  CHANGE THIS AFTER REPROCESS
+df_final$indincome_new[df_final$paper_study == "2013 Scheibe study1"] <- NA
+# Create ethn_new_indincome to categorize the studies' ethnicities for analysis
+df_final$ethn_new_indincome <- "Other"
+df_final$ethn_new_indincome[df_final$ethn == "European American"] = "European American"
+df_final$ethn_new_indincome[df_final$ethn == "Chinese American"  | df_final$ethn == "East Asian American"] = "Asian American"
+df_final$ethn_new_indincome[df_final$ethn == "Japanese" | df_final$ethn == "Korean" | df_final$ethn == "Taiwanese" | df_final$ethn == "Chinese"] = "East Asian"
+df_final$ethn_new_indincome[df_final$ethn == "Hong Kong Chinese"] = "Hong Kong Chinese"
+df_final$ethn_new_indincome[df_final$ethn == "Turkish" | df_final$ethn == "Swedish" | df_final$ethn == "German" | df_final$ethn == "British" | df_final$ethn == "French" | df_final$ethn == "Bulgarian" | df_final$ethn == "Russian" | df_final$ethn == "Moldovian"] = "European"
+
+
+# NOTE: Still missing 2018 Bencharit study 3 and 4a
+## Convert all to USD by PPP in 2015, use midpoints
+
+df_final$indincome_new <- ifelse((df_final$indincome_new == 1 & df_final$paper_study == "2014 Koopman-Holm study2"), 5000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 2 & df_final$paper_study == "2014 Koopman-Holm study2"), 15000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 3 & df_final$paper_study == "2014 Koopman-Holm study2"), 25000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 4 & df_final$paper_study == "2014 Koopman-Holm study2"), 35000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 5 & df_final$paper_study == "2014 Koopman-Holm study2"), 45000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 6 & df_final$paper_study == "2014 Koopman-Holm study2"), 62500, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 7 & df_final$paper_study == "2014 Koopman-Holm study2"), 87500, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 8 & df_final$paper_study == "2014 Koopman-Holm study2"), 200000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 9 & df_final$paper_study == "2014 Koopman-Holm study2"), NA, df_final$indincome_new)
+
+df_final$indincome_new <- ifelse((df_final$indincome_new == 1 & df_final$paper_study == "2014 Mannell study1"), 25000*(1/1.248004), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 2 & df_final$paper_study == "2014 Mannell study1"), 75000*(1/1.248004), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 3 & df_final$paper_study == "2014 Mannell study1"), 200000*(1/1.248004), df_final$indincome_new)
+
+df_final$indincome_new <- ifelse((df_final$indincome_new == 0 & df_final$paper_study == "2018 Ito study1"), (1/103.449739)*1250000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 1 & df_final$paper_study == "2018 Ito study1"), (1/103.449739)*5000000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 2 & df_final$paper_study == "2018 Ito study1"), (1/103.449739)*15000000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 3 & df_final$paper_study == "2018 Ito study1"), NA, df_final$indincome_new)
+
+df_final$indincome_new <- ifelse((df_final$indincome_new == 1 & df_final$paper_study == "2014 Luong study1"), 5000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 2 & df_final$paper_study == "2014 Luong study1"), 15000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 3 & df_final$paper_study == "2014 Luong study1"), 25000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 4 & df_final$paper_study == "2014 Luong study1"), 35000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 5 & df_final$paper_study == "2014 Luong study1"), 45000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 6 & df_final$paper_study == "2014 Luong study1"), 55000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 7 & df_final$paper_study == "2014 Luong study1"), 65000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 8 & df_final$paper_study == "2014 Luong study1"), 75000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 9 & df_final$paper_study == "2014 Luong study1"), 85000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 10 & df_final$paper_study == "2014 Luong study1"), 95000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 11 & df_final$paper_study == "2014 Luong study1"), 200000, df_final$indincome_new)
+
+df_final$indincome_new <- ifelse((df_final$indincome_new == 0 & df_final$paper_study == "2016 Da Jiang LTP study11"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 1 & df_final$paper_study == "2016 Da Jiang LTP study11"), 40000*(1/5.831053257), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 2 & df_final$paper_study == "2016 Da Jiang LTP study11"), 120000*(1/5.831053257), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 3 & df_final$paper_study == "2016 Da Jiang LTP study11"), 200000*(1/5.831053257), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 4 & df_final$paper_study == "2016 Da Jiang LTP study11"), 280000*(1/5.831053257), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 5 & df_final$paper_study == "2016 Da Jiang LTP study11"), 360000*(1/5.831053257), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 6 & df_final$paper_study == "2016 Da Jiang LTP study11"), 500000*(1/5.831053257), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 7 & df_final$paper_study == "2016 Da Jiang LTP study11"), 1200000*(1/5.831053257), df_final$indincome_new)
+
+df_final$indincome_new <- ifelse((df_final$indincome_new == 1 & df_final$paper_study == "2016 Da Jiang LTP study2"), 2500*(1/5.831053257)*12, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 2 & df_final$paper_study == "2016 Da Jiang LTP study2"), 7500*(1/5.831053257)*12, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 3 & df_final$paper_study == "2016 Da Jiang LTP study2"), 15000*(1/5.831053257)*12, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 4 & df_final$paper_study == "2016 Da Jiang LTP study2"), 25000*(1/5.831053257)*12, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 5 & df_final$paper_study == "2016 Da Jiang LTP study2"), 60000*(1/5.831053257)*12, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 6 & df_final$paper_study == "2016 Da Jiang LTP study2"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 7 & df_final$paper_study == "2016 Da Jiang LTP study2"), NA, df_final$indincome_new)
+
+df_final$indincome_new <- ifelse((df_final$indincome_new == 1 & df_final$paper_study == "2016 Ito study1"), 1000000*(1/103.449739), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 2 & df_final$paper_study == "2016 Ito study1"), 3000000*(1/103.449739), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 3 & df_final$paper_study == "2016 Ito study1"), 5000000*(1/103.449739), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 4 & df_final$paper_study == "2016 Ito study1"), 7000000*(1/103.449739), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 5 & df_final$paper_study == "2016 Ito study1"), 9000000*(1/103.449739), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 6 & df_final$paper_study == "2016 Ito study1"), 11000000*(1/103.449739), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 7 & df_final$paper_study == "2016 Ito study1"), 13000000*(1/103.449739), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 8 & df_final$paper_study == "2016 Ito study1"), 17500000*(1/103.449739), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 9 & df_final$paper_study == "2016 Ito study1"), 40000000*(1/103.449739), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 10 & df_final$paper_study == "2016 Ito study1"), NA, df_final$indincome_new)
+
+df_final$indincome_new <- ifelse((df_final$indincome_new == 1 & df_final$paper_study == "2018 Bencharit study3"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 2 & df_final$paper_study == "2018 Bencharit study3"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 3 & df_final$paper_study == "2018 Bencharit study3"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 4 & df_final$paper_study == "2018 Bencharit study3"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 5 & df_final$paper_study == "2018 Bencharit study3"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 6 & df_final$paper_study == "2018 Bencharit study3"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 7 & df_final$paper_study == "2018 Bencharit study3"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 8 & df_final$paper_study == "2018 Bencharit study3"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 9 & df_final$paper_study == "2018 Bencharit study3"), NA, df_final$indincome_new)
+
+df_final$indincome_new <- ifelse((df_final$indincome_new == 1 & df_final$paper_study == "2018 Bencharit study4a"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 2 & df_final$paper_study == "2018 Bencharit study4a"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 3 & df_final$paper_study == "2018 Bencharit study4a"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 4 & df_final$paper_study == "2018 Bencharit study4a"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 5 & df_final$paper_study == "2018 Bencharit study4a"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 6 & df_final$paper_study == "2018 Bencharit study4a"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 7 & df_final$paper_study == "2018 Bencharit study4a"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 8 & df_final$paper_study == "2018 Bencharit study4a"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 9 & df_final$paper_study == "2018 Bencharit study4a"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 10 & df_final$paper_study == "2018 Bencharit study4a"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 11 & df_final$paper_study == "2018 Bencharit study4a"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 12 & df_final$paper_study == "2018 Bencharit study4a"), NA, df_final$indincome_new)
+
+df_final$indincome_new <- ifelse((df_final$indincome_new < 10000 & df_final$paper_study == "2019 Palmer study1"), NA, df_final$indincome_new)
+
+df_final$indincome_new <- ifelse((df_final$indincome_new == 1 & df_final$paper_study == "Unpublished Ito Kono study1"), 1000000*(1/103.449739), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 2 & df_final$paper_study == "Unpublished Ito Kono study1"), 3000000*(1/103.449739), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 3 & df_final$paper_study == "Unpublished Ito Kono study1"), 5000000*(1/103.449739), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 4 & df_final$paper_study == "Unpublished Ito Kono study1"), 7000000*(1/103.449739), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 5 & df_final$paper_study == "Unpublished Ito Kono study1"), 9000000*(1/103.449739), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 6 & df_final$paper_study == "Unpublished Ito Kono study1"), 11000000*(1/103.449739), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 7 & df_final$paper_study == "Unpublished Ito Kono study1"), 13000000*(1/103.449739), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 8 & df_final$paper_study == "Unpublished Ito Kono study1"), 17500000*(1/103.449739), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 9 & df_final$paper_study == "Unpublished Ito Kono study1"), 40000000*(1/103.449739), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 10 & df_final$paper_study == "Unpublished Ito Kono study1"), NA, df_final$indincome_new)
+
+
+```
+
+
+```{r}
+### famincome
+
+# famincome studies with respective values:
+
+# 2013 Koopman-Holm study2 (USD: 1 - 0-10,000; 2 - 10,001-20,000; 3 - 20,001-30,000; 4 - 30,001-40,000; 5 - 40,001-50,000; 6 - 50,001-75,000; 8 - 100,000+; 999 - idk)
+# 2014 Koopman-Holm study2 (USD: 1 - 0-10,000; 2 - 10,001-20,000; 3 - 20,001-30,000; 4 - 30,001-40,000; 5 - 40,001-50,000; 6 - 50,001-75,000; 8 - 100,000+; 999 - idk)
+# 2018 Tompson study1 (USD: 1=<40K, 2=40K-60K, 3=60K-80K, 4=80K-100K, 5=100K-120K, 6=120K-140K, 7=140K-160K, 8=>$60K)
+# 2018 Swerdlow study2 (USD: 1 - 0-10,000; 2 - 10,001-15,000; 3 - 15,001-25,000; 4 - 25,001-50,000; 5 - 50,001-75,000; 6 - 75,001-100,000; 7 - 100,001-150,000; 8 - 150,000+; 9 - idk)
+# 2019 Palmer study1 (USD input)
+# 2018 Gentzler (USD: 1 - 0-10,000; 2 - 10,000-20,000; 3 - 20,000-30,000; 4 - 30,000-40,000; 5 - 40,000-50,000; 6 - 50,000-60,000; 7 - 60,000-70,000; 8 - 70,000-80,000; 9 - 80,000-90,000; 10 - 90,000-100,000; 11 - 100,000-150,000; 12 - 150,000+)
+# Unpublished Palmer study1 (USD: 1 - 0-10,000; 2 - 10,000-20,000; 3 - 20,000-40,000; 4 - 40,000-60,000; 5 - 60,000-80,000; 6 - 80,000-100,000; 7 - 100-000+)
+# 2016 Ito study1 (1 = under 1,999,999 yen, 2 = 2,000,000 yen - 3,999,999 yen, 3 = 4,000,000 yen - 5,999,999 yen, 4 = 6,000,000 yen - 7,999,999 yen, 5 = 8,000,000 yen - 9,999,999 yen, 6 = 10,000,000 yen - 11,999,999 yen, 7 = 12,000,000 yen - 14,999,999 yen, 8 = 15,000,000 yen - 19,999,999 yen, 9 = Over 20,000,000 yen, 10 = Don't know.)
+# Unpublished Ito Kono study1 (1 = under 1,999,999 yen, 2 = 2,000,000 yen - 3,999,999 yen, 3 = 4,000,000 yen - 5,999,999 yen, 4 = 6,000,000 yen - 7,999,999 yen, 5 = 8,000,000 yen - 9,999,999 yen, 6 = 10,000,000 yen - 11,999,999 yen, 7 = 12,000,000 yen - 14,999,999 yen, 8 = 15,000,000 yen - 19,999,999 yen, 9 = Over 20,000,000 yen, 10 = Don't know.)
+# Unpublished Ito Yamaguchi Takamatsu study1 (Yen: 1 - 0-2,500,000; 2 - 2,500,000-5,000,000; 3 - 5,000,000-7,500,000; 4 - 7,500,000-10,000,000; 5 - 10,000,000+; 6 - NA)
+# Unpublished Ito Mika study1 (Yen: 1 - 0-2,500,000; 2 - 2,500,000-5,000,000; 3 - 5,000,000-7,500,000; 4 - 7,500,000-10,000,000; 5 - 10,000,000+; 6 - NA)
+# Unpublished Samanez-Larkin agerl study1 (already sorted into buckets)
+# 2017 Oosterhoff study1 (USD: 1 - 0-11,999; 2 - 12,000-24,999; 3 - 25,000-49,999; 4 - 50,000-74,999; 5 - 75,000-99,999; 6 - 100,000-149,999; 7 - 150,000+; 8 - Prefer not to answer)
+# 2016 Da Jiang LTP study11 - (Unknown currency, maybe yuan; 1 - 80,000; 2 - 80,001-160,000; 3 - 160,001-240,000; 4 - 240,001-320,000; 5 - 320,001-400,000; 6 - 400,001-600,000; 7 - 600,0001+)
+# 2014 Mortazavi study1 (USD: 1 - 0-15k; 2 - 15-30k; 3 - 30-45k; 4 - 45-60k; 5 - 60-75k; 6 - 75k+; 7 - Prefer not to answer)
+# 2016 Da Jiang LTP study2 - (HKD; 1 - 0-5,000; 2 - 5,000-10,000; 3 - 10,001-20,000; 4 - 20,001-30,000; 5 - 30,001+)
+# 2016 Da Jiang FTP study3 - (HKD; 1 - 0-5,000; 2 - 5,000-10,000; 3 - 10,001-20,000; 4 - 20,001-30,000; 5 - 30,001+)
+# 2016 Da Jiang FTP study1 - (unsure currency; 1 - 80,000; 2 - 80,001-160,000; 3 - 160,001-240,000; 4 - 240,001-320,000; 5 - 320,001-400,000; 6 - 400,001-600,000; 7 - 600,0001+)
+
+## Create new variables famincome_new and ethn_new_famincome for analysis
+
+# Create new variable for analysis
+df_final$famincome_new <- df_final$famincome
+# Remove commas
+df_final$famincome_new <- gsub(",","",df_final$famincome_new)
+# Regex to just keep numbers and decimals
+df_final$famincome_new <- unlist(sapply(regmatches(df_final$famincome_new, gregexpr("[[:digit:]]+\\.*[[:digit:]]*", df_final$famincome_new)), function(x) { ifelse(identical(character(0), x), NA, x)}))
+# Convert to numeric
+df_final$famincome_new <- as.numeric(as.character(df_final$famincome_new))
+# Create ethn_new_famincome to categorize the studies' ethnicities for analysis
+df_final$ethn_new_famincome <- "Other"
+df_final$ethn_new_famincome[df_final$ethn == "European American"] = "European American"
+df_final$ethn_new_famincome[df_final$ethn == "Chinese American"  | df_final$ethn == "East Asian American"] = "Asian American"
+df_final$ethn_new_famincome[df_final$ethn == "Japanese" | df_final$ethn == "Korean" | df_final$ethn == "Taiwanese" | df_final$ethn == "Chinese"] = "East Asian"
+df_final$ethn_new_famincome[df_final$ethn == "Hong Kong Chinese"] = "Hong Kong Chinese"
+df_final$ethn_new_famincome[df_final$ethn == "Turkish" | df_final$ethn == "Swedish" | df_final$ethn == "German" | df_final$ethn == "British" | df_final$ethn == "French" | df_final$ethn == "Bulgarian" | df_final$ethn == "Russian" | df_final$ethn == "Moldovian"] = "European"
+
+
+## Convert all to USD by PPP in 2015, use midpoints
+
+df_final$famincome_new <- ifelse((df_final$famincome_new == 1 & df_final$paper_study == "2014 Koopman-Holm study2"), 5000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 2 & df_final$paper_study == "2014 Koopman-Holm study2"), 15000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 3 & df_final$paper_study == "2014 Koopman-Holm study2"), 25000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 4 & df_final$paper_study == "2014 Koopman-Holm study2"), 35000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 5 & df_final$paper_study == "2014 Koopman-Holm study2"), 45000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_study == "2014 Koopman-Holm study2"), 62500, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 7 & df_final$paper_study == "2014 Koopman-Holm study2"), 87500, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 8 & df_final$paper_study == "2014 Koopman-Holm study2"), 200000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 9 & df_final$paper_study == "2014 Koopman-Holm study2"), NA, df_final$famincome_new)
+
+df_final$famincome_new <- ifelse((df_final$famincome_new == 0 & df_final$paper_study == "2016 Da Jiang LTP study11"), NA, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 1 & df_final$paper_study == "2016 Da Jiang LTP study11"), 40000*0.13, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 2 & df_final$paper_study == "2016 Da Jiang LTP study11"), 120000*0.13, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 3 & df_final$paper_study == "2016 Da Jiang LTP study11"), 200000*0.13, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 4 & df_final$paper_study == "2016 Da Jiang LTP study11"), 280000*0.13, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 5 & df_final$paper_study == "2016 Da Jiang LTP study11"), 360000*0.13, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_study == "2016 Da Jiang LTP study11"), 500000*0.13, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 7 & df_final$paper_study == "2016 Da Jiang LTP study11"), 1200000*0.13, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 8 & df_final$paper_study == "2016 Da Jiang LTP study11"), NA, df_final$famincome_new)
+
+df_final$famincome_new <- ifelse((df_final$famincome_new == 1 & df_final$paper_study == "2016 Da Jiang LTP study2"), 2500*0.13*12, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 2 & df_final$paper_study == "2016 Da Jiang LTP study2"), 7500*0.13*12, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 3 & df_final$paper_study == "2016 Da Jiang LTP study2"), 15000*0.13*12, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 4 & df_final$paper_study == "2016 Da Jiang LTP study2"), 25000*0.13*12, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 5 & df_final$paper_study == "2016 Da Jiang LTP study2"), 60000*0.13*12, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_study == "2016 Da Jiang LTP study2"), NA, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 7 & df_final$paper_study == "2016 Da Jiang LTP study2"), NA, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 8 & df_final$paper_study == "2016 Da Jiang LTP study2"), NA, df_final$famincome_new)
+
+df_final$famincome_new <- ifelse((df_final$famincome_new == 1 & df_final$paper_study == "2016 Ito study1"), 1000000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 2 & df_final$paper_study == "2016 Ito study1"), 3000000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 3 & df_final$paper_study == "2016 Ito study1"), 5000000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 4 & df_final$paper_study == "2016 Ito study1"), 7000000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 5 & df_final$paper_study == "2016 Ito study1"), 9000000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_study == "2016 Ito study1"), 11000000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 7 & df_final$paper_study == "2016 Ito study1"), 13000000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 8 & df_final$paper_study == "2016 Ito study1"), 17500000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 9 & df_final$paper_study == "2016 Ito study1"), 40000000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 10 & df_final$paper_study == "2016 Ito study1"), NA, df_final$famincome_new)
+
+df_final$famincome_new <- ifelse((df_final$famincome_new == 1 & df_final$paper_study == "Unpublished Ito Kono study1"), 1000000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 2 & df_final$paper_study == "Unpublished Ito Kono study1"), 3000000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 3 & df_final$paper_study == "Unpublished Ito Kono study1"), 5000000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 4 & df_final$paper_study == "Unpublished Ito Kono study1"), 7000000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 5 & df_final$paper_study == "Unpublished Ito Kono study1"), 9000000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_study == "Unpublished Ito Kono study1"), 11000000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 7 & df_final$paper_study == "Unpublished Ito Kono study1"), 13000000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 8 & df_final$paper_study == "Unpublished Ito Kono study1"), 17500000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 9 & df_final$paper_study == "Unpublished Ito Kono study1"), 40000000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 10 & df_final$paper_study == "Unpublished Ito Kono study1"), NA, df_final$famincome_new)
+
+df_final$famincome_new <- ifelse((df_final$famincome_new == 1 & df_final$paper_study == "Unpublished Ito Yamaguchi Takamatsu study1"), 1250000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 2 & df_final$paper_study == "Unpublished Ito Yamaguchi Takamatsu study1"), 3750000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 3 & df_final$paper_study == "Unpublished Ito Yamaguchi Takamatsu study1"), 6250000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 4 & df_final$paper_study == "Unpublished Ito Yamaguchi Takamatsu study1"), 8750000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 5 & df_final$paper_study == "Unpublished Ito Yamaguchi Takamatsu study1"), 20000000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_study == "Unpublished Ito Yamaguchi Takamatsu study1"), NA, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 8 & df_final$paper_study == "Unpublished Ito Yamaguchi Takamatsu study1"), NA, df_final$famincome_new)
+
+df_final$famincome_new <- ifelse((df_final$famincome_new == 1 & df_final$paper_study == "Unpublished Ito Mika study1"), 1250000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 2 & df_final$paper_study == "Unpublished Ito Mika study1"), 3750000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 3 & df_final$paper_study == "Unpublished Ito Mika study1"), 6250000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 4 & df_final$paper_study == "Unpublished Ito Mika study1"), 8750000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 5 & df_final$paper_study == "Unpublished Ito Mika study1"), 20000000*0.0095, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_study == "Unpublished Ito Mika study1"), NA, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 8 & df_final$paper_study == "Unpublished Ito Mika study1"), NA, df_final$famincome_new)
+
+df_final$famincome_new <- ifelse((df_final$famincome_new == 1 & df_final$paper_study == "2017 Oosterhoff study1"), 6000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 2 & df_final$paper_study == "2017 Oosterhoff study1"), 18500, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 3 & df_final$paper_study == "2017 Oosterhoff study1"), 37500, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 4 & df_final$paper_study == "2017 Oosterhoff study1"), 62500, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 5 & df_final$paper_study == "2017 Oosterhoff study1"), 87500, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_study == "2017 Oosterhoff study1"), 125000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 7 & df_final$paper_study == "2017 Oosterhoff study1"), 300000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 8 & df_final$paper_study == "2017 Oosterhoff study1"), NA, df_final$famincome_new)
+
+df_final$famincome_new <- ifelse((df_final$famincome_new == 1 & df_final$paper_study == "2018 Gentzler study1"), 5000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 2 & df_final$paper_study == "2018 Gentzler study1"), 15000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 3 & df_final$paper_study == "2018 Gentzler study1"), 25000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 4 & df_final$paper_study == "2018 Gentzler study1"), 35000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 5 & df_final$paper_study == "2018 Gentzler study1"), 45000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_study == "2018 Gentzler study1"), 55000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 7 & df_final$paper_study == "2018 Gentzler study1"), 65000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 8 & df_final$paper_study == "2018 Gentzler study1"), 75000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 9 & df_final$paper_study == "2018 Gentzler study1"), 85000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 10 & df_final$paper_study == "2018 Gentzler study1"), 95000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 11 & df_final$paper_study == "2018 Gentzler study1"), 125000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 12 & df_final$paper_study == "2018 Gentzler study1"), 300000, df_final$famincome_new)
+
+df_final$famincome_new <- ifelse((df_final$famincome_new == 1 & df_final$paper_study == "2018 Swerdlow study2"), 5000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 2 & df_final$paper_study == "2018 Swerdlow study2"), 12500, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 3 & df_final$paper_study == "2018 Swerdlow study2"), 20000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 4 & df_final$paper_study == "2018 Swerdlow study2"), 37500, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 5 & df_final$paper_study == "2018 Swerdlow study2"), 62500, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_study == "2018 Swerdlow study2"), 87500, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 7 & df_final$paper_study == "2018 Swerdlow study2"), 125000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 8 & df_final$paper_study == "2018 Swerdlow study2"), 300000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 9 & df_final$paper_study == "2018 Swerdlow study2"), NA, df_final$famincome_new)
+
+df_final$famincome_new <- ifelse((df_final$famincome_new == 1 & df_final$paper_study == "2018 Tompson study1"), 20000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 2 & df_final$paper_study == "2018 Tompson study1"), 50000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 3 & df_final$paper_study == "2018 Tompson study1"), 70000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 4 & df_final$paper_study == "2018 Tompson study1"), 90000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 5 & df_final$paper_study == "2018 Tompson study1"), 110000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_study == "2018 Tompson study1"), 130000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 7 & df_final$paper_study == "2018 Tompson study1"), 150000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 8 & df_final$paper_study == "2018 Tompson study1"), 320000, df_final$famincome_new)
+
+df_final$famincome_new <- ifelse((df_final$famincome_new < 10000 & df_final$paper_study == "2019 Palmer study1"), NA, df_final$famincome_new)
+
+df_final$famincome_new <- ifelse((df_final$famincome_new == 1 & df_final$paper_study == "Unpublished Palmer study1"), 5000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 2 & df_final$paper_study == "Unpublished Palmer study1"), 15000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 3 & df_final$paper_study == "Unpublished Palmer study1"), 30000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 4 & df_final$paper_study == "Unpublished Palmer study1"), 50000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 5 & df_final$paper_study == "Unpublished Palmer study1"), 70000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_study == "Unpublished Palmer study1"), 90000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 7 & df_final$paper_study == "Unpublished Palmer study1"), 200000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 8 & df_final$paper_study == "Unpublished Palmer study1"), NA, df_final$famincome_new)
+
+```
+
 
 ```{r}
 df_final <- df_final[order(df_final$"Unnamed..0"), ]

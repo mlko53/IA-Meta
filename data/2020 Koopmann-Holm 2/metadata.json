@@ -1,0 +1,48 @@
+{
+    "Paper": "2020 Koopmann-Holm 2",
+    "Year": 2020,
+    "Title": "Compassion meditation increases optimism towards a transgressor",
+    "Authors": "Koopmann-Holm, B., Sze, J., Jinpa, T., Tsai, J.L.",
+    "Journal": "Cognition and Emotion",
+    "Studies": ["study3.sav"],
+    "Usable": ["study3.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study3": {
+            "total": 74,
+            "European American": 38,
+            "Asian American": 36
+        }
+    },
+    "Filter":{
+        "study3": {
+        }
+        
+    },
+    "Recode":{
+        "study3": {
+            "ethnicity":{
+                "European American": ["Caucasian", "caucasian", "Caucasian/Jewish", "white/non-minority", "Caucasian-American", "White &&European-American@@", "White", "white", "White/Caucasian", "European American"],
+                "Chinese American": ["Chinese American", "Chinese-American", "chinese american", "Chinese"],
+                "Asian American": ["Asian American", "Asian", "asian", "Asian American (based on screening form", "Asian-American"],
+                "Vietnamese American": ["Vietnamese American", "Vietnamese-American", "Vietnamese &&Asian American@@"],
+                "Filipino American": ["Filipino American /Asian American", "Filipino", "Filipino American/ Asian American"],
+                "Thai American": ["Thai"],
+                "Thai Chinese American": ["Thai Chinese", "Thai/Chinese"],
+                "Chinese Vietnamese American": ["Chinese-Vietnamese"],
+                "Taiwanese American": ["Taiwanese American"],
+                "Japanese Chinese Filipino Hawaiian American": ["Japanese, Chinese, Filipino, Hawaiian"]
+            },
+            "gender":{
+                "F": 0,
+                "M": 1
+            }
+        }
+    },
+    "Replace":{
+        "study3":{
+            "_NAN_": "NA"
+        
+        }
+    }
+}

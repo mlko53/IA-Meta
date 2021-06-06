@@ -4,8 +4,8 @@
     "Title": "Seeing the Whole Picture? Avoided Negative Affect and Processing of Others’ Suffering",
     "Authors": "Koopmann-Holm, B., Bartel, K., Meshar, M. B., Yang, H. E.",
     "Journal": "Personality and Social Psychology Bulletin",
-    "Studies": ["study1.sav", "study2.sav", "study3.sav"],
-    "Usable": ["study1.sav", "study2.sav", "study3.sav"],
+    "Studies": ["study1.sav", "study2.csv", "study3.csv"],
+    "Usable": ["study1.sav", "study2.csv", "study3.csv"],
     "Manipulation": [],
     "Reported": {
         "study1": {
@@ -16,7 +16,7 @@
         	"African American": 3,
         	"Latino American": 6,
         	"Middle Eastern": 2,
-        	"Other": 3,
+        	"Other": 3
         },
         "study2": {
         	"total": 182,
@@ -31,7 +31,6 @@
     		"Middle Eastern": 4,
     		"Filipino American": 4,
     		"Other": 31
-        }
         },
         "study3": {
         	"total": 468,
@@ -47,7 +46,7 @@
         	"South Asian American": 6,
         	"Middle Eastern": 2,
         	"Multiracial": 4,
-        	"Other": 6,
+        	"Other": 6
         }
     },
     "Filter":{
@@ -71,7 +70,7 @@
         	},
         	"gender": {
         		"F": 1,
-        		"M": 2,
+        		"M": 2
         	}
         },
         "study2":{
@@ -90,7 +89,7 @@
         	},
         	"gender": {
         		"F": 1,
-        		"M": 2,
+        		"M": 2
         	}
         },
         "study3":{
@@ -117,13 +116,13 @@
     },
     "Replace":{
         "study1":{
-            "_NAN_": ["999", "NA", "EMPTY"]
+            "_NAN_": "999"
         },
         "study2":{
-            "_NAN_": ["999", "NA", "EMPTY"]
+            "_NAN_": "999"
         },
         "study3":{
-            "_NAN_": ["999", "NA", "EMPTY"]
+            "_NAN_": "999"
         }
     }
 }
