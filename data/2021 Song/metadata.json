@@ -4,17 +4,20 @@
     "Title": "Anger and Sadness Expressions Situated in Both Positive and Negative Contexts: An Investigation in South Korea and the United States",
     "Authors": "Song, S. Y., Curtis, A. M., & Aragón, O. R.",
     "Journal": "Frontiers in Psychology",
-    "Studies": ["study1.sav"],
-    "Usable": ["study1.sav"],
+    "Studies": ["study1.sav", "pilot.sav"],
+    "Usable": ["study1.sav", "pilot.sav"],
     "Manipulation": [],
     "Reported": {
         "study1":{
             "total": 659,
             "Korean": 305
+        },
+        "pilot":{
         }
     },
     "Filter":{
-        "study1": {}
+        "study1": {},
+        "pilot": {}
     },
     "Recode":{
         "study1": {
@@ -31,10 +34,22 @@
 	            "Korean": 6,
 	            "Other": 7
             }
+        },
+        "pilot":{
+            "Male1":{
+                "M":1,
+                "F":0
+            },
+            "Eth":{
+                "Korean": 6
+            }
         }
     },
     "Replace":{
         "study1":{
+            "_NAN_": "" 
+        },
+        "pilot":{
             "_NAN_": "" 
         }
     }
