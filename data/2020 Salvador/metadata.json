@@ -9,11 +9,9 @@
     "Manipulation": [],
     "Reported": {
         "study1":{
-            "Colombian": 172,
-            "Japanese": 175,
-            "European American": 204,
-            "Pacific Islander": 2,
-            "Other": 4
+            "Colombian": 175,
+            "Japanese": 178,
+            "European American": 204
         }
     },
     "Filter":{

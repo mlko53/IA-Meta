@@ -9,13 +9,8 @@
     "Manipulation": [],
     "Reported": {
         "study1":{
-            "Latino American": 14,
-            "Pacific Islander": 1,
-            "European American": 314,
-            "African American": 13,
-            "Native American": 1,
-            "Korean": 247,
-            "Other": 8
+            "total": 659,
+            "Korean": 305
         }
     },
     "Filter":{
