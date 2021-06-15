@@ -1,6 +1,6 @@
 {
 "Datasets": {
-        "2020" : ["Salvador", "Hu", "Koopmann-Holm 2"],
+        "2020" : ["Salvador", "Hu", "Koopmann-Holm 2", "Koopmann-Holm 1", "Vishkin"],
         "2021" : ["Song"],
         "Unpublished": ["Ito"]
     }

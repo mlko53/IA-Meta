@@ -1,0 +1,54 @@
+{
+    "Paper": "2020 Vishkin",
+    "Year": 2020,
+    "Title": "Religiosity and Desired Emotions: Belief Maintenance or Prosocial Facilitation?",
+    "Authors": "Vishkin, A., Schwartz, S. H., Ben-Nun Bloom, P., Solak, N., & Tamir, M.",
+    "Journal": "Personality and Social Psychology Bulletin",
+    "Studies": ["study2.sav", "study3.sav"],
+    "Usable": ["study2.sav", "study3.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study2": {
+            "total": 616,
+            "American": 210,
+            "Turkish": 203,
+            "Israeli": 203
+        },
+        "study3": {
+            "total": 272
+        }
+    },
+    "Filter":{     
+        "study2": {
+        },
+        "study3": {
+        }
+    },
+    "Recode":{
+        "study2": {
+            "Sample":{
+                "American": 2,
+                "Turkish": 3,
+                "Israeli": 1
+            },
+            "Gender":{
+                "F": 2,
+                "M": 1
+            }
+        },
+        "study3": {
+            "gender": {
+                "F": 2,
+                "M": 1
+            }
+        }
+    },
+    "Replace":{
+        "study2":{
+            "_NAN_": "999"
+        },
+        "study3":{
+            "_NAN_": "999"        
+        }
+    }
+}
