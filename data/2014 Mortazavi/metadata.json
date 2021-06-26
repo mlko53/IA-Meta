@@ -11,7 +11,7 @@
         "study1":{
             "European American": 39,
             "Latino American": 41,
-            "Asian American": 26,
+            "Asian American": 26
         }
     },
     "Filter":{
@@ -22,9 +22,9 @@
             "Ethnicity": {
                 "European American": 1,
                 "Latino American": 2,
-                "Asian American": 3,
+                "Asian American": 3
             },
-            "Sex": {
+            "Gender": {
                 "M": 0,
                 "F": 1
             }

@@ -181,13 +181,13 @@ def load_and_merge(meta_df, paper_paths, manipulation, verbose=False):
                         print("ISO-8859-1 encoding didn't work")
             else:
                 raise ValueError("Invalid data type found in metadata.json")
-
+            
             # basic preprocessing
             df = filter(df, study, metadata)
             df = replace(df, study, metadata)
             df = recode(df, study, metadata)
             df = rename_and_drop(df, name, var_name_dict, verbose=verbose)
-
+            
             df = df.reset_index(drop=True)
 
             # validate final subject number

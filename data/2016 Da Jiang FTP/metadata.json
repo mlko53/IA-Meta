@@ -20,19 +20,27 @@
     },
     "Filter":{
     	"study1":{
-            "Ethnicity": {
+    	},
+    	"study2":{
+    	},
+    	"study3":{
+    	}
+    },
+    "Recode":{
+    	"study1":{
+            "ethnicity": {
                 "Hong Kong Chinese": 2
             },
-            "Sex": {
+            "gender": {
                 "F": 0,
                 "M": 1
             }
     	},
     	"study2":{
-            "Ethnicity": {
-                "Hong Kong Chinese": 2,
+            "ethnicity": {
+                "Hong Kong Chinese": 2
             },
-            "Sex": {
+            "gender": {
                 "F": 0,
                 "M": 1
             }
@@ -43,29 +51,21 @@
                 "Chinese American": 2,
                 "Other": 3
             },
-            "Sex": {
+            "gender_recode": {
                 "F": 2,
                 "M": 1
             }
     	}
     },
-    "Recode":{
-    	"study1":{
-    	},
-    	"study2":{
-    	},
-    	"study3":{
-    	}
-    },
     "Replace":{
     	"study1":{
-            "_NAN_": 999
+            "_NAN_": "NA"
     	},
     	"study2":{
-            "_NAN_": 999
+            "_NAN_": "NA"
     	},
     	"study3":{
-            "_NAN_": 999
+            "_NAN_": "NA"
     	}
     }
 }
