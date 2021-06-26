@@ -1,0 +1,36 @@
+{
+    "Paper": "2020 Arens",
+    "Year": 2020,
+    "Title": "Sad as a Matter of Evidence: The Desire for Self-Verification Motivates the Pursuit of Sadness in Clinical Depression",
+    "Authors": "Arens, E. A. & Stangier, U.",
+    "Journal": "Frontiers in Psychology",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 100
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "nationality":{
+                "German": 1,
+                "Other": 2
+            },
+            "sex":{
+                "M": 1,
+                "F": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": "NA"
+        }
+    }
+}

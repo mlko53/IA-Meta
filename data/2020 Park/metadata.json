@@ -1,0 +1,41 @@
+{
+    "Paper": "2020 Park",
+    "Year": 2020,
+    "Title": "Culturally Valued Facial Expressions Enhance Loan Request Success",
+    "Authors": "Park, B. K., Genevsky, A., Knutson, B., & Tsai, J.",
+    "Journal": "Emotion",
+    "Studies": ["study3.csv"],
+    "Usable": ["study3.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study3": {
+            "total": 103,
+            "European American": 50,
+            "Korean": 53
+        }
+    },
+    "Filter":{
+        "study3": {
+            "filter_$": [1]
+        }
+    },
+    "Recode":{
+        "study3": {
+            "culture":{
+                "European American": 0,
+                "Korean": 1,
+                "Chinese": 2
+            },
+            "gender":{
+                "F": 1,
+                "M": 2,
+                "Other": 3
+            }
+        }
+    },
+    "Replace":{
+        "study3":{
+            "_NAN_": "NA"
+        }
+    }
+}

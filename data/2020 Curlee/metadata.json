@@ -1,0 +1,42 @@
+{
+    "Paper": "2020 Curlee",
+    "Year": 2020,
+    "Title": "The Ignatian Examen, Self-Transcendent Positive Emotions, Eudaimonic Motivation, and Interpersonal Processes",
+    "Authors": "Curlee MS.",
+    "Journal": "Thesis",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 99,
+            "European American": 59,
+            "African American": 13,
+            "Hispanic": 10,
+            "Other": 17
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "RaceNumber":{
+                "European American": 2,
+                "African American": 1,
+                "Hispanic": 3,
+                "Other": 4
+            },
+            "Gender":{
+                "M": 1,
+                "Non-male": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": "NA"
+        }
+    }
+}

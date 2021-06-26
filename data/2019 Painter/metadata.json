@@ -1,0 +1,34 @@
+{
+    "Paper": "2019 Painter",
+    "Year": 2019,
+    "Title": "A positive emotion regulation intervention for bipolar I disorder: Treatment development and initial outcomes",
+    "Authors": "Painter, J. M., Mote, J., Peckham, A. D., Lee, E. H., Campellone, T. R., Pearlstein, J. G., Morgan, S., Kring, A. M., Johnson, S. L., & Moskowitz, J. T.",
+    "Journal": "General Hospital Psychiatry",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 16
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "ETHNCITY":{
+                "European American": 2,
+                "Hispanic": 1
+            },
+            "GENDER":{
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": "NA"
+        }
+    }
+}

@@ -1,0 +1,42 @@
+{
+    "Paper": "2019 Kraus",
+    "Year": 2019,
+    "Title": "Interdependent self-construal predicts emotion suppression in Asian Americans: An electro-cortical investigation",
+    "Authors": "Kraus, B., & Kitayama, S.",
+    "Journal": "Biological Psychology",
+    "Studies": ["study1.csv"],
+    "Usable": ["study1.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 120
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Ethnicity":{
+                "Multiracial": ["Bi-Cultural (European/Asian)", "Bi-Cultural (Swedish/Filipino)", "Multi-Cultural (White/Asian/Pacific Islander)", "Bi-Cultural (White/Native American)", "Bi-Cultural (Filipino/Indian)", "Bi-Cultural (White/Hispanic)", "Multi-Cultural (Filipino/Indian/German)", "Bi-Cultural (Iranian/Italian)"],
+                "Other": ["East Asian descent, but raised by European Americans", "Grew up in Brazil (Asian Descent)"],
+                "European American": "European American",
+                "East Asian and East Asian American": "East Asian",
+                "Pakistani": "Pakistani",
+                "Israeli": "Israeli",
+                "Indonesian": "Indonesian",
+                "Filipino": "Filipino"                
+            },
+            "Gender":{
+                "M": "Male", 
+                "F": "Female"
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": "."
+        }
+    }
+}

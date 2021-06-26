@@ -1,0 +1,35 @@
+{
+    "Paper": "2019 Severin",
+    "Year": 2019,
+    "Title": "How Buddhism Impacts Happiness: Psychological mechanisms explaining Buddhism's effect on subjective well-being",
+    "Authors": "Severin, Marine",
+    "Journal": "Thesis",
+    "Studies": ["study1.csv"],
+    "Usable": ["study1.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 124
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "ethn":{
+                "Thai": "Thai"
+            },
+            "Sex":{
+                "M": 1,
+                "F": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": "NA"
+        }
+    }
+}
