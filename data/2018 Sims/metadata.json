@@ -1,0 +1,60 @@
+{
+    "Paper": "2018 Sims",
+    "Year": 2018,
+    "Title": "Asian Americans Respond Less Favorably to Excitement (vs. Calm)-Focused Physicians Compared to European Americans",
+    "Authors": "Sims, T., Koopman-Holm, B., Young, P.R., Jiang, D., & Fung, H., Tsai, J.L.",
+    "Journal": "Cultural Diversity and Ethnic Minority Psychology",
+    "Studies": ["study1.sav", "study2.sav"],
+    "Usable": ["study1.sav", "study2.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 198,
+            "European American": 67,
+            "Chinese American": 65,
+            "Hong Kong Chinese": 66
+        },
+        "study2": {
+            "total": 81,
+            "European American": 39,
+            "Asian American": 42
+        }
+    },
+    "Filter":{
+    	"study1":{
+    	},
+    	"study2":{
+    	}
+    },
+    "Recode":{
+        "study1": {
+            "ethnicity":{
+                "European American": 0,
+                "Chinese American": 1,
+                "Hong Kong Chinese": 2
+            },
+            "gender":{
+                "F": 0,
+                "M": 1
+            }
+        },
+        "study2": {
+            "Ethnicity":{
+                "European American": 0,
+                "Asian American": 1
+           },
+            "Gender": {
+                "F": 0,
+                "M": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": "999"
+        },
+        "study2":{
+            "_NAN_": "999"
+        }
+    }
+}

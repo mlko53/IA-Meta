@@ -1,0 +1,36 @@
+{
+	"Paper": "2016 Park",
+    "Year": 2016,
+    "Title": "Neural evidence for cultural differences in the valuation of positive facial expressions",
+    "Authors": "Park, B., Tsai, J. L., Chim, L., Blevins, E., & Knutson, B.",
+    "Journal": "Social Cognitive and Affective Neuroscience",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported":{
+    	"study1":{
+    		"European American": 19,
+            "Chinese": 19
+    	}
+    },
+    "Filter":{
+    	"study1":{
+    	}
+    },
+    "Recode":{
+    	"study1":{
+            "ethni_r": {
+                "European American": 0,
+                "Chinese": 1
+            },
+            "gender": {               
+                "F": 1
+            }
+    	}
+    },
+    "Replace":{
+    	"study1":{
+            "_NAN_": "NA"
+    	}
+    }
+}

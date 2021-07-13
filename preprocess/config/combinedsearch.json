@@ -1,7 +1,7 @@
 {
 "Datasets": {
         "2006" : ["Tsai"],
-        "2007" : ["Tsai"],
+        "2007" : ["Tsai", "Tsai Influence"],
         "2009" : ["Scollon"],
         "2011" : ["Harmon-Jones", "Li"],
         "2012" : ["Chen", "Chow", "Ruby", "Tamir"],
@@ -9,9 +9,9 @@
         "2014" : ["Ditzfield", "Ditzfield Thesis"],
         "2014" : ["Ford", "Koopman-Holm", "Kumar", "Luong", "Mannell", "Mannell Diss", "Mortazavi"],
         "2015" : ["Chow", "Sims"],
-        "2016" : ["Da Jiang FTP", "Da Jiang LTP", "Ito", "Koc", "Tamir", "Thompson", "Tsai"],
+        "2016" : ["Da Jiang FTP", "Da Jiang LTP", "Ito", "Koc", "Tamir", "Thompson", "Tsai", "Park"],
         "2017" : ["Chim", "Floerke", "Gui", "Oosterhoff", "Park", "Parker", "Sands"],
-        "2018" : ["Benachrit", "Gentzler", "Ito", "Koc Identity Integration", "Lee", "Lin", "Shim", "Swerdlow", "Tompson", "Tsai", "Yamada", "Yip"],
+        "2018" : ["Benachrit", "Gentzler", "Ito", "Koc Identity Integration", "Lee", "Lin", "Shim", "Swerdlow", "Tompson", "Tsai", "Yamada", "Yip", "Sims"],
         "2019" : ["Li", "Palmer", "Tsai", "Kraus", "Severin"],
         "2020" : ["Salvador", "Hu", "Koopmann-Holm 2", "Koopmann-Holm 1", "Vishkin", "Park", "Arens", "Curlee"],
         "2021" : ["Song"],
