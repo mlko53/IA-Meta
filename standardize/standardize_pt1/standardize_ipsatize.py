@@ -96,6 +96,17 @@ def manual_change(df, cols):
     #Unpublished Cheung study1 1-7 to 1-5
     df.loc[df['paper_study'] == "Unpublished Cheung study1", cols] = df.loc[df['paper_study'] == "Unpublished Cheung study1", cols].apply(lambda x: np.where(x > 5, np.nan, x))
     
+    
+    #2014 Mortazavi study1 1-6 to 1-5
+    df.loc[df['paper_study'] == "2014 Mortazavi study1", cols] = df.loc[df['paper_study'] == "2014 Mortazavi study1", cols].apply(lambda x: np.where(x > 5, np.nan, x))
+    #2016 Da Jiang FTP study1 0-5 to 1-5
+    df.loc[df['paper_study'] == "2016 Da Jiang FTP study1", cols] = df.loc[df['paper_study'] == "2016 Da Jiang FTP study1", cols].apply(lambda x: np.where(x < 1, np.nan, x))
+    #2016 Da Jiang FTP study3  1-6 to 1-5
+    df.loc[df['paper_study'] == "2016 Da Jiang FTP study3", cols] = df.loc[df['paper_study'] == "2016 Da Jiang FTP study3", cols].apply(lambda x: np.where(x > 5, np.nan, x))
+    #Unpublished Fung study1  1-6 to 1-5
+    df.loc[df['paper_study'] == "Unpublished Fung study1", cols] = df.loc[df['paper_study'] == "Unpublished Fung study1", cols].apply(lambda x: np.where(x > 5, np.nan, x))
+
+    
     return df  
     
     
@@ -131,6 +142,8 @@ def main(fname, custom=None):
     
     # get_min_max
     min_max = get_min_max(data, affect_cols)
+    min_max.loc[('2020 Arens study1'), 'max'] = 7.0   ## adding special case because Arens was 1-7, but only had a max score of 6
+
     print("Old min and max:")
     fullprint(min_max)
     

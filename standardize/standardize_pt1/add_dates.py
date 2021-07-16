@@ -99,16 +99,17 @@ def switch_month_day(row, switch_list):
 
 # recalculate collected_year values based on those 3 values and overwrite. Only take ones that have all three values, since otherwise it means there was a null error
 def recalc_collection_date(row):
-    if not(pd.isnull(row['time.year']) and pd.isnull(row['time.month']) and pd.isnull(row['time.day'])):
+    #if not(pd.isnull(row['time.year']) and pd.isnull(row['time.month']) and pd.isnull(row['time.day'])):
+    if not(pd.isnull(row['time.year']) and pd.isnull(row['time.month'])):
         return row['time.year'] + row['time.month']/12.0
     else:
         return row['collected_year']
     
 
 def main(fname, custom=None):
-    collected = pd.read_csv("year_collection.csv")
+    collected = pd.read_csv("year_collection.csv", dtype={'collected_mod': str, 'earlypub_mod': str})
     collected = collected.filter(regex=("_mod")).dropna()
-    earlypub = pd.read_csv("earliest_pub_year.csv")
+    earlypub = pd.read_csv("earliest_pub_year.csv", dtype={'collected_mod': str, 'earlypub_mod': str})
     earlypub = earlypub.filter(regex=("_mod")).dropna()
     #stdzd_data = pd.read_csv("../../standardized_affect_data_8_17.csv")  ## CHANGE THIS FOR MOST UPDATED STANDARDIZED DATA
     stdzd_data = pd.read_csv(fname)  ## CHANGE THIS FOR MOST UPDATED STANDARDIZED DATA
@@ -179,6 +180,7 @@ def main(fname, custom=None):
             if months[idx] > 12:
                 switch_idxs.append(idx)
     #print(switch_idxs)
+    switch_idxs = [switch_idxs]
     switched_month_day = stdzd_data.apply(switch_month_day, args=(switch_idxs), axis=1)
     stdzd_data['time.month'] = switched_month_day.apply(lambda x: x[0])
     stdzd_data['time.day'] = switched_month_day.apply(lambda x: x[1])

@@ -37,34 +37,34 @@ study_name,Earliest Published Date,study_name_mod,earlypub_mod
 2018 Gentzler,18-Feb,2012 Tamir,2.2012
 2018 Swerdlow,18-Jun,2014 Ford,8.2013
 ,15-Sep,2014 Mannell study1,3.2014
-2017 Park,17-Mar,2016 Ito,7.2014
-2012 Ruby,12-Jul,2016 Koc,9.2016
-,14-Oct,2016 Tamir,1.2015
-2012 Chow,12-Jan,2016 Thompson,3.2016
-,12-Oct,2017 Chim,6.2017
-2014 Mortazavi,14-Oct,2017 Gui,0.2017
-2014 Ditzfield,13-Oct,2017 Oosterhoff,1.2017
-2018 Benachrit,18-Jul,2017 Parker,11.2016
-2013 Scheibe,12-Oct,2018 Koc Identity Integration,10.2017
-,2018,2018 Lee,5.2018
-,2015,2018 Shim,4.2018
-,13-Aug,2018 Tompson,4.2014
-2016 Da Jiang FTP,15-Jul,2018 Tsai,10.2018
-Same sample as 2018 Lin,17-Jan,,
-2014 Luong,2012,,
-2009 Scollon,7-Nov,,
-2015 Sims,15-Jun,,
-,17-Apr,,
-,19-Jan,,
-,14-Oct,,
-,10-Jan,,
-,19-Jun,,
-,2015,,
-,10-May,,
-,2017,,
-,8-Dec,,
-,16-Jun,,
-,13-Aug,,
+2017 Park,17-Mar,2016 Koc,9.2016
+2012 Ruby,12-Jul,2016 Tamir,1.2015
+,14-Oct,2016 Thompson,3.2016
+2012 Chow,12-Jan,2017 Chim,6.2017
+,12-Oct,2017 Gui,0.2017
+2014 Mortazavi,14-Oct,2017 Oosterhoff,1.2017
+2014 Ditzfield,13-Oct,2017 Parker,11.2016
+2018 Benachrit,18-Jul,2018 Koc Identity Integration,10.2017
+2013 Scheibe,12-Oct,2018 Lee,5.2018
+,2018,2018 Shim,4.2018
+,2015,2018 Tompson,4.2014
+,13-Aug,2018 Tsai,10.2018
+2016 Da Jiang FTP,15-Jul,2019 Kraus,7.2019
+Same sample as 2018 Lin,17-Jan,2019 Li,2.2019
+2014 Luong,2012,2019 Severin,0.2019
+2009 Scollon,7-Nov,2020 Arens,2.2020
+2015 Sims,15-Jun,2020 Curlee,9.2020
+,17-Apr,2020 Hu,9.2020
+,19-Jan,2020 Koopmann-Holm 1,2.2020
+,14-Oct,2020 Koopmann-Holm 2,12.2019
+,10-Jan,2020 Park,8.2019
+,19-Jun,2020 Salvador,9.2020
+,2015,2020 Vishkin,7.2020
+,10-May,2021 Song,10.2020
+,2017,2007 Tsai Influence,0.2007
+,8-Dec,2016 Park,9.2015
+,16-Jun,2018 Sims,7.2017
+,13-Aug,2019 Painter,7.2019
 2011 Harmon-Jones,"August, 2011",,
 2012 Tamir,12-Feb,,
 2014 Ford,13-Aug,,

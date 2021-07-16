@@ -70,6 +70,7 @@ def main(fname, custom=None):
     #get_spread(data)
     fullprint(get_min_max(data))
     
+    #get_spread(data)
     print(data)
     
     if (custom is None):

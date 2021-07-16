@@ -1,9 +1,63 @@
+Formula: a to b: (a+b)/2+0.5
+
 FIXED Unpublished Palmer study1
 BROKEN Unpublished Ito Mika study1		
 BROKEN 2018 Bencharit study4a
 
 
+2: 18-25 -> 22
+3: 26-35 -> 31
+4: 36-45 -> 41
+Fix Bencharit
+2018 Bencharit study4a                      2.000000       4
+                                            3.000000     112
+                                            4.000000      10
 
+remove below 18
+Fix Ito
+Unpublished Ito Mika study1                 12.000000      1
+                                            13.000000      3
+                                            14.000000      2
+                                            16.000000      1
+                                            17.000000      1
+                                            19.000000      6
+
+1: 18-29 -> 24
+2: 30-39 -> 35
+3: 40-49 -> 45
+Fix 2019 Tsai study3
+2019 Tsai study3                            1.000000     129
+                                            2.000000      54
+                                            3.000000      15
+
+1: 18
+2: 19
+3: 20
+4: 21
+5: 22-23 -> 23
+6: 24-29 -> 27
+7: 30-38 -> 34.5
+Fix 2020 Curlee
+2020 Curlee study1                          1.000000      13
+                                            2.000000      34
+                                            3.000000      18
+                                            4.000000       9
+                                            5.000000       9
+                                            6.000000       9
+                                            7.000000       7
+Fix 2020 Koopmann-Holm 1
+2020 Koopmann-Holm 1 study3                 0.000000       1
+                                            14.000000      1
+                                            16.000000      1
+                                            17.000000      1
+                                            18.000000     14
+
+
+
+
+
+
+----------------------------------------------------------------
 
 2006 Tsai study2                            1.0                     1
 2011 Li study1 					weird - should be at least 18 (MTurk)
