@@ -28,8 +28,9 @@
                 "Thai American": ["Thai"],
                 "Thai Chinese American": ["Thai Chinese", "Thai/Chinese"],
                 "Chinese Vietnamese American": ["Chinese-Vietnamese"],
-                "Taiwanese American": ["Taiwanese American"],
-                "Japanese Chinese Filipino Hawaiian American": ["Japanese, Chinese, Filipino, Hawaiian"]
+                "Taiwanese American": ["Taiwanese American", "Taiwanese-American"],
+                "Japanese Chinese Filipino Hawaiian American": ["Japanese, Chinese, Filipino, Hawaiian"],
+                "Korean American": ["Korean-American"]
             },
             "gender":{
                 "F": 0,
