@@ -52,7 +52,7 @@
                 "Other": 3
             },
             "gender_recode": {
-                "F": 2,
+                "F": 0,
                 "M": 1
             }
     	}

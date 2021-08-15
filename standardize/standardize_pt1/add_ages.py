@@ -56,18 +56,37 @@ def replace_age(data, age_mod):
     
     return data
     
+def manual_change(df):
     
+    # Fixing 2015 Sims Patients study1
+    def sims_date(curr_date):
+        test_year = curr_date[-4:]
+        #print(curr_date, test_year)
+        if test_year.isnumeric():
+            test_year = int(test_year)
+        else:
+            test_year = int(test_year[-2:])
+            if test_year > 12:
+                test_year += 1900
+            else:
+                test_year += 2000
+        return int(test_year)       
+    df['age'] = df.apply(lambda x: x['age']  if (x['paper_study']!="2015 Sims Patients study1" or "nan" in x['age']) else int(float(x['collected_year']) - sims_date(x['age'])), axis=1)
+    
+    return df
+
     
 def main(fname, custom=None):
     data = pd.read_csv(fname)
     min_max = get_min_max(data)
     fullprint(min_max)
-    #get_spread(data)
+    get_spread(data)
     age_mod = pd.read_csv('ages/ages_edit.csv')
     #print(age_mod)
     data = replace_age(data, age_mod)
+    data = manual_change(data)  
     data['age'] = data['age'].apply(lambda x: autoconvert(str(x).strip()) )  
-    #get_spread(data)
+    get_spread(data)
     fullprint(get_min_max(data))
     
     #get_spread(data)

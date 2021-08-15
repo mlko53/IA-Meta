@@ -106,6 +106,17 @@ def recalc_collection_date(row):
         return row['collected_year']
     
 
+def manual_change(df):
+    
+    # edits for 2016 Park
+    park_lookup = {"101":"jm052112", "102":"sa052812", "103":"cz052912", "105":"ny053012", "106":"ll060412", "108":"nn060512", "110":"dt063012", "112":"zq072312", "113":"xl072912", "115":"km073012", "116":"sh073012", "117":"ql073012", "118":"mt080812", "119":"lm080812", "120":"lc091012", "121":"mk092712", "123":"sm103112", "124":"yl111012", "125":"yg111212", "126":"xl113012", "128":"my120612", "129":"ck120812", "130":"ja120912", "131":"qx121312", "132":"gt040613", "134":"ym042513", "135":"ar042713", "136":"vw051413", "137":"js051813", "138":"et051913", "141":"gr062513", "143":"kt071313", "156":"jm041614", "157":"ys041714", "158":"yw042414", "159":"ll042414", "160":"ly050514", "161":"kb060314"}
+    df['time.year']  = df.apply(lambda x: x['time.year']  if x['paper_study']!="2016 Park study1" else int(park_lookup[str(int(x['ID']))][6:8])+2000, axis=1)
+    df['time.month'] = df.apply(lambda x: x['time.month'] if x['paper_study']!="2016 Park study1" else int(park_lookup[str(int(x['ID']))][2:4]), axis=1)
+    df['time.day']   = df.apply(lambda x: x['time.day']   if x['paper_study']!="2016 Park study1" else int(park_lookup[str(int(x['ID']))][4:6]), axis=1)
+    
+    return df
+
+
 def main(fname, custom=None):
     collected = pd.read_csv("year_collection.csv", dtype={'collected_mod': str, 'earlypub_mod': str})
     collected = collected.filter(regex=("_mod")).dropna()
@@ -184,6 +195,10 @@ def main(fname, custom=None):
     switched_month_day = stdzd_data.apply(switch_month_day, args=(switch_idxs), axis=1)
     stdzd_data['time.month'] = switched_month_day.apply(lambda x: x[0])
     stdzd_data['time.day'] = switched_month_day.apply(lambda x: x[1])
+
+    # manual overrides here
+    stdzd_data = manual_change(stdzd_data)
+
 
     # recalculate collected_year values based on those 3 values and overwrite. Only take ones that have all three values, since otherwise it means there was a null error
     stdzd_data['collected_year'] = stdzd_data.apply(recalc_collection_date, axis=1)

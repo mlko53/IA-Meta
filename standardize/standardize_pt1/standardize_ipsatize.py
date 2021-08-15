@@ -106,16 +106,23 @@ def manual_change(df, cols):
     #Unpublished Fung study1  1-6 to 1-5
     df.loc[df['paper_study'] == "Unpublished Fung study1", cols] = df.loc[df['paper_study'] == "Unpublished Fung study1", cols].apply(lambda x: np.where(x > 5, np.nan, x))
 
+
+    #2018 Sims study1 0-5 to 1-5
+    df.loc[df['paper_study'] == "2018 Sims study1", cols] = df.loc[df['paper_study'] == "2018 Sims study1", cols].apply(lambda x: np.where(x < 1, np.nan, x))
+    
     
     return df  
     
     
 def ipsatize(df, cols):
-    df["mean"] = df[cols].mean(axis=1, skipna=True)
-    df["std"]  = df[cols].std(axis=1, skipna=True)    
+    df["mean_raw"] = df[cols].mean(axis=1, skipna=True)
+    df["std_raw"]  = df[cols].std(axis=1, skipna=True)    
     
     for col in cols:
-        df[col] = (df[col] - df['mean']) / df['std']
+        df[col[:-4]+".ips.stdpt1"] = (df[col] - df['mean_raw']) / df['std_raw']
+    
+    del df["mean_raw"]
+    del df["std_raw"]
     
     return df
     
@@ -163,8 +170,17 @@ def main(fname, custom=None):
     print("New min and max:")
     fullprint(get_min_max(data, affect_cols))
     
-    # ipsatize
+    
+    
+    # ipsatize (done separately for ideal and actual)
     # affect_words = ipsatize(affect_words, affect_cols)
+    ideal_cols = [col for col in affect_cols if col[0]=='i']
+    actual_cols = [col for col in affect_cols if col[0]=='r']
+    data = ipsatize(data, actual_cols)
+    data = ipsatize(data, ideal_cols)
+    
+    
+    
     
     #get HAP, LAP, year
     #year
@@ -206,6 +222,32 @@ def main(fname, custom=None):
     data['r.LA'] = data[['r.idle.raw', 'r.inac.raw', 'r.pass.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
     data['i.LA'] = data[['i.idle.raw', 'i.inac.raw', 'i.pass.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
         
+    
+    # storing ipsatized versions
+    #r.HAP, r.LAP, i.HAP, i.LAP
+    data['r.HAP.ips.stdpt1'] = data[['r.exci.ips.stdpt1', 'r.elat.ips.stdpt1', 'r.euph.ips.stdpt1', 'r.enth.ips.stdpt1']].dropna(thresh=3).mean(axis=1, skipna=True)
+    data['r.LAP.ips.stdpt1'] = data[['r.calm.ips.stdpt1', 'r.peac.ips.stdpt1', 'r.sere.ips.stdpt1', 'r.rela.ips.stdpt1']].dropna(thresh=3).mean(axis=1, skipna=True)
+    data['i.HAP.ips.stdpt1'] = data[['i.exci.ips.stdpt1', 'i.elat.ips.stdpt1', 'i.euph.ips.stdpt1', 'i.enth.ips.stdpt1']].dropna(thresh=3).mean(axis=1, skipna=True)
+    data['i.LAP.ips.stdpt1'] = data[['i.calm.ips.stdpt1', 'i.peac.ips.stdpt1', 'i.sere.ips.stdpt1', 'i.rela.ips.stdpt1']].dropna(thresh=3).mean(axis=1, skipna=True)
+    print(data)
+    #r.POS, i.POS, r.NEG, i.NEG
+    data['r.POS.ips.stdpt1'] = data[['r.happ.ips.stdpt1', 'r.content.ips.stdpt1', 'r.sati.ips.stdpt1']].dropna(thresh=3).mean(axis=1, skipna=True)
+    data['i.POS.ips.stdpt1'] = data[['i.happ.ips.stdpt1', 'i.content.ips.stdpt1', 'i.sati.ips.stdpt1']].dropna(thresh=3).mean(axis=1, skipna=True)
+    data['r.NEG.ips.stdpt1'] = data[['r.lone.ips.stdpt1', 'r.sadx.ips.stdpt1', 'r.unha.ips.stdpt1']].dropna(thresh=3).mean(axis=1, skipna=True)
+    data['i.NEG.ips.stdpt1'] = data[['i.lone.ips.stdpt1', 'i.sadx.ips.stdpt1', 'i.unha.ips.stdpt1']].dropna(thresh=3).mean(axis=1, skipna=True)
+    #r.HAN, i.HAN, r.LAN, i.HAN
+    data['r.HAN.ips.stdpt1'] = data[['r.host.ips.stdpt1', 'r.nerv.ips.stdpt1', 'r.fear.ips.stdpt1']].dropna(thresh=3).mean(axis=1, skipna=True)
+    data['i.HAN.ips.stdpt1'] = data[['i.host.ips.stdpt1', 'i.nerv.ips.stdpt1', 'i.fear.ips.stdpt1']].dropna(thresh=3).mean(axis=1, skipna=True)
+    data['r.LAN.ips.stdpt1'] = data[['r.dull.ips.stdpt1', 'r.slee.ips.stdpt1', 'r.slug.ips.stdpt1']].dropna(thresh=3).mean(axis=1, skipna=True)
+    data['i.LAN.ips.stdpt1'] = data[['i.dull.ips.stdpt1', 'i.slee.ips.stdpt1', 'i.slug.ips.stdpt1']].dropna(thresh=3).mean(axis=1, skipna=True)
+    #r.HA, i.HA, r.LA, i.LA
+    data['r.HA.ips.stdpt1'] = data[['r.asto.ips.stdpt1', 'r.surp.ips.stdpt1']].dropna(thresh=2).mean(axis=1, skipna=True)
+    data['i.HA.ips.stdpt1'] = data[['i.asto.ips.stdpt1', 'i.surp.ips.stdpt1']].dropna(thresh=2).mean(axis=1, skipna=True)
+    data['r.LA.ips.stdpt1'] = data[['r.idle.ips.stdpt1', 'r.inac.ips.stdpt1', 'r.pass.ips.stdpt1']].dropna(thresh=3).mean(axis=1, skipna=True)
+    data['i.LA.ips.stdpt1'] = data[['i.idle.ips.stdpt1', 'i.inac.ips.stdpt1', 'i.pass.ips.stdpt1']].dropna(thresh=3).mean(axis=1, skipna=True)
+    
+    
+    
     
     # slicing ethnicity
     # data = data.loc[data['ethn'] == "European American"]
