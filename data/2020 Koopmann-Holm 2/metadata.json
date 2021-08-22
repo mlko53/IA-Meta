@@ -20,7 +20,7 @@
     "Recode":{
         "study3": {
             "ethnicity":{
-                "European American": ["Caucasian", "caucasian", "Caucasian/Jewish", "white/non-minority", "Caucasian-American", "White &&European-American@@", "White", "white", "White/Caucasian", "European American"],
+                "European American": ["Caucasian", "caucasian", "Caucasian/Jewish", "White/non-minority", "Caucasian-American", "White &&European-American@@", "White", "white", "White/Caucasian", "European American"],
                 "Chinese American": ["Chinese American", "Chinese-American", "chinese american", "Chinese"],
                 "Asian American": ["Asian American", "Asian", "asian", "Asian American (based on screening form", "Asian-American"],
                 "Vietnamese American": ["Vietnamese American", "Vietnamese-American", "Vietnamese &&Asian American@@"],
