@@ -356,8 +356,8 @@ Japan_convert <- 103.469437
 
 # Set a max multiplier - for things that are X_amount+ (e.g. $100,000+), set the value as multipler * X_amount
 # So if we have a box of $100,000+ and the multipler is 2, then we would set the income as 200,000.
-max_mult <- 2
-# max_mult <- 1
+# max_mult <- 2
+max_mult <- 1
 # max_mult <- NA
 ```
 
@@ -816,5 +816,5 @@ df_final$famincome_new <- ifelse((df_final$famincome_new == 150000 & df_final$pa
 
 ```{r}
 df_final <- df_final[order(df_final$"Unnamed..0"), ]
-write.csv(df_final, "std_pt2_df_8_4_21_manual2.csv", row.names = FALSE, na="")
+write.csv(df_final, "std_pt2_df_8_4_21_manual2_1x.csv", row.names = FALSE, na="")
 ```
