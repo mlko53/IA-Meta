@@ -21,7 +21,8 @@ knitr::opts_chunk$set(echo = TRUE)
 #df <- read.csv("./std_pt1_data.csv")
 #df <- read.csv("./std_pt1_df_11_15.csv")
 #df <- read.csv("./std_pt1_df_8_4_21_manual.csv")
-df <- read.csv("./std_pt1_df_8_4_21_manual2.csv")
+#df <- read.csv("./std_pt1_df_8_4_21_manual2.csv")
+df <- read.csv("./std_pt1_df_10_22_21.csv")
 df[1] <- NULL #removing a weird extra column from step 1
 df[2] <- NULL #removing other weird column from edited standardizing
 
@@ -816,5 +817,5 @@ df_final$famincome_new <- ifelse((df_final$famincome_new == 150000 & df_final$pa
 
 ```{r}
 df_final <- df_final[order(df_final$"Unnamed..0"), ]
-write.csv(df_final, "std_pt2_df_8_4_21_manual2_1x.csv", row.names = FALSE, na="")
+write.csv(df_final, "std_pt2_std_pt1_df_10_22_21.csv", row.names = FALSE, na="")
 ```
