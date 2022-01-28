@@ -193,37 +193,60 @@ def main(fname, custom=None):
     #data['r.LAP'] = data[['r.calm.raw', 'r.peac.raw', 'r.sere.raw', 'r.rela.raw']].mean(axis=1, skipna=True)
     #data['i.HAP'] = data[['i.exci.raw', 'i.elat.raw', 'i.euph.raw', 'i.enth.raw']].mean(axis=1, skipna=True)
     #data['i.LAP'] = data[['i.calm.raw', 'i.peac.raw', 'i.sere.raw', 'i.rela.raw']].mean(axis=1, skipna=True)
-    data['r.HAP'] = data[['r.exci.raw', 'r.elat.raw', 'r.euph.raw', 'r.enth.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
-    data['r.LAP'] = data[['r.calm.raw', 'r.peac.raw', 'r.sere.raw', 'r.rela.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
-    data['i.HAP'] = data[['i.exci.raw', 'i.elat.raw', 'i.euph.raw', 'i.enth.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
-    data['i.LAP'] = data[['i.calm.raw', 'i.peac.raw', 'i.sere.raw', 'i.rela.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
+    #data['r.HAP'] = data[['r.exci.raw', 'r.elat.raw', 'r.euph.raw', 'r.enth.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
+    #data['r.LAP'] = data[['r.calm.raw', 'r.peac.raw', 'r.sere.raw', 'r.rela.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
+    #data['i.HAP'] = data[['i.exci.raw', 'i.elat.raw', 'i.euph.raw', 'i.enth.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
+    #data['i.LAP'] = data[['i.calm.raw', 'i.peac.raw', 'i.sere.raw', 'i.rela.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
+    data['r.HAP'] = data[['r.exci.raw', 'r.elat.raw', 'r.enth.raw']].dropna().mean(axis=1, skipna=True)
+    data['r.LAP'] = data[['r.calm.raw', 'r.peac.raw', 'r.rela.raw']].dropna().mean(axis=1, skipna=True)
+    data['i.HAP'] = data[['i.exci.raw', 'i.elat.raw', 'i.enth.raw']].dropna().mean(axis=1, skipna=True)
+    data['i.LAP'] = data[['i.calm.raw', 'i.peac.raw', 'i.rela.raw']].dropna().mean(axis=1, skipna=True)
+    
     print(data)
     #r.POS, i.POS, r.NEG, i.NEG
     #data['r.POS'] = data[['r.happ.raw', 'r.content.raw', 'r.sati.raw']].mean(axis=1, skipna=True)
     #data['i.POS'] = data[['i.happ.raw', 'i.content.raw', 'i.sati.raw']].mean(axis=1, skipna=True)
     #data['r.NEG'] = data[['r.lone.raw', 'r.sadx.raw', 'r.unha.raw']].mean(axis=1, skipna=True)
     #data['i.NEG'] = data[['i.lone.raw', 'i.sadx.raw', 'i.unha.raw']].mean(axis=1, skipna=True)
-    data['r.POS'] = data[['r.happ.raw', 'r.content.raw', 'r.sati.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
-    data['i.POS'] = data[['i.happ.raw', 'i.content.raw', 'i.sati.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
-    data['r.NEG'] = data[['r.lone.raw', 'r.sadx.raw', 'r.unha.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
-    data['i.NEG'] = data[['i.lone.raw', 'i.sadx.raw', 'i.unha.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
+    #data['r.POS'] = data[['r.happ.raw', 'r.content.raw', 'r.sati.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
+    #data['i.POS'] = data[['i.happ.raw', 'i.content.raw', 'i.sati.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
+    #data['r.NEG'] = data[['r.lone.raw', 'r.sadx.raw', 'r.unha.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
+    #data['i.NEG'] = data[['i.lone.raw', 'i.sadx.raw', 'i.unha.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
+    data['r.POS'] = data[['r.happ.raw', 'r.content.raw', 'r.sati.raw']].dropna().mean(axis=1, skipna=True)
+    data['i.POS'] = data[['i.happ.raw', 'i.content.raw', 'i.sati.raw']].dropna().mean(axis=1, skipna=True)
+    data['r.NEG'] = data[['r.lone.raw', 'r.sadx.raw', 'r.unha.raw']].dropna().mean(axis=1, skipna=True)
+    data['i.NEG'] = data[['i.lone.raw', 'i.sadx.raw', 'i.unha.raw']].dropna().mean(axis=1, skipna=True)
+    
     #r.HAN, i.HAN, r.LAN, i.HAN
     #data['r.HAN'] = data[['r.host.raw', 'r.nerv.raw', 'r.fear.raw']].mean(axis=1, skipna=True)
     #data['i.HAN'] = data[['i.host.raw', 'i.nerv.raw', 'i.fear.raw']].mean(axis=1, skipna=True)
     #data['r.LAN'] = data[['r.dull.raw', 'r.slee.raw', 'r.slug.raw']].mean(axis=1, skipna=True)
     #data['i.LAN'] = data[['i.dull.raw', 'i.slee.raw', 'i.slug.raw']].mean(axis=1, skipna=True)
-    data['r.HAN'] = data[['r.host.raw', 'r.nerv.raw', 'r.fear.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
-    data['i.HAN'] = data[['i.host.raw', 'i.nerv.raw', 'i.fear.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
-    data['r.LAN'] = data[['r.dull.raw', 'r.slee.raw', 'r.slug.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
-    data['i.LAN'] = data[['i.dull.raw', 'i.slee.raw', 'i.slug.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
+    #data['r.HAN'] = data[['r.host.raw', 'r.nerv.raw', 'r.fear.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
+    #data['i.HAN'] = data[['i.host.raw', 'i.nerv.raw', 'i.fear.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
+    #data['r.LAN'] = data[['r.dull.raw', 'r.slee.raw', 'r.slug.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
+    #data['i.LAN'] = data[['i.dull.raw', 'i.slee.raw', 'i.slug.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
+    data['r.HAN'] = data[['r.host.raw', 'r.nerv.raw', 'r.fear.raw']].dropna().mean(axis=1, skipna=True)
+    data['i.HAN'] = data[['i.host.raw', 'i.nerv.raw', 'i.fear.raw']].dropna().mean(axis=1, skipna=True)
+    data['r.LAN'] = data[['r.dull.raw', 'r.slee.raw', 'r.slug.raw']].dropna().mean(axis=1, skipna=True)
+    data['i.LAN'] = data[['i.dull.raw', 'i.slee.raw', 'i.slug.raw']].dropna().mean(axis=1, skipna=True)
+    
     #r.HA, i.HA, r.LA, i.LA
-    data['r.HA'] = data[['r.asto.raw', 'r.surp.raw']].dropna(thresh=2).mean(axis=1, skipna=True)
-    data['i.HA'] = data[['i.asto.raw', 'i.surp.raw']].dropna(thresh=2).mean(axis=1, skipna=True)
-    data['r.LA'] = data[['r.idle.raw', 'r.inac.raw', 'r.pass.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
-    data['i.LA'] = data[['i.idle.raw', 'i.inac.raw', 'i.pass.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
-        
+    #data['r.HA'] = data[['r.asto.raw', 'r.surp.raw']].dropna(thresh=2).mean(axis=1, skipna=True)
+    #data['i.HA'] = data[['i.asto.raw', 'i.surp.raw']].dropna(thresh=2).mean(axis=1, skipna=True)
+    #data['r.LA'] = data[['r.idle.raw', 'r.inac.raw', 'r.pass.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
+    #data['i.LA'] = data[['i.idle.raw', 'i.inac.raw', 'i.pass.raw']].dropna(thresh=3).mean(axis=1, skipna=True)
+    data['r.HA'] = data[['r.asto.raw', 'r.surp.raw']].dropna().mean(axis=1, skipna=True)
+    data['i.HA'] = data[['i.asto.raw', 'i.surp.raw']].dropna().mean(axis=1, skipna=True)
+    data['r.LA'] = data[['r.idle.raw', 'r.inac.raw', 'r.pass.raw']].dropna().mean(axis=1, skipna=True)
+    data['i.LA'] = data[['i.idle.raw', 'i.inac.raw', 'i.pass.raw']].dropna().mean(axis=1, skipna=True)
+    
+    data['r.HA.all3'] = data[['r.asto.raw', 'r.surp.raw', 'r.arou.raw']].dropna().mean(axis=1, skipna=True)
+    data['i.HA.all3'] = data[['i.asto.raw', 'i.surp.raw', 'i.arou.raw']].dropna().mean(axis=1, skipna=True)
+     
     
     # storing ipsatized versions
+    """
     #r.HAP, r.LAP, i.HAP, i.LAP
     data['r.HAP.ips.stdpt1'] = data[['r.exci.ips.stdpt1', 'r.elat.ips.stdpt1', 'r.euph.ips.stdpt1', 'r.enth.ips.stdpt1']].dropna(thresh=3).mean(axis=1, skipna=True)
     data['r.LAP.ips.stdpt1'] = data[['r.calm.ips.stdpt1', 'r.peac.ips.stdpt1', 'r.sere.ips.stdpt1', 'r.rela.ips.stdpt1']].dropna(thresh=3).mean(axis=1, skipna=True)
@@ -245,7 +268,31 @@ def main(fname, custom=None):
     data['i.HA.ips.stdpt1'] = data[['i.asto.ips.stdpt1', 'i.surp.ips.stdpt1']].dropna(thresh=2).mean(axis=1, skipna=True)
     data['r.LA.ips.stdpt1'] = data[['r.idle.ips.stdpt1', 'r.inac.ips.stdpt1', 'r.pass.ips.stdpt1']].dropna(thresh=3).mean(axis=1, skipna=True)
     data['i.LA.ips.stdpt1'] = data[['i.idle.ips.stdpt1', 'i.inac.ips.stdpt1', 'i.pass.ips.stdpt1']].dropna(thresh=3).mean(axis=1, skipna=True)
+    """
     
+    #r.HAP, r.LAP, i.HAP, i.LAP
+    data['r.HAP.ips.stdpt1'] = data[['r.exci.ips.stdpt1', 'r.elat.ips.stdpt1', 'r.enth.ips.stdpt1']].dropna().mean(axis=1, skipna=True)
+    data['r.LAP.ips.stdpt1'] = data[['r.calm.ips.stdpt1', 'r.peac.ips.stdpt1', 'r.rela.ips.stdpt1']].dropna().mean(axis=1, skipna=True)
+    data['i.HAP.ips.stdpt1'] = data[['i.exci.ips.stdpt1', 'i.elat.ips.stdpt1', 'i.enth.ips.stdpt1']].dropna().mean(axis=1, skipna=True)
+    data['i.LAP.ips.stdpt1'] = data[['i.calm.ips.stdpt1', 'i.peac.ips.stdpt1', 'i.rela.ips.stdpt1']].dropna().mean(axis=1, skipna=True)
+    #r.POS, i.POS, r.NEG, i.NEG
+    data['r.POS.ips.stdpt1'] = data[['r.happ.ips.stdpt1', 'r.content.ips.stdpt1', 'r.sati.ips.stdpt1']].dropna().mean(axis=1, skipna=True)
+    data['i.POS.ips.stdpt1'] = data[['i.happ.ips.stdpt1', 'i.content.ips.stdpt1', 'i.sati.ips.stdpt1']].dropna().mean(axis=1, skipna=True)
+    data['r.NEG.ips.stdpt1'] = data[['r.lone.ips.stdpt1', 'r.sadx.ips.stdpt1', 'r.unha.ips.stdpt1']].dropna().mean(axis=1, skipna=True)
+    data['i.NEG.ips.stdpt1'] = data[['i.lone.ips.stdpt1', 'i.sadx.ips.stdpt1', 'i.unha.ips.stdpt1']].dropna().mean(axis=1, skipna=True)
+    #r.HAN, i.HAN, r.LAN, i.HAN
+    data['r.HAN.ips.stdpt1'] = data[['r.host.ips.stdpt1', 'r.nerv.ips.stdpt1', 'r.fear.ips.stdpt1']].dropna().mean(axis=1, skipna=True)
+    data['i.HAN.ips.stdpt1'] = data[['i.host.ips.stdpt1', 'i.nerv.ips.stdpt1', 'i.fear.ips.stdpt1']].dropna().mean(axis=1, skipna=True)
+    data['r.LAN.ips.stdpt1'] = data[['r.dull.ips.stdpt1', 'r.slee.ips.stdpt1', 'r.slug.ips.stdpt1']].dropna().mean(axis=1, skipna=True)
+    data['i.LAN.ips.stdpt1'] = data[['i.dull.ips.stdpt1', 'i.slee.ips.stdpt1', 'i.slug.ips.stdpt1']].dropna().mean(axis=1, skipna=True)
+    #r.HA, i.HA, r.LA, i.LA
+    data['r.HA.ips.stdpt1'] = data[['r.asto.ips.stdpt1', 'r.surp.ips.stdpt1']].dropna().mean(axis=1, skipna=True)
+    data['i.HA.ips.stdpt1'] = data[['i.asto.ips.stdpt1', 'i.surp.ips.stdpt1']].dropna().mean(axis=1, skipna=True)
+    data['r.LA.ips.stdpt1'] = data[['r.idle.ips.stdpt1', 'r.inac.ips.stdpt1', 'r.pass.ips.stdpt1']].dropna().mean(axis=1, skipna=True)
+    data['i.LA.ips.stdpt1'] = data[['i.idle.ips.stdpt1', 'i.inac.ips.stdpt1', 'i.pass.ips.stdpt1']].dropna().mean(axis=1, skipna=True)
+    
+    data['r.HA.all3.ips.stdpt1'] = data[['r.asto.ips.stdpt1', 'r.surp.ips.stdpt1', 'r.arou.ips.stdpt1']].dropna().mean(axis=1, skipna=True)
+    data['i.HA.all3.ips.stdpt1'] = data[['i.asto.ips.stdpt1', 'i.surp.ips.stdpt1', 'i.arou.ips.stdpt1']].dropna().mean(axis=1, skipna=True)
     
     
     
