@@ -120,7 +120,6 @@ def ipsatize(df, cols):
     
     for col in cols:
         df[col[:-4]+".ips.stdpt1"] = (df[col] - df['mean_raw']) / df['std_raw']
-    
     del df["mean_raw"]
     del df["std_raw"]
     
@@ -178,7 +177,6 @@ def main(fname, custom=None):
     actual_cols = [col for col in affect_cols if col[0]=='r']
     data = ipsatize(data, actual_cols)
     data = ipsatize(data, ideal_cols)
-    
     
     
     

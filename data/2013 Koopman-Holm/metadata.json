@@ -27,7 +27,7 @@
         "study1": {
             "ethnicit": {
                 "European American": 3,
-                "Asian American": 1
+                "East Asian American": 1
             },
             "gender": {
                 "F": 2,
@@ -37,7 +37,7 @@
         "study2": {
             "ethncat":{
                 "European American": 1,
-                "Asian American": 2
+                "East Asian American": 2
             },
             "gender":{
                 "F": 0

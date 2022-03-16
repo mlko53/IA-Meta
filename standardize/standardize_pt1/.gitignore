@@ -31,3 +31,4 @@ __pycache__/
 !ages/correct_studies.txt
 !ages/incorrect_studies.txt
 !nonAVI.csv
+!ourlab.csv
