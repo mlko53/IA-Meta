@@ -111,6 +111,11 @@ def manual_change(df, cols):
     df.loc[df['paper_study'] == "2018 Sims study1", cols] = df.loc[df['paper_study'] == "2018 Sims study1", cols].apply(lambda x: np.where(x < 1, np.nan, x))
     
     
+    # Unpublished Ito Kono study1: reverse code
+    df.loc[df['paper_study'] == "Unpublished Ito Kono study1", cols] = df.loc[df['paper_study'] == "Unpublished Ito Kono study1", cols].apply(lambda x: -1*x+5)
+
+    
+    
     return df  
     
     
