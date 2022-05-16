@@ -357,7 +357,45 @@ def main(fname, custom=None):
     print()
     
     
-
+    # adding hard and soft constraint
+    hard_r_ips = (~np.isnan(data['r.HA'])) 
+    hard_r_ips_all3 = (~np.isnan(data['r.HA.all3'])) 
+    hard_i_ips = (~np.isnan(data['i.HA'])) 
+    hard_i_ips_all3 = (~np.isnan(data['i.HA.all3'])) 
+    for column in ['HAP', 'LAP', 'POS', 'NEG', 'HAN', 'LAN', 'LA']:
+        hard_r_ips = hard_r_ips & (~np.isnan(data['r.'+column])) 
+        hard_r_ips_all3 = hard_r_ips_all3 & (~np.isnan(data['r.'+column])) 
+        hard_i_ips = hard_i_ips & (~np.isnan(data['i.'+column])) 
+        hard_i_ips_all3 = hard_i_ips_all3 & (~np.isnan(data['i.'+column])) 
+    data['hard.r.ips'] = hard_r_ips.astype(int)
+    data['hard.r.ips.all3'] = hard_r_ips_all3.astype(int)
+    data['hard.i.ips'] = hard_i_ips.astype(int)
+    data['hard.i.ips.all3'] = hard_i_ips_all3.astype(int)
+    
+    soft_r_ips = ( (~np.isnan(data['r.asto.raw'])) | (~np.isnan(data['r.surp.raw'])) )
+    soft_r_ips_all3 = ( (~np.isnan(data['r.asto.raw'])) | (~np.isnan(data['r.surp.raw'])) | (~np.isnan(data['r.arou.raw'])) )
+    soft_i_ips = ( (~np.isnan(data['i.asto.raw'])) | (~np.isnan(data['i.surp.raw'])) )
+    soft_i_ips_all3 = ( (~np.isnan(data['i.asto.raw'])) | (~np.isnan(data['i.surp.raw'])) | (~np.isnan(data['i.arou.raw'])) )
+    indiv_words = [ ['exci.raw', 'elat.raw', 'enth.raw'],
+                    ['calm.raw', 'peac.raw', 'rela.raw'],
+                    ['happ.raw', 'content.raw', 'sati.raw'],
+                    ['lone.raw', 'sadx.raw', 'unha.raw'],
+                    ['host.raw', 'nerv.raw', 'fear.raw'],
+                    ['dull.raw', 'slee.raw', 'slug.raw'],
+                    ['idle.raw', 'inac.raw', 'pass.raw']]
+    for column in indiv_words:
+        actual_check = ( (~np.isnan(data['r.'+column[0]])) | (~np.isnan(data['r.'+column[1]])) | (~np.isnan(data['r.'+column[2]])) )
+        ideal_check  = ( (~np.isnan(data['i.'+column[0]])) | (~np.isnan(data['i.'+column[1]])) | (~np.isnan(data['i.'+column[2]])) )
+        soft_r_ips = soft_r_ips & actual_check
+        soft_r_ips_all3 = soft_r_ips_all3 & actual_check
+        soft_i_ips = soft_i_ips & ideal_check
+        soft_i_ips_all3 = soft_i_ips_all3 & ideal_check
+    data['soft.r.ips'] = soft_r_ips.astype(int)
+    data['soft.r.ips.all3'] = soft_r_ips_all3.astype(int)
+    data['soft.i.ips'] = soft_i_ips.astype(int)
+    data['soft.i.ips.all3'] = soft_i_ips_all3.astype(int)
+    
+    
     #plt.show()
 
     # writing it out
