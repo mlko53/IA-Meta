@@ -9,8 +9,8 @@
     "Manipulation": [],
     "Reported":{
     	"study1":{
-    		"European American": 19,
-            "Chinese": 19
+    		"culture: European American": 19,
+            "culture: Chinese": 19
     	}
     },
     "Filter":{
@@ -20,8 +20,8 @@
     "Recode":{
     	"study1":{
             "ethni_r": {
-                "European American": 0,
-                "Chinese": 1
+                "culture: European American": 0,
+                "culture: Chinese": 1
             },
             "gender": {               
                 "F": 1

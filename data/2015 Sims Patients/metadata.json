@@ -10,8 +10,8 @@
     "Reported": {
         "study1": {
         	"total": 101,
-        	"European American": 50,
-        	"Chinese American": 51
+        	"culture: European American": 50,
+        	"culture: East Asian American": 51
         }
     },
     "Filter":{
@@ -21,8 +21,8 @@
     "Recode":{
         "study1": {
         	"ethn": {
-        		"European American": "EA",
-                "Chinese American": "CA"
+        		"culture: European American": "EA",
+                "culture: East Asian American": "CA"
         	}
         }
     },

@@ -29,14 +29,14 @@
                 "F": 2
             },
             "Sample":{
-                "German": 1,
-                "Israeli": 2,
-                "American": 3,
-                "Brazilian": 4,
-                "Ghanaian": 5,
-                "Polish": 6,
-                "Chinese": 8,
-                "Singaporean": 9
+                "geo: German": 1,
+                "geo: Israeli": 2,
+                "geo: US American": 3,
+                "geo: Brazilian": 4,
+                "geo: Ghanaian": 5,
+                "geo: Polish": 6,
+                "geo: Chinese": 8,
+                "geo: Singaporean": 9
             }
         },
         "pilot1": {

@@ -10,11 +10,11 @@
     "Reported": {
         "study1": {
             "total": 112,
-            "European American": 62,
-            "Chinese": 10,
-            "Japanese": 6,
-            "Korean": 33,
-            "Taiwanese": 1
+            "culture: European American": 62,
+            "culture: Chinese": 10,
+            "culture: Japanese": 6,
+            "culture: Korean": 33,
+            "culture: Taiwanese": 1
         }
     },
     "Filter":{
@@ -24,11 +24,11 @@
     "Recode":{
         "study1": {
             "BORN":{
-                "European American": "EA",
-                "Japanese": "JP",
-                "Chinese": "CH",
-                "Korean": "SK",
-                "Taiwanese": "TW"
+                "culture: European American": "EA",
+                "culture: Japanese": "JP",
+                "culture: Chinese": "CH",
+                "culture: Korean": "SK",
+                "culture: Taiwanese": "TW"
             },
             "SEX":{
                 "M": "M",

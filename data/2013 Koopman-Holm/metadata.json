@@ -26,8 +26,8 @@
     "Recode":{
         "study1": {
             "ethnicit": {
-                "European American": 3,
-                "East Asian American": 1
+                "culture: European American": 3,
+                "culture: East Asian American": 1
             },
             "gender": {
                 "F": 2,

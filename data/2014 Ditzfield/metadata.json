@@ -19,13 +19,13 @@
     "Recode":{
         "study1_sample1": {
             "RACE":{
-                "European American": 1,
-                "Hispanic": 6,
-                "African and African American": 2,
-                "Native American": 3,
-                "Pacific Islander": 4,
-                "Asian": 5,
-                "Other": 7
+                "race/ethn: White": 1,
+                "race/ethn: Hispanic": 6,
+                "race/ethn: Black": 2,
+                "race/ethn: Native American": 3,
+                "race/ethn: Hawaiian/Pacific Islander": 4,
+                "race/ethn: Asian": 5,
+                "race/ethn: Other": 7
             },
             "GENDER":{
                 "M": 1,

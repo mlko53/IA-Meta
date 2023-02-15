@@ -10,7 +10,7 @@
     "Reported": {
     	"study3": {
     		"total": 194,
-    		"Hong Kong Chinese": 95
+    		"geo: Hong Kong Chinese": 95
     	}
     },
     "Filter":{
@@ -21,14 +21,14 @@
     "Recode":{
         "study3": {
             "Ehnicity": {
-                "European American": 0,
-                "Asian": 1,
-                "Hispanic": 2,
-                "Native American": 3,
-                "African American": 4,
-                "Other": 5,
-                "Multiracial": 6,
-                "Hong Kong Chinese": 7
+                "race/ethn: White": 0,
+                "race/ethn: Asian": 1,
+                "race/ethn: Hispanic": 2,
+                "race/ethn: Native American": 3,
+                "race/ethn: Black": 4,
+                "race/ethn: Other": 5,
+                "race/ethn: Multiracial": 6,
+                "geo: Hong Kong Chinese": 7
             },
             "gender": {
                 "F": 0,

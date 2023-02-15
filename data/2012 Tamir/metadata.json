@@ -18,12 +18,12 @@
     "Recode":{
         "study1": {
             "ethn": {
-                "African American": 1,
-                "European American": 2,
-                "Hispanic":  3,
-                "Asian": 4,
-                "Middle Eastern": 5,
-                "Other": 6
+                "race/ethn: African American": 1,
+                "race/ethn: Caucasian": 2,
+                "race/ethn: Hispanic":  3,
+                "race/ethn: Asian": 4,
+                "race/ethn: Middle Eastern": 5,
+                "race/ethn: Other": 6
             },
             "gender": {
                 "M": 1,

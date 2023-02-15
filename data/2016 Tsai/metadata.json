@@ -10,16 +10,16 @@
     "Reported": {
         "study3": {
             "total": 1267,
-            "European American": 79,
-            "Hong Kong Chinese": 94,
-            "Chinese": 109,
-            "British": 147,
-            "German": 105,
-            "French": 143,
-            "Japanese": 208,
-            "Korean": 136,
-            "Mexican": 139,
-            "Taiwanese": 107
+            "culture: European American": 79,
+            "culture: Hong Kong Chinese": 94,
+            "culture: Chinese": 109,
+            "culture: British": 147,
+            "culture: German": 105,
+            "culture: French": 143,
+            "culture: Japanese": 208,
+            "culture: Korean": 136,
+            "culture: Mexican": 139,
+            "culture: Taiwanese": 107
         }
     },
     "Filter":{
@@ -30,16 +30,16 @@
     "Recode":{
         "study3": {
             "Group":{
-                "Hong Kong Chinese": 3,
-                "European American": 1,
-                "Japanese": 10,
-                "Mexican": 12,
-                "Chinese": 4,
-                "British": 6,
-                "German": 7,
-                "French": 8,
-                "Korean": 11,
-                "Taiwanese": 16
+                "culture: Hong Kong Chinese": 3,
+                "culture: European American": 1,
+                "culture: Japanese": 10,
+                "culture: Mexican": 12,
+                "culture: Chinese": 4,
+                "culture: British": 6,
+                "culture: German": 7,
+                "culture: French": 8,
+                "culture: Korean": 11,
+                "culture: Taiwanese": 16
             },
             "sex":{
                 "M": 1,

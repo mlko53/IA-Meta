@@ -9,8 +9,8 @@
     "Manipulation": [],
     "Reported": {
         "study1": {
-            "European American": 120,
-            "East Asian American": 105
+            "culture: European American": 120,
+            "culture: East Asian American": 105
         }
     },
     "Filter":{
@@ -22,8 +22,8 @@
     "Recode":{
         "study1": {
             "group": {
-                "European American": 1,
-                "East Asian American": 2
+                "culture: European American": 1,
+                "culture: East Asian American": 2
             },
             "sex": {
                 "F": 0,

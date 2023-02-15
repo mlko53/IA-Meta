@@ -10,9 +10,9 @@
     "Reported": {
         "study1": {
         	"total": 229,
-            "European American": 126,
-            "Southeast Asian": 70,
-            "East Asian": 33
+            "race/ethn: European American": 126,
+            "race/ethn: Southeast Asian": 70,
+            "race/ethn: East Asian": 33
         }
     },
     "Filter":{
@@ -24,9 +24,9 @@
                 "F": 2
             },
             "Ethnicity /  / Please choose a category that best describes you.":{
-                "European American": 1,
-                "Southeast Asian": 2,
-                "East Asian": 3
+                "race/ethn: European American": 1,
+                "race/ethn: Southeast Asian": 2,
+                "race/ethn: East Asian": 3
             }
         }
     },

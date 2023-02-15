@@ -18,11 +18,8 @@
     },
     "Recode":{
         "study1": {
-            "country":{
-                "Turkish": "Turkey",
-                "Swedish": "Sweden",
-                "Belgian": "Belgium",
-                "German": "Germany"
+            "county_of_data_collection":{
+                "geo: Turkish": 1
             },
             "sex":{
                 "M": 1

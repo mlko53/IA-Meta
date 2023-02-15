@@ -10,15 +10,15 @@
     "Reported": {
         "study1": {
             "total": 236,
-            "European Canadian": 78,
-            "Mexican": 26,
-            "Hong Kong Chinese": 132
+            "race/ethn: European Canadian": 78,
+            "race/ethn: Mexican International": 26,
+            "geo: Hong Kong Chinese": 132
         },
         "study2": {
             "total": 182,
-            "European Canadian": 94,
-            "Mexican": 54,
-            "Japanese": 34
+            "race/ethn: European Canadian": 94,
+            "geo: Mexican": 54,
+            "geo: Japanese": 34
         }
     },
     "Filter":{
@@ -28,9 +28,9 @@
     "Recode":{
         "study1": {
             "ethn": {
-                "European Canadian": 1,
-                "Mexican": 2,
-                "Hong Kong Chinese": 3
+                "race/ethn: European Canadian": 1,
+                "race/ethn: Mexican International": 2,
+                "geo: Hong Kong Chinese": 3
             },
             "gender": {
                 "F": 1,
@@ -39,9 +39,9 @@
         },
         "study2": {
             "ethn": {
-                "European Canadian": 1,
-                "Japanese": 2,
-                "Mexican": 3
+                "race/ethn: European Canadian": 1,
+                "geo: Japanese": 2,
+                "geo: Mexican": 3
             },
             "gender": {
                 "F": 0,

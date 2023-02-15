@@ -9,9 +9,9 @@
     "Manipulation": [],
     "Reported":{
         "study1":{
-            "European American": 39,
-            "Latino American": 41,
-            "Asian American": 26
+            "culture: European American": 39,
+            "culture: Latino American": 41,
+            "culture: Asian American": 26
         }
     },
     "Filter":{
@@ -20,9 +20,9 @@
     "Recode":{
         "study1":{
             "Ethnicity": {
-                "European American": 1,
-                "Latino American": 2,
-                "Asian American": 3
+                "culture: European American": 1,
+                "culture: Latino American": 2,
+                "culture: Asian American": 3
             },
             "Gender": {
                 "M": 0,

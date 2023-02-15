@@ -18,11 +18,11 @@
     "Recode":{
         "study1": {
             "race": {
-                "European American": 1,
-                "Asian American": 2,
-                "African American": 3,
-                "Multiracial": 4,
-                "Latino American": 5
+                "race/ethn: European American": 1,
+                "race/ethn: Asian American": 2,
+                "race/ethn: African American": 3,
+                "race/ethn: Multiracial": 4,
+                "race/ethn: Latino American": 5
             },
             "gender": {
                 "M": 0,

@@ -19,8 +19,8 @@
     "Recode":{
         "study1": {
             "p2dem_n1":{
-                "Chinese": ["Chinese", "vietnamese Chinese", "chiense"],
-                "Chinese American": ["Chinese American", "Chinese America", " Chinese American", "Chinese-American"],
+                "race/ethn: Chinese": ["Chinese", "vietnamese Chinese", "chiense"],
+                "race/ethn: Chinese American": ["Chinese American", "Chinese America", " Chinese American", "Chinese-American"],
                 "-999": ["", "999"]
             }
         }

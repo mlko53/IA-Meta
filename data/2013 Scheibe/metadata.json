@@ -18,9 +18,9 @@
     "Recode":{
         "study1": {
             "race.3":{
-                "African American": 2,
-                "European American": 1,
-                "Other": 6
+                "race/ethn: African American": 2,
+                "race/ethn: European American": 1,
+                "race/ethn: Other": 6
             },
             "sex":{
                 "M": 1,

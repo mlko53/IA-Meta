@@ -5,11 +5,11 @@
     "Authors": "Jiang, D., Fung, H. H., Sims, T., Tsai, J. L., & Zhang, F.",
     "Journal": "Emotion",
     "Studies": ["study11.sav", "study12.sav", "study2.sav"],
-    "Usable": ["study11.sav", "study12.sav", "study2.sav"],
-    "Manipulation": [],
+    "Usable": ["study11.sav", "study2.sav"],
+    "Manipulation": ["study2.sav"],
     "Reported":{
         "study11":{
-            "Hong Kong Chinese": 299
+            "culture: Hong Kong Chinese": 299
         },
         "study12":{
             "Hong Kong Chinese": 106
@@ -29,7 +29,7 @@
     "Recode":{
         "study11":{
             "ethnicity": {
-                "Hong Kong Chinese": 2
+                "culture: Hong Kong Chinese": 2
             },
             "gender": {
                 "F": 0,

@@ -19,21 +19,21 @@
     "Recode":{
         "study1": {
             "EthnicityCultural":{
-                "African American": 1,
-                "Filipino American": 2,
-                "Chinese American": 3,
-                "Korean American": 4,
-                "Japanese American": 5,
-                "Vietnamese American": 6,
-                "South Asian American": 7,
-                "Mexican American": 8,
-                "Central American": 9,
-                "South American": 10,
-                "Native American": 11,
-                "European American": 12,
-                "Persian American": 13,
-                "Middle Eastern": 14,
-                "Other": 15
+                "race/ethn: African American": 1,
+                "race/ethn: Filipino American": 2,
+                "race/ethn: Chinese American": 3,
+                "race/ethn: Korean American": 4,
+                "race/ethn: Japanese American": 5,
+                "race/ethn: Vietnamese American": 6,
+                "race/ethn: South Asian American": 7,
+                "race/ethn: Mexican American": 8,
+                "race/ethn: Central American": 9,
+                "race/ethn: South American": 10,
+                "race/ethn: Native American": 11,
+                "race/ethn: White": 12,
+                "race/ethn: Persian American": 13,
+                "race/ethn: Middle Eastern": 14,
+                "race/ethn: Other": 15
             },
             "Gender":{
                 "M": 0,

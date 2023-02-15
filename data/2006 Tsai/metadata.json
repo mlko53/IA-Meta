@@ -9,13 +9,13 @@
     "Manipulation": [],
     "Reported": {
         "study1": {
-            "European American": 201,
-            "East Asian American": 196
+            "culture: European American": 201,
+            "culture: East Asian American": 196
         },
         "study2": {
-            "European American": 79,
-            "Chinese American": 81,
-            "Hong Kong Chinese": 96
+            "culture: European American": 79,
+            "culture: Chinese American": 81,
+            "culture: Hong Kong Chinese": 96
         }
     },
     "Filter":{
@@ -25,8 +25,8 @@
     "Recode":{
         "study1": {
             "ethn": {
-                "European American": 0,
-                "East Asian American": 1
+                "culture: European American": 0,
+                "culture: East Asian American": 1
             },
             "sex": {
                 "F": 0,
@@ -35,9 +35,9 @@
         },
         "study2": {
             "group5": {
-                "European American": 1,
-                "Chinese American": 2,
-                "Hong Kong Chinese": 3
+                "culture: European American": 1,
+                "culture: Chinese American": 2,
+                "culture: Hong Kong Chinese": 3
             },
             "sex": {
                 "F": 0,

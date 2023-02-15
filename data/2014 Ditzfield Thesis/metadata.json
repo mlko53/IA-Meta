@@ -19,13 +19,13 @@
     "Recode":{
         "study3": {
             "ETHNICITY":{
-                "European American": 1,
-                "Hispanic": 2,
-                "African and African American": 3,
-                "Native American": 4,
-                "Pacific Islander": 5,
-                "Asian": 6,
-                "Other": 7
+                "race/ethn: White": 1,
+                "race/ethn: Hispanic": 2,
+                "race/ethn: Black": 3,
+                "race/ethn: Native American": 4,
+                "race/ethn: Hawaiian": 5,
+                "race/ethn: Asian": 6,
+                "race/ethn: Other": 7
             },
             "GENDER":{
                 "M": 2,
@@ -35,9 +35,7 @@
     },
     "Replace":{
         "study3":{
-            "_NAN_": 999,
-            "_NAN_": "NA",
-            "_NAN_": "#NULL!"
+            "_NAN_": ["999", "NA", "#NULL!"]
         }
     }
 }
