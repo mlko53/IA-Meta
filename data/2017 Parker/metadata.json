@@ -24,13 +24,13 @@
                 "Other": 3
             },
             "Race":{
-                "African American": 1,
-                "European American": 2,
-                "Hispanic": 3,
-                "Asian and Pacific Islander": 4,
-                "Middle Eastern": 5,
-                "Multiracial": 6,
-                "Other": 7
+                "race/ethn: Black/African American": 1,
+                "race/ethn: White/Caucasian": 2,
+                "race/ethn: Hispanic/Latino": 3,
+                "race/ethn: Asian/Pacific Islander": 4,
+                "race/ethn: Middle Eastern": 5,
+                "race/ethn: Multiracial": 6,
+                "race/ethn: Other": 7
             }
         }
     },

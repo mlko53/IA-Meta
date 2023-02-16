@@ -24,12 +24,12 @@
     "Recode":{
         "study1": {
             "q0204":{
-                "European American": 1,
-                "Prefer not to answer": 6,
-                "Hispanic": 2,
-                "Asian": 4,
-                "African and African American": 3,
-                "Native American": 5
+                "race/ethn: White/Caucasian": 1,
+                "race/ethn: Prefer not to answer": 6,
+                "race/ethn: Hispanic/Latino": 2,
+                "race/ethn: Asian": 4,
+                "race/ethn: Black/African American": 3,
+                "race/ethn: Native American": 5
             },
             "q0201":{
                 "M": 1,
@@ -39,12 +39,12 @@
         },
         "study3": {
             "Race":{
-                "European American": 1,
-                "Other": 6,
-                "Hispanic": 2,
-                "Asian": 4,
-                "African and African American": 3,
-                "Native American": 5
+                "race/ethn: White/Caucasian": 1,
+                "race/ethn: Other": 6,
+                "race/ethn: Hispanic/Latino": 2,
+                "race/ethn: Asian": 4,
+                "race/ethn: Black/African American": 3,
+                "race/ethn: Native American": 5
             },
             "Gender":{
                 "M": 1,

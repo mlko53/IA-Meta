@@ -10,13 +10,13 @@
     "Reported": {
         "study1":{
             "total": 159,
-            "Korean": 60,
-            "European American": 99
+            "culture: Korean": 60,
+            "culture: European American": 99
         },
         "study2":{
             "total": 36,
-            "Korean": 18,
-            "European American": 18
+            "culture: Korean International": 18,
+            "culture: European American": 18
         }
     },
     "Filter":{
@@ -30,8 +30,8 @@
                 "F": "Female"
             },
             "ethni_r":{
-                "European American": "US",
-                "Korean": "KR"
+                "culture: European American": "US",
+                "culture: Korean": "KR"
             }
         },
         "study2": {
@@ -40,8 +40,8 @@
                 "F": 2
             },
             "Culture":{
-                "European American": "EA",
-                "Korean": "KR"
+                "culture: European American": "EA",
+                "culture: Korean International": "KR"
             }
         }
     },

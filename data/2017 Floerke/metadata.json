@@ -19,11 +19,11 @@
     "Recode":{
         "study2": {
             "Race_Mod":{
-                "Asian": "Asian",
-                "African and African American": "Black",
-                "Hispanic": "Hispanic",
-                "Multiracial": "Multiracial",
-                "European and Middle Eastern and North Africa": "White"
+                "race/ethn: Asian": "Asian",
+                "race/ethn: Black/African American": "Black",
+                "race/ethn: Hispanic": "Hispanic",
+                "race/ethn: Multiracial": "Multiracial",
+                "race/ethn: White": "White"
             },
             "Gender":{
                 "M": 1,

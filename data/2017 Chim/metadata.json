@@ -13,8 +13,8 @@
         },
         "study3":{
             "total": 58,
-            "European American": 29,
-            "Hong Kong Chinese": 29
+            "culture: European American": 29,
+            "culture: Hong Kong Chinese": 29
         },
         "study4a":{
             "total": 51
@@ -37,9 +37,9 @@
                 "F": "Female"
             },
             "ethni":{
-                "European American": "European American",
-                "East Asian and East Asian American": "East Asian",
-                "Other": "Other"
+                "race/ethn: European American": "European American",
+                "race/ethn: East Asian": "East Asian",
+                "race/ethn: Other": "Other"
             }
         },
         "study3": {
@@ -48,8 +48,8 @@
                 "F": "Female"
             },
             "ethni_all":{
-                "European American": "EA",
-                "Hong Kong Chinese": "HKC"
+                "culture: European American": "EA",
+                "culture: Hong Kong Chinese": "HKC"
             }
         },
         "study4a": {
@@ -58,15 +58,15 @@
                 "F": "Female"
             },
             "ethni_r":{
-                "African American": "African American",
-                "East Asian American": "East Asian American",
-                "Eastern Europe": "Eastern Europe",
-                "European American": "European American",
-                "Hispanic": "Hispanic",
-                "Middle Eastern": "Middle Eastern",
-                "Multiracial": "Multiracial",
-                "South Asian": "South Asian",
-                "Southeast Asian": "Southeast Asian"
+                "race/ethn: African American": "African American",
+                "race/ethn: East Asian": "East Asian American",
+                "race/ethn: Eastern European": "Eastern Europe",
+                "race/ethn: European American": "European American",
+                "race/ethn: Hispanic": "Hispanic",
+                "race/ethn: Middle Eastern": "Middle Eastern",
+                "race/ethn: Multiracial": "Multiracial",
+                "race/ethn: South Asian": "South Asian",
+                "race/ethn: Southeast Asian": "Southeast Asian"
             }
         },
         "study4b": {
@@ -75,12 +75,12 @@
                 "F": "Female"
             },
             "Ethni_r":{
-                "African American": "African American",
-                "Asian American": "Asian American",
-                "European American": "European American",
-                "Hispanic": "Hispanic",
-                "Multiracial": "Multiracial",
-                "Native Hawaiian and Pacific Islander": "Native Hawaiian or other pacific islander"
+                "race/ethn: African American": "African American",
+                "race/ethn: Asian": "Asian American",
+                "race/ethn: European American": "European American",
+                "race/ethn: Hispanic": "Hispanic",
+                "race/ethn: Multiracial": "Multiracial",
+                "race/ethn: Native Hawaiian/Pacific Islander": "Native Hawaiian or other pacific islander"
             }
         }
     },
