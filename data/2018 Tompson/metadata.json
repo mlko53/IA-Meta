@@ -10,8 +10,8 @@
     "Reported": {
         "study1":{
             "total": 377,
-            "European American": 189,
-            "East Asian": 188
+            "culture: European American": 189,
+            "culture: East Asian": 188
         }
     },
     "Filter":{
@@ -19,9 +19,10 @@
     },
     "Recode":{
         "study1": {
-            "ethn":{
-            	"European American": 1,
-            	"East Asian": 2
+            "ethn_mod":{
+            	"culture: European American": 1,
+            	"culture: East Asian International": 2,
+                "culture: East Asian American": 3
             },
             "gender": {
                 "F": 1,

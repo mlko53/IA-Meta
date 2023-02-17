@@ -24,14 +24,14 @@
     "Recode":{
         "study1": {
             "Ethnicity_Mod":{
-                "Asian": "Asian",
-                "African American": "Black",
-                "Hispanic": "Hispanic",
-                "Multiracial": "Multiracial",
-                "Native American": "Native American",
-                "Other": "Other",
-                "Pacific Islander": "PacificIslander",
-                "European American": "White"                
+                "race/ethn: Asian": "Asian",
+                "race/ethn: Black": "Black",
+                "race/ethn: Hispanic": "Hispanic",
+                "race/ethn: Multiracial": "Multiracial",
+                "race/ethn: Native American": "Native American",
+                "race/ethn: Other": "Other",
+                "race/ethn: Pacific Islander": "PacificIslander",
+                "race/ethn: White": "White"                
             },
             "Gender":{
                 "M": 2,
@@ -41,15 +41,15 @@
         },
         "study2": {
             "Ethnicity":{
-                "European American": 1,
-                "Hispanic": 2,
-                "Middle Eastern and Arab": 3,
-                "African and African American": 4,
-                "Carribean": 5,
-                "South Asian": 6,
-                "East Asian": 7,
-                "Multiracial": 8,
-                "Other": 9                
+                "race/ethn: White/Caucasian": 1,
+                "race/ethn: Hispanic/Latino": 2,
+                "race/ethn: Middle Eastern/Arab": 3,
+                "race/ethn: Black/African": 4,
+                "race/ethn: Carribean": 5,
+                "race/ethn: South Asian": 6,
+                "race/ethn: East Asian": 7,
+                "race/ethn: Multiracial": 8,
+                "race/ethn: Other": 9                
             },
             "Gender":{
                 "M": 2,

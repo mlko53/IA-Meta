@@ -10,10 +10,10 @@
     "Reported": {
         "study1": {
             "total": 170,
-            "European American": 86,
-            "Chinese American": 52,
-            "Japanese American": 3,
-            "Korean American": 29
+            "race/ethn: European American": 86,
+            "race/ethn: Chinese": 52,
+            "race/ethn: Japanese": 3,
+            "race/ethn: Korean": 29
         }
     },
     "Filter":{
@@ -23,10 +23,10 @@
     "Recode":{
         "study1": {
             "Ethnicity":{
-                "European American": 1,
-                "Chinese American": 2,
-                "Japanese American": 4,
-                "Korean American": 3
+                "race/ethn: European American": 1,
+                "race/ethn: Chinese": 2,
+                "race/ethn: Japanese": 4,
+                "race/ethn: Korean": 3
             },
             "Sex":{
                 "M": 1,

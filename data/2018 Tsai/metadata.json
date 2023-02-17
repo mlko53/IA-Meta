@@ -9,14 +9,14 @@
     "Manipulation": ["study2.sav"],
     "Reported": {
         "study1": {
-            "European American": 267,
-            "Chinese American": 265,
-            "Hong Kong Chinese": 320
+            "culture: European American": 267,
+            "culture: Chinese American": 265,
+            "culture: Hong Kong Chinese": 320
         },
         "study2": {
-        	"European American": 54,
-        	"East Asian American": 52,
-        	"Hong Kong Chinese": 58
+        	"culture: European American": 54,
+        	"culture: East Asian American": 52,
+        	"culture: Hong Kong Chinese": 58
         }
     },
     "Filter":{
@@ -28,9 +28,9 @@
     "Recode":{
         "study1": {
             "ethnic": {
-            	"European American": 0,
-            	"Chinese American": 1,
-            	"Hong Kong Chinese": 2
+            	"culture: European American": 0,
+            	"culture: Chinese American": 1,
+            	"culture: Hong Kong Chinese": 2
             },
             "gender":{
                 "M": 1,
@@ -39,9 +39,9 @@
         },
         "study2": {
             "Ethn": {
-            	"European American": 0,
-            	"East Asian American": 1,
-            	"Hong Kong Chinese": 2
+            	"culture: European American": 0,
+            	"culture: East Asian American": 1,
+            	"culture: Hong Kong Chinese": 2
             },
             "Gender":{
                 "M": 1,

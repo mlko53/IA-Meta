@@ -14,20 +14,21 @@
     },
     "Filter":{
         "study1": {
+            "Group": [0, 1]
         }
     },
     "Recode":{
         "study1": {
             "Q6": {
-            	"European American": 1,
-                "African and African American": 2,
-                "Native American": 3,
-                "Asian": 4,
-                "Asian American": 5,
-                "Native Hawaiian and Pacific Islander": 6,
-                "Other": 7,
-                "Hispanic": 8,
-            	"Multiracial": 14
+            	"race/ethn: White": 1,
+                "race/ethn: Black/African American": 2,
+                "race/ethn: Native American": 3,
+                "race/ethn: Asian": 4,
+                "race/ethn: Asian American": 5,
+                "race/ethn: Native Hawaiian/Pacific Islander": 6,
+                "race/ethn: Other": 7,
+                "race/ethn: Hispanic/Latino": 8,
+            	"race/ethn: Multiracial": 14
             },
             "Gender":{
                 "M": 1,

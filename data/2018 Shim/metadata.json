@@ -24,12 +24,12 @@
     "Recode":{
         "study1": {
             "Ethnicity":{
-                "Asian": 1,
-                "African American": 2,
-                "Hispanic": 3,
-                "Multiracial": 5,
-                "Other": 6,
-                "European American": 4
+                "race/ethn: Asian": 1,
+                "race/ethn: Black/African American": 2,
+                "race/ethn: Hispanic/Latino": 3,
+                "race/ethn: Multiracial": 5,
+                "race/ethn: Other": 6,
+                "race/ethn: White/Caucasian": 4
             },
             "Gender":{
                 "M": 1,
@@ -38,12 +38,12 @@
         },
         "study2": {
             "ethnicity":{
-                "Asian": 1,
-                "African American": 2,
-                "Hispanic": 3,
-                "Multiracial": 5,
-                "Other": 6,
-                "European American": 4
+                "race/ethn: Asian": 1,
+                "race/ethn: Black/African American": 2,
+                "race/ethn: Hispanic/Latino": 3,
+                "race/ethn: Multiracial": 5,
+                "race/ethn: Other": 6,
+                "race/ethn: White/Caucasian": 4
             },
             "gender":{
                 "M": 1,

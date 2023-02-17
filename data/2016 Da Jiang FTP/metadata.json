@@ -5,7 +5,7 @@
     "Authors": "Jiang, D.",
     "Journal": "",
     "Studies": ["study1.sav", "study2.sav", "study3.sav"],
-    "Usable": ["study1.sav", "study3.sav"],
+    "Usable": ["study1.sav"],
     "Manipulation": ["study3.sav"],
     "Reported":{
     	"study1":{

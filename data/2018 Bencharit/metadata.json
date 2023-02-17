@@ -9,24 +9,24 @@
     "Manipulation": [],
     "Reported": {
         "study1": {
-            "European American": 72,
-            "East Asian American": 69,
-            "Hong Kong Chinese": 95
+            "culture: European American": 72,
+            "culture: East Asian American": 69,
+            "culture: Hong Kong Chinese": 95
         },
         "study2": {
-            "European American": 60,
-            "East Asian American": 55,
-            "Hong Kong Chinese": 59
+            "culture: European American": 60,
+            "culture: East Asian American": 55,
+            "culture: Hong Kong Chinese": 59
         },
         "study3": {
-            "European American": 69,
-            "East Asian American": 49,
-            "Hong Kong Chinese": 67
+            "culture: European American": 69,
+            "culture: East Asian American": 49,
+            "culture: Hong Kong Chinese": 67
         },
         "study4a": {
-            "European American": 58,
-            "East Asian American": 25,
-            "Hong Kong Chinese": 42
+            "culture: European American": 58,
+            "culture: East Asian American": 25,
+            "culture: Hong Kong Chinese": 42
         }
     },
     "Filter": {
@@ -46,9 +46,9 @@
     "Recode":{
         "study1": {
             "Ethnicity": {
-                "European American": 1,
-                "East Asian American": 2,
-                "Hong Kong Chinese": 0
+                "culture: European American": 1,
+                "culture: East Asian American": 2,
+                "culture: Hong Kong Chinese": 0
             },
             "D_Gender": {
                 "F": 2,
@@ -57,9 +57,9 @@
         },
         "study2": {
         	"Ethnicity": {
-        		"European American": 1,
-        		"East Asian American": 2,
-        		"Hong Kong Chinese": 3
+        		"culture: European American": 1,
+        		"culture: East Asian American": 2,
+        		"culture: Hong Kong Chinese": 3
         	},
         	"D_Gender1Male":{
         		"M": 1,
@@ -68,9 +68,9 @@
         },
         "study3": {
         	"Ethnicity": {
-        		"European American": 1,
-        		"East Asian American": 0,
-        		"Hong Kong Chinese": -1
+        		"culture: European American": 1,
+        		"culture: East Asian American": 0,
+        		"culture: Hong Kong Chinese": -1
         	},
             "Age":{
                 "21.5": 2,
@@ -89,9 +89,9 @@
         },
         "study4a": {
         	"Ethnicity": {
-        		"European American": 1,
-        		"East Asian American": 0,
-        		"Hong Kong Chinese": -1
+        		"culture: European American": 1,
+        		"culture: East Asian American": 0,
+        		"culture: Hong Kong Chinese": -1
         	},
             "Gender":{
                 "M": 1,

@@ -19,10 +19,10 @@
     "Recode":{
         "study1": {
             "Mother_Ethnicity":{
-                "Asian": "Asian",
-                "African and African American": "Black",
-                "Hispanic": "Hispanic",
-                "European and Middle Eastern and North Africa": "White"
+                "race/ethn: Asian": "Asian",
+                "race/ethn: Black": "Black",
+                "race/ethn: Hispanic": "Hispanic",
+                "race/ethn: White": "White"
             },
             "Mother_Sex":{
                 "F": 1

@@ -5,7 +5,7 @@
     "Authors": "Jiang, D., Fung, H. H., Sims, T., Tsai, J. L., & Zhang, F.",
     "Journal": "Emotion",
     "Studies": ["study11.sav", "study12.sav", "study2.sav"],
-    "Usable": ["study11.sav", "study2.sav"],
+    "Usable": ["study11.sav"],
     "Manipulation": ["study2.sav"],
     "Reported":{
         "study11":{

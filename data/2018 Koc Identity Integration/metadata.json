@@ -18,12 +18,8 @@
     },
     "Recode":{
         "study1": {
-            "National":{
-                "Bulgarian": ["Bulgarian"],
-                "Turkish": ["Turkish", "Turkish-UK", "Turkish", "Turkish-German"],
-                "Russian": ["Russian"],
-                "Moldovian": ["Moldovian"],
-                "Chinese": ["Chinese"]
+            "country_of_data_collection":{
+                "geo: Turkish": 1
             },
             "Gender":{
                 "M": 1,

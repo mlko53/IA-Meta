@@ -10,14 +10,14 @@
     "Reported": {
         "study1": {
             "total": 198,
-            "European American": 67,
-            "Chinese American": 65,
-            "Hong Kong Chinese": 66
+            "culture: European American": 67,
+            "culture: Chinese American": 65,
+            "culture: Hong Kong Chinese": 66
         },
         "study2": {
             "total": 81,
-            "European American": 39,
-            "Asian American": 42
+            "culture: European American": 39,
+            "culture: Asian American": 42
         }
     },
     "Filter":{
@@ -29,9 +29,9 @@
     "Recode":{
         "study1": {
             "ethnicity":{
-                "European American": 0,
-                "Chinese American": 1,
-                "Hong Kong Chinese": 2
+                "culture: European American": 0,
+                "culture: Chinese American": 1,
+                "culture: Hong Kong Chinese": 2
             },
             "gender":{
                 "F": 0,
@@ -40,8 +40,8 @@
         },
         "study2": {
             "Ethnicity":{
-                "European American": 0,
-                "Asian American": 1
+                "culture: European American": 0,
+                "culture: Asian American": 1
            },
             "Gender": {
                 "F": 0,

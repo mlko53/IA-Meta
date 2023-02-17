@@ -10,9 +10,9 @@
     "Reported": {
         "study2": {
             "total": 201,
-            "European American": 71,
-            "Hong Kong Chinese": 66,
-            "East Asian American": 64
+            "culture: European American": 71,
+            "culture: Hong Kong Chinese": 66,
+            "culture: East Asian American": 64
         }
     },
     "Filter":{
@@ -23,15 +23,15 @@
     "Recode":{
         "study2": {
             "ethn":{
-                "European American": 1,
-                "East Asian American": 2,
-                "Hong Kong Chinese": 3,
-                "Chinese": 4,
-                "Chinese Macau": 5,
-                "Taiwanese": 6,
-                "Japanese": 7,
-                "Korean": 8,
-                "Other": 9
+                "culture: European American": 1,
+                "culture: East Asian American": 2,
+                "culture: Hong Kong Chinese": 3,
+                "culture: Chinese": 4,
+                "culture: Chinese Macau": 5,
+                "culture: Taiwanese": 6,
+                "culture: Japanese": 7,
+                "culture: Korean": 8,
+                "culture: Other": 9
             },
             "gender":{
                 "M": 1,
