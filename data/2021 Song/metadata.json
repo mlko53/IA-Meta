@@ -10,7 +10,7 @@
     "Reported": {
         "study1":{
             "total": 659,
-            "Korean": 305
+            "geo: Korean": 305
         },
         "pilot":{
         }
@@ -26,13 +26,13 @@
             	"F": 2
             },
             "RaceEth":{
-	            "Latino American": 1,
-	            "Pacific Islander": 2,
-	            "European American": 3,
-	            "African American": 4,
-	            "Native American": 5,
-	            "Korean": 6,
-	            "Other": 7
+	            "race/ethn: Hispanic/Latino": 1,
+	            "race/ethn: Native Hawaiian/Pacific Islander": 2,
+	            "race/ethn: White/Caucasian": 3,
+	            "race/ethn: Black/African American": 4,
+	            "race/ethn: Native American": 5,
+	            "geo: Korean": 6,
+	            "race/ethn: Other": 7
             }
         },
         "pilot":{
@@ -41,7 +41,7 @@
                 "F":0
             },
             "Eth":{
-                "Korean": 6
+                "geo: Korean": 6
             }
         }
     },

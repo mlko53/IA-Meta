@@ -19,15 +19,15 @@
     "Recode":{
         "study1": {
             "Race/Ethnicity": {
-            	"African American": 1,
-            	"East Asian and East Asian American": 2,
-                "South Asian and South Asian American": 3,
-                "Southeast Asian and Southeast Asian American": 4,
-                "European American": 5,
-                "Hispanic": 6,
-                "Pacific Islander": 7,
-                "Native American": 8,
-                "Multiracial": 9
+            	"race/ethn: African American": 1,
+            	"race/ethn: East Asian": 2,
+                "race/ethn: South Asian": 3,
+                "race/ethn: Southeast Asian": 4,
+                "race/ethn: European American": 5,
+                "race/ethn: Hispanic": 6,
+                "race/ethn: Pacific Islander": 7,
+                "race/ethn: Native American": 8,
+                "race/ethn: Multiracial": 9
             },
             "Gender":{
                 "M": 0,

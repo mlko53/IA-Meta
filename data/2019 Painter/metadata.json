@@ -19,8 +19,8 @@
     "Recode":{
         "study1": {
             "ETHNCITY":{
-                "European American": 2,
-                "Hispanic": 1
+                "race/ethn: European American": 2,
+                "race/ethn: Hispanic": 1
             },
             "GENDER":{
                 "M": 1,

@@ -11,8 +11,8 @@
         "2016" : ["Da Jiang FTP", "Da Jiang LTP", "Ito", "Koc", "Tamir", "Thompson", "Tsai", "Park"],
         "2017" : ["Chim", "Floerke", "Gui", "Oosterhoff", "Park", "Parker", "Sands"],
         "2018" : ["Bencharit", "Gentzler", "Ito", "Koc Identity Integration", "Lee", "Lin", "Shim", "Sims", "Swerdlow", "Tompson", "Tsai", "Yamada", "Yip"],
-        "2019" : ["Li", "Palmer", "Tsai", "Kraus", "Severin", "Painter"],
-        "2020" : ["Salvador", "Hu", "Koopmann-Holm 2", "Koopmann-Holm 1", "Vishkin", "Park", "Arens", "Curlee"],
+        "2019" : ["Kraus", "Li", "Painter", "Palmer", "Tsai", "Severin"],
+        "2020" : ["Salvador", "Hu", "Koopmann-Holm 1", "Vishkin", "Park", "Arens", "Curlee"],
         "2021" : ["Song"],
         "Unpublished" : ["Acevedo", "Cheung", "Ito Kono", "Ito Mika", "Ito Yamaguchi Takamatsu", "Kashima 1", "Kashima 2", "Palmer", "Samanez-Larkin agerl", "Samanez-Larkin finra2", "Yi", "Ito", "Fung"]
     }

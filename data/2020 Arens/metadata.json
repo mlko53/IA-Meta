@@ -19,8 +19,7 @@
     "Recode":{
         "study1": {
             "nationality":{
-                "German": 1,
-                "Other": 2
+                "geo: German": [1, 2]
             },
             "sex":{
                 "M": 1,

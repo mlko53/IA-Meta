@@ -9,7 +9,7 @@
     "Manipulation": [],
     "Reported": {
         "study1": {
-            "Chinese": 80
+            "geo: Chinese": 80
         }
     },
     "Filter": {
@@ -22,7 +22,7 @@
                 "F": 2
             },
             "Race": {
-                "Chinese": 1
+                "geo: Chinese": 1
             }
         }
     },

@@ -10,10 +10,10 @@
     "Reported": {
         "study1": {
             "total": 99,
-            "European American": 59,
-            "African American": 13,
-            "Hispanic": 10,
-            "Other": 17
+            "race/ethn: White": 59,
+            "race/ethn: Black": 13,
+            "race/ethn: Hispanic/Latino": 10,
+            "race/ethn: Other": 17
         }
     },
     "Filter":{
@@ -23,10 +23,10 @@
     "Recode":{
         "study1": {
             "RaceNumber":{
-                "European American": 2,
-                "African American": 1,
-                "Hispanic": 3,
-                "Other": 4
+                "race/ethn: White": 2,
+                "race/ethn: Black": 1,
+                "race/ethn: Hispanic/Latino": 3,
+                "race/ethn: Other": 4
             },
             "Gender":{
                 "M": 1,

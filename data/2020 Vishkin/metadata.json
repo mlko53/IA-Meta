@@ -10,9 +10,9 @@
     "Reported": {
         "study2": {
             "total": 616,
-            "American": 210,
-            "Turkish": 203,
-            "Israeli": 203
+            "geo: US American": 210,
+            "geo: Turkish": 203,
+            "geo: Israeli": 203
         },
         "study3": {
             "total": 272
@@ -27,9 +27,9 @@
     "Recode":{
         "study2": {
             "Sample":{
-                "American": 2,
-                "Turkish": 3,
-                "Israeli": 1
+                "geo: US American": 2,
+                "geo: Turkish": 3,
+                "geo: Israeli": 1
             },
             "Gender":{
                 "F": 2,
@@ -37,6 +37,9 @@
             }
         },
         "study3": {
+            "ethn":{
+                "geo: Israeli": "Israeli"
+            },
             "gender": {
                 "F": 2,
                 "M": 1

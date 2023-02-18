@@ -9,8 +9,8 @@
     "Manipulation": [],
     "Reported": {
         "study3": {
-        	"European American": 98,
-        	"Hong Kong Chinese": 100
+        	"culture: European American": 98,
+        	"culture: Hong Kong Chinese": 100
         }
     },
     "Filter":{
@@ -21,8 +21,8 @@
     "Recode":{
         "study3": {
             "eth": {
-            	"European American": 1,
-            	"Hong Kong Chinese": -1
+            	"culture: European American": 1,
+            	"culture: Hong Kong Chinese": -1
             },
             "Gender":{
                 "M": 1,

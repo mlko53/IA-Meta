@@ -10,16 +10,16 @@
     "Reported": {
         "study1": {
         	"total": 60,
-        	"European American": 25,
-        	"Asian American": 12,
-        	"Latino American": 6
+        	"race/ethn: Caucasian": 25,
+        	"race/ethn: Asian": 12,
+        	"race/ethn: Hispanic": 6
         },
         "study2": {
         	"total": 157
         },
         "study3": {
         	"total": 467,
-        	"German": 315
+        	"race/ethn: German": 315
         }
     },
     "Filter":{
@@ -33,13 +33,13 @@
     "Recode":{
         "study1": {
         	"Ethnicityrec": {
-        		"European American": "Caucasia",
-        		"Multiracial": ["Biracial", "Multi"],
-        		"African American": "African",
-        		"Asian American": "Asian",
-        		"Middle Eastern": "Middle E",
-        		"Latino American": "Hispanic",
-        		"Other": ""
+        		"race/ethn: Caucasian": "Caucasia",
+        		"race/ethn: Multiracial": ["Biracial", "Multi"],
+        		"race/ethn: Black/African American": "African",
+        		"race/ethn: Asian": "Asian",
+        		"race/ethn: Middle Eastern": "Middle E",
+        		"race/ethn: Hispanic": "Hispanic",
+        		"race/ethn: Other": ""
         	},
         	"gender": {
         		"F": 1,
@@ -48,17 +48,24 @@
         },
         "study2":{
         	"ethn": {
-        		"European American": "European American",
-        		"Latino American": "Latino American",
-        		"South Asian American": "South Asian American",
-        		"Multiracial": "Multiracial",
-        		"Asian American": "Asian American",
-        		"Chinese American": "Chinese American",
-        		"Vietnamese American": "Vietnamese American",
-        		"African American": "African American",
-        		"Middle Eastern": "Middle Eastern",
-        		"Filipino American": "Filipino American",
-        		"Other": "Other"
+        		"race/ethn: Black/African American": "Black/African American",
+                "race/ethn: Chinese American": "Chinese American",
+                "race/ethn: East Asian American": "East Asian American",
+                "race/ethn: Ethiopian American": "Ethiopian American",
+                "race/ethn: European American/White/Caucasian": "European American/White/Caucasian",
+                "race/ethn: Filipino American": "Filipino American",
+                "race/ethn: Hispanic American/Latino American": "Hispanic American/Latino American",
+                "race/ethn: Indian American": "Indian American",
+                "race/ethn: Japanese American": "Japanese American",
+                "race/ethn: Korean American": "Korean American",
+                "race/ethn: Mexican American": "Mexican American",
+                "race/ethn: Middle Eastern American": "Middle Eastern American",
+                "race/ethn: Multiracial": "Multiracial",
+                "race/ethn: Nigerian American": "Nigerian American",
+                "race/ethn: Other": "Other",
+                "race/ethn: Persian American": "Persian American",
+                "race/ethn: Taiwanese American": "Taiwanese American",
+                "race/ethn: Vietnamese American": "Vietnamese American"
         	},
         	"gender": {
         		"F": 1,
@@ -67,19 +74,21 @@
         },
         "study3":{
         	"ethn": {
-        		"German": "German",
-        		"European American": "European American",
-        		"Latino American": "Latino American",
-        		"South Asian American": "South Asian American",
-        		"Multiracial": "Multiracial",
-        		"Asian American": "Asian American",
-        		"Chinese American": "Chinese American",
-        		"Vietnamese American": "Vietnamese American",
-        		"African American": "African American",
-        		"Middle Eastern": "Middle Eastern",
-        		"Filipino American": "Filipino American",
-	        	"Korean American": "Korean American",
-        		"Other": "Other"
+                "race/ethn: Asian American": "Asian American",
+                "race/ethn: Black/African American": "Black/African American",
+                "race/ethn: Chinese American": "Chinese American",
+                "race/ethn: European American/White/Caucasian": "European American/White/Caucasian",
+                "race/ethn: Filipino American": "Filipino American",
+                "race/ethn: German": "German",
+                "race/ethn: Hispanic American/Latino American": "Hispanic American/Latino American",
+                "race/ethn: Indian American": "Indian American",
+                "race/ethn: Indonesian American": "Indonesian American",
+                "race/ethn: Korean American": "Korean American",
+                "race/ethn: Mexican American": "Mexican American",
+                "race/ethn: Middle Eastern American": "Middle Eastern American",
+                "race/ethn: Multiracial": "Multiracial",
+                "race/ethn: Other": "Other",
+                "race/ethn: Vietnamese American": "Vietnamese American"
         	},
         	"gender": {
         		"F": 1,

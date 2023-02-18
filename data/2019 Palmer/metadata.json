@@ -19,12 +19,12 @@
     "Recode":{
         "study1": {
             "ethnicity_mod":{
-                "Asian and Pacific Islander": "API",
-                "African American": "Black",
-                "Hispanic": "Hispanic",
-                "Multiracial": "Multiracial",
-                "Other": "Other",
-                "European American": "White"
+                "race/ethn: Asian/Pacific Islander": "API",
+                "race/ethn: Black/African American": "Black",
+                "race/ethn: Hispanic/Latino": "Hispanic",
+                "race/ethn: Multiracial": "Multiracial",
+                "race/ethn: Other": "Other",
+                "race/ethn: White/Caucasian": "White"
             },
             "gender":{
                 "M": 2,

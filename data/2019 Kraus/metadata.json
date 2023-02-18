@@ -19,14 +19,14 @@
     "Recode":{
         "study1": {
             "Ethnicity":{
-                "Multiracial": ["Bi-Cultural (European/Asian)", "Bi-Cultural (Swedish/Filipino)", "Multi-Cultural (White/Asian/Pacific Islander)", "Bi-Cultural (White/Native American)", "Bi-Cultural (Filipino/Indian)", "Bi-Cultural (White/Hispanic)", "Multi-Cultural (Filipino/Indian/German)", "Bi-Cultural (Iranian/Italian)"],
-                "Other": ["East Asian descent, but raised by European Americans", "Grew up in Brazil (Asian Descent)"],
-                "European American": "European American",
-                "East Asian and East Asian American": "East Asian",
-                "Pakistani": "Pakistani",
-                "Israeli": "Israeli",
-                "Indonesian": "Indonesian",
-                "Filipino": "Filipino"                
+                "race/ethn: Multiracial": ["Bi-Cultural (European/Asian)", "Bi-Cultural (Swedish/Filipino)", "Multi-Cultural (White/Asian/Pacific Islander)", "Bi-Cultural (White/Native American)", "Bi-Cultural (Filipino/Indian)", "Bi-Cultural (White/Hispanic)", "Multi-Cultural (Filipino/Indian/German)", "Bi-Cultural (Iranian/Italian)"],
+                "race/ethn: Other": ["East Asian descent, but raised by European Americans", "Grew up in Brazil (Asian Descent)"],
+                "culture: European American": "European American",
+                "race/ethn: East Asian": "East Asian",
+                "race/ethn: Pakistani": "Pakistani",
+                "race/ethn: Israeli": "Israeli",
+                "race/ethn: Indonesian": "Indonesian",
+                "race/ethn: Filipino": "Filipino"                
             },
             "Gender":{
                 "M": "Male", 

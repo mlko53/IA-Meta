@@ -10,8 +10,8 @@
     "Reported": {
         "study3": {
             "total": 103,
-            "European American": 50,
-            "Korean": 53
+            "culture: European American": 50,
+            "culture: Korean": 53
         }
     },
     "Filter":{
@@ -22,9 +22,9 @@
     "Recode":{
         "study3": {
             "culture":{
-                "European American": 0,
-                "Korean": 1,
-                "Chinese": 2
+                "culture: European American": 0,
+                "culture: Korean": 1,
+                "culture: Chinese": 2
             },
             "gender":{
                 "F": 1,
