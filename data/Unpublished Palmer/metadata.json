@@ -18,13 +18,13 @@
     "Recode":{
         "study1": {
             "DAES_ChildRace_Final":{
-                "Native American": 1,
-                "Asian": 2,
-                "Pacific Islander": 3,
-                "African and African American": 4,
-                "European American": 5,
-                "Other": 6,
-                "Multiracial": 7
+                "race/ethn: Native American": 1,
+                "race/ethn: Asian": 2,
+                "race/ethn: Native Hawaiian/Pacific Islander": 3,
+                "race/ethn: Black/African American": 4,
+                "race/ethn: White/Caucasian": 5,
+                "race/ethn: Other": 6,
+                "race/ethn: Multiracial": 7
             },
             "DAES_ChildGender":{
                 "M": 1,

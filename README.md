@@ -6,5 +6,4 @@ We are collecting more than a decade worth of data from unpublished and publishe
 
 ## Descriptives
 
-* Table 1: each study - paper reference with each cultural n's
-* Fig. 1: Histogram of ideal HAP and ideal LAP of each study - paper
+To run analyses, use: `python preprocess.py --config_file config.json --verbose`

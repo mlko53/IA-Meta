@@ -19,7 +19,7 @@
     "Recode":{
         "study1": {
             "Australian":{
-                "Australian": 1
+                "geo: Australian": 1
             },
             "Gender":{
                 "M": 1,

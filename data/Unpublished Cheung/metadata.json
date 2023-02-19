@@ -21,9 +21,11 @@
                 "M": "Male",
                 "F": "Female"
             },
-            "Native Country":{
-                "Chinese": "Mainland China",
-                "Hong Kong Chinese": "Hong Kong"
+            "ethn_country":{
+                "culture: Chinese Canadian": "Mainland China",
+                "culture: Hong Kong Chinese Canadian": "Hong Kong",
+                "culture: Chinese International": "Mainland China Int",
+                "culture: Hong Kong Chinese International": "Hong Kong Int"
             }
         }
     },

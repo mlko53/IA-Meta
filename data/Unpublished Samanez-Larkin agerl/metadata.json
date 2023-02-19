@@ -21,11 +21,11 @@
                 "F": "F"
             },
             "Ethnicity":{
-                "European American": "White",
-                "Asian": "Asian",
-                "Multiracial": ["Biracial", "White/Pacific Islander", "Hispanic/Caucasian", "Hispanic/Other"],
-                "Hispanic": "Hispanic",
-                "African and African American": "Black"
+                "race/ethn: White": "White",
+                "race/ethn: Asian": "Asian",
+                "race/ethn: Multiracial": ["Biracial", "White/Pacific Islander", "Hispanic/Caucasian", "Hispanic/Other"],
+                "race/ethn: Hispanic": "Hispanic",
+                "race/ethn: Black": "Black"
             }
         }
     },
