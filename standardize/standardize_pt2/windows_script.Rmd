@@ -27,7 +27,10 @@ knitr::opts_chunk$set(echo = TRUE)
 #df <- read.csv("./std_pt1_df_2_15_22.csv")
 #df <- read.csv("./std_pt1_df_3_16_22.csv")
 #df <- read.csv("./std_pt1_df_4_28_22.csv")
-df <- read.csv("./std_pt1_df_5_16_22.csv")
+#df <- read.csv("./std_pt1_df_5_16_22.csv")
+#df <- read.csv("./std_pt1_df_2_19_23.csv")
+#df <- read.csv("./std_pt1_df_3_1_23.csv")
+df <- read.csv("./std_pt1_df_3_2_23.csv")
 
 
 df[1] <- NULL #removing a weird extra column from step 1
@@ -52,151 +55,232 @@ head(gdp)
 ```{r}
 # Get country from ethnicity
 
-df$country = as.character(df$ethn)
+## OLD VERSION:
+# df$country = as.character(df$ethn)
+# 
+# df$country[df$country == "Other" |
+#                    df$country == "" |
+#                    df$country == "Taiwanese" |
+#                    df$country == "Asian" |
+#                    df$country == "Hispanic" |
+#                    df$country == "African and African American" |
+#                    df$country == "German + American" |
+#                    df$country == "Multiracial" |
+#                    df$country == "Eastern Europe" |
+#                    df$country == "Native Hawaiian and Pacific Islander" |
+#                    df$country == "East Asian and East Asian American" |
+#                    df$country == "European and Middle Eastern and North Africa" |
+#                    df$country == "Prefer not to answer" |
+#                    df$country == "Asian and Pacific Islander" |
+#                    df$country == "Asian and Asian American" |
+#                    df$country == "South Asian and South Asian American" |
+#                    df$country == "Southeast Asian and Southeast Asian American"] = "Not included"
+# 
+# df$country[df$country == "European American" |
+#                    df$country == "East Asian American" |
+#                    df$country == "Chinese American" |
+#                    df$country == "Latino American" |
+#                    df$country == "African American" |
+#                    df$country == "Asian American" |
+#                    df$country == "Native American" |
+#                    df$country == "American" |
+#                    df$country == "Korean American" |
+#                    df$country == "Japanese American" |
+#                    df$country == "Filipino American" |
+#                    df$country == "Vietnamese American" |
+#                    df$country == "South Asian American" |
+#                    df$country == "Mexican American" |
+#                    df$country == "Central American" |
+#                    df$country == "South American" |
+#                    df$country == "Persian American" |
+#                    df$country == "Taiwanese American" |
+#                    df$country == "Thai American" |
+#                    df$country == "Thai Chinese American" |
+#                    df$country == "Chinese Vietnamese American" |
+#                    df$country == "Japanese Chinese Filipino Hawaiian American"] = "United States"
+# 
+# df$country[df$country == "European Canadian" | 
+#                    df$country == "Canadian"] = "Canada"
+# 
+# df$country[df$country == "Mexican"] = "Mexico"
+# 
+# df$country[df$country == "Brazilian"] = "Brazil"
+# 
+# df$country[df$country == "Colombian"] = "Colombia"
+# 
+# df$country[df$country == "Peruvian"] = "Peru"
+# 
+# df$country[df$country == "Hong Kong Chinese"] = "Hong Kong SAR, China"
+# 
+# df$country[df$country == "Chinese"] = "China"
+# 
+# df$country[df$country == "Japanese"] = "Japan"
+# 
+# df$country[df$country == "Korean"] = "Korea, Rep."
+# 
+# df$country[df$country == "Singaporean"] = "Singapore"
+# 
+# df$country[df$country == "Vietnamese"] = "Vietnam"
+# 
+# df$country[df$country == "Indian"] = "India"
+# 
+# df$country[df$country == "Nepalese"] = "Nepal"
+# 
+# df$country[df$country == "Filipino"] = "Philippines"
+# 
+# df$country[df$country == "Sri Lankan"] = "Sri Lanka"
+# 
+# df$country[df$country == "East Asian" |
+#                    df$country == "Southeast Asian"] = "East Asia & Pacific"
+# 
+# df$country[df$country == "Pacific Islander"] = "Pacific island small states"
+# 
+# df$country[df$country == "South Asian"] = "South Asia"
+# 
+# df$country[df$country == "Australian"] = "Australia"
+# 
+# df$country[df$country == "New Zealander"] = "New Zealand"
+# 
+# df$country[df$country == "Malaysian"] = "Malaysia"
+# 
+# df$country[df$country == "British"] = "United Kingdom"
+# 
+# df$country[df$country == "French"] = "France"
+# 
+# df$country[df$country == "Dutch"] = "Netherlands"
+# 
+# df$country[df$country == "Belgian"] = "Belgium"
+# 
+# df$country[df$country == "German"] = "Germany"
+# 
+# df$country[df$country == "Italian"] = "Italy"
+# 
+# df$country[df$country == "Polish"] = "Poland"
+# 
+# df$country[df$country == "Swedish"] = "Sweden"
+# 
+# df$country[df$country == "Moldovian"] = "Moldova"
+# 
+# df$country[df$country == "Russian"] = "Russian Federation"
+# 
+# df$country[df$country == "Bulgarian"] = "Bulgaria"
+# 
+# df$country[df$country == "Turkish"] = "Turkey"
+# 
+# df$country[df$country == "Middle Eastern" |
+#                    df$country == "Middle Eastern and Arab"] = "Middle East & North Africa"
+# 
+# df$country[df$country == "Israeli"] = "Israel"
+# 
+# df$country[df$country == "Iranian"] = "Iran, Islamic Rep."
+# 
+# df$country[df$country == "Ghanaian"] = "Ghana"
+# 
+# df$country[df$country == "Mauritian"] = "Mauritius"
+# 
+# df$country[df$country == "Nigerian"] = "Nigeria"
+# 
+# df$country[df$country == "Ethiopian"] = "Ethiopia"
+# 
+# df$country[df$country == "Omani"] = "Oman"
+# 
+# df$country[df$country == "Carribean"] = "Latin America & Caribbean"
+# 
+# df$country[df$country == "Chinese Macau"] = "Macao SAR, China"
+# 
+# df$country[df$country == "Lebanese"] = "Lebanon"
+# 
+# df$country[df$country == "Bangladeshi"] = "Bangladesh"
+# 
+# df$country[df$country == "Guatemalan"] = "Guatemala"
+# 
+# df$country[df$country == "Pakistani"] = "Pakistan"
+# 
+# df$country[df$country == "Indonesian"] = "Indonesia"
+# 
+# df$country[df$country == "Thai"] = "Thailand"
 
-df$country[df$country == "Other" |
-                   df$country == "" |
-                   df$country == "Taiwanese" |
-                   df$country == "Asian" |
-                   df$country == "Hispanic" |
-                   df$country == "African and African American" |
-                   df$country == "German + American" |
-                   df$country == "Multiracial" |
-                   df$country == "Eastern Europe" |
-                   df$country == "Native Hawaiian and Pacific Islander" |
-                   df$country == "East Asian and East Asian American" |
-                   df$country == "European and Middle Eastern and North Africa" |
-                   df$country == "Prefer not to answer" |
-                   df$country == "Asian and Pacific Islander" |
-                   df$country == "Asian and Asian American" |
-                   df$country == "South Asian and South Asian American" |
-                   df$country == "Southeast Asian and Southeast Asian American"] = "Not included"
 
-df$country[df$country == "European American" |
-                   df$country == "East Asian American" |
-                   df$country == "Chinese American" |
-                   df$country == "Latino American" |
-                   df$country == "African American" |
-                   df$country == "Asian American" |
-                   df$country == "Native American" |
-                   df$country == "American" |
-                   df$country == "Korean American" |
-                   df$country == "Japanese American" |
-                   df$country == "Filipino American" |
-                   df$country == "Vietnamese American" |
-                   df$country == "South Asian American" |
-                   df$country == "Mexican American" |
-                   df$country == "Central American" |
-                   df$country == "South American" |
-                   df$country == "Persian American" |
-                   df$country == "Taiwanese American" |
-                   df$country == "Thai American" |
-                   df$country == "Thai Chinese American" |
-                   df$country == "Chinese Vietnamese American" |
-                   df$country == "Japanese Chinese Filipino Hawaiian American"] = "United States"
 
-df$country[df$country == "European Canadian" | 
-                   df$country == "Canadian"] = "Canada"
+# NEW VERSION
+#df$country = as.character(df$ethn)
+df$country <- "Not included"
 
-df$country[df$country == "Mexican"] = "Mexico"
+df$country[as.character(df$ethn) == "geo: Australian"] = "Australia"
 
-df$country[df$country == "Brazilian"] = "Brazil"
+df$country[as.character(df$ethn) == "geo: Brazilian"] = "Brazil"
 
-df$country[df$country == "Colombian"] = "Colombia"
+df$country[as.character(df$ethn) == "culture: Chinese Canadian" |
+           as.character(df$ethn) == "culture: Hong Kong Chinese Canadian" |
+           as.character(df$ethn) == "race/ethn: Canadian" |
+           as.character(df$ethn) == "race/ethn: European Canadian"] = "Canada"
 
-df$country[df$country == "Peruvian"] = "Peru"
+df$country[as.character(df$ethn) == "culture: Chinese" |
+           as.character(df$ethn) == "geo: Chinese"] = "China"
 
-df$country[df$country == "Hong Kong Chinese"] = "Hong Kong SAR, China"
+df$country[as.character(df$ethn) == "geo: Colombian"] = "Colombia"
 
-df$country[df$country == "Chinese"] = "China"
+df$country[as.character(df$ethn) == "culture: French"] = "France"
 
-df$country[df$country == "Japanese"] = "Japan"
+df$country[as.character(df$ethn) == "culture: German" |
+           as.character(df$ethn) == "geo: German"] = "Germany"
 
-df$country[df$country == "Korean"] = "Korea, Rep."
+df$country[as.character(df$ethn) == "geo: Ghanaian"] = "Ghana"
 
-df$country[df$country == "Singaporean"] = "Singapore"
+df$country[as.character(df$ethn) == "culture: Hong Kong Chinese" |
+           as.character(df$ethn) == "geo: Hong Kong Chinese"] = "Hong Kong SAR, China"
 
-df$country[df$country == "Vietnamese"] = "Vietnam"
+df$country[as.character(df$ethn) == "geo: Israeli"] = "Israel"
 
-df$country[df$country == "Indian"] = "India"
+df$country[as.character(df$ethn) == "culture: Japanese" |
+           as.character(df$ethn) == "geo: Japanese"] = "Japan"
 
-df$country[df$country == "Nepalese"] = "Nepal"
+df$country[as.character(df$ethn) == "culture: Korean" |
+           as.character(df$ethn) == "geo: Korean"] = "Korea, Rep."
 
-df$country[df$country == "Filipino"] = "Philippines"
+df$country[as.character(df$ethn) == "culture: Mexican" |
+           as.character(df$ethn) == "geo: Mexican"] = "Mexico"
 
-df$country[df$country == "Sri Lankan"] = "Sri Lanka"
+df$country[as.character(df$ethn) == "geo: Polish"] = "Poland"
 
-df$country[df$country == "East Asian" |
-                   df$country == "Southeast Asian"] = "East Asia & Pacific"
+df$country[as.character(df$ethn) == "geo: Singaporean"] = "Singapore"
 
-df$country[df$country == "Pacific Islander"] = "Pacific island small states"
+df$country[as.character(df$ethn) == "geo: Thai"] = "Thailand"
 
-df$country[df$country == "South Asian"] = "South Asia"
+df$country[as.character(df$ethn) == "geo: Turkish"] = "Turkey"
 
-df$country[df$country == "Australian"] = "Australia"
+df$country[as.character(df$ethn) == "culture: British"] = "United Kingdom"
 
-df$country[df$country == "New Zealander"] = "New Zealand"
+df$country[as.character(df$ethn) == "culture: Asian American" |
+           as.character(df$ethn) == "culture: Chinese American" |
+           as.character(df$ethn) == "culture: East Asian American" |
+           as.character(df$ethn) == "culture: European American" |
+           as.character(df$ethn) == "culture: Latino American" |
+           as.character(df$ethn) == "geo: US American" |
+           as.character(df$ethn) == "race/ethn: African American" |
+           as.character(df$ethn) == "race/ethn: Asian American" |
+           as.character(df$ethn) == "race/ethn: Chinese American" |
+           as.character(df$ethn) == "race/ethn: East Asian American" |
+           as.character(df$ethn) == "race/ethn: Ethiopian American" |
+           as.character(df$ethn) == "race/ethn: European American" |
+           as.character(df$ethn) == "race/ethn: Filipino American" |
+           as.character(df$ethn) == "race/ethn: Hispanic American/Latino American" |
+           as.character(df$ethn) == "race/ethn: Indian American" |
+           as.character(df$ethn) == "race/ethn: Indonesian American" |
+           as.character(df$ethn) == "race/ethn: Japanese American" |
+           as.character(df$ethn) == "race/ethn: Korean American" |
+           as.character(df$ethn) == "race/ethn: Latino American" |
+           as.character(df$ethn) == "race/ethn: Mexican American" |
+           as.character(df$ethn) == "race/ethn: Middle Eastern American" |
+           as.character(df$ethn) == "race/ethn: Native American" |
+           as.character(df$ethn) == "race/ethn: Nigerian American" |
+           as.character(df$ethn) == "race/ethn: Persian American" |
+           as.character(df$ethn) == "race/ethn: Taiwanese American" |
+           as.character(df$ethn) == "race/ethn: Vietnamese American" 
+           ] = "United States"
 
-df$country[df$country == "Malaysian"] = "Malaysia"
 
-df$country[df$country == "British"] = "United Kingdom"
-
-df$country[df$country == "French"] = "France"
-
-df$country[df$country == "Dutch"] = "Netherlands"
-
-df$country[df$country == "Belgian"] = "Belgium"
-
-df$country[df$country == "German"] = "Germany"
-
-df$country[df$country == "Italian"] = "Italy"
-
-df$country[df$country == "Polish"] = "Poland"
-
-df$country[df$country == "Swedish"] = "Sweden"
-
-df$country[df$country == "Moldovian"] = "Moldova"
-
-df$country[df$country == "Russian"] = "Russian Federation"
-
-df$country[df$country == "Bulgarian"] = "Bulgaria"
-
-df$country[df$country == "Turkish"] = "Turkey"
-
-df$country[df$country == "Middle Eastern" |
-                   df$country == "Middle Eastern and Arab"] = "Middle East & North Africa"
-
-df$country[df$country == "Israeli"] = "Israel"
-
-df$country[df$country == "Iranian"] = "Iran, Islamic Rep."
-
-df$country[df$country == "Ghanaian"] = "Ghana"
-
-df$country[df$country == "Mauritian"] = "Mauritius"
-
-df$country[df$country == "Nigerian"] = "Nigeria"
-
-df$country[df$country == "Ethiopian"] = "Ethiopia"
-
-df$country[df$country == "Omani"] = "Oman"
-
-df$country[df$country == "Carribean"] = "Latin America & Caribbean"
-
-df$country[df$country == "Chinese Macau"] = "Macao SAR, China"
-
-df$country[df$country == "Lebanese"] = "Lebanon"
-
-df$country[df$country == "Bangladeshi"] = "Bangladesh"
-
-df$country[df$country == "Guatemalan"] = "Guatemala"
-
-df$country[df$country == "Pakistani"] = "Pakistan"
-
-df$country[df$country == "Indonesian"] = "Indonesia"
-
-df$country[df$country == "Thai"] = "Thailand"
-
-unique(df$country)
+sort(unique(df$country))
 ```
 
 
@@ -824,5 +908,5 @@ df_final$famincome_new <- ifelse((df_final$famincome_new == 150000 & df_final$pa
 
 ```{r}
 df_final <- df_final[order(df_final$"Unnamed..0"), ]
-write.csv(df_final, "std_pt2_df_5_16_22.csv", row.names = FALSE, na="")
+write.csv(df_final, "std_pt2_df_3_2_23.csv", row.names = FALSE, na="")
 ```

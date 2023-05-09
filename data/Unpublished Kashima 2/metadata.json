@@ -18,36 +18,8 @@
     },
     "Recode":{
         "study1": {
-            "Country":{
-                "race/ethn: Mexican": ["Mexico", "MEXICO"],
-                "race/ethn: Hong Kong Chinese": "Hong Kong",
-                "race/ethn: Mauritian": ["Mauritius", "mauritius"],
-                "race/ethn: Malaysian": "Malaysia",
-                "race/ethn: Nigerian": "Nigeria",
-                "race/ethn: Indian": ["India", "india", "Indian"],
-                "race/ethn: Brazilian": "Brazil",
-                "race/ethn: Filipino": "Philippines",
-                "race/ethn: Canadian": "canada",
-                "race/ethn: Nepalese": "Nepal",
-                "race/ethn: Japanese": "Japan",
-                "race/ethn: Sri Lankan": ["Sri Lanka", "Sri lanka"],
-                "race/ethn: Vietnamese": ["Vietnam", "vietnam"],
-                "race/ethn: German": "Germany",
-                "race/ethn: Iranian": "Iran",
-                "race/ethn: New Zealander": "New Zealand",
-                "race/ethn: Lebanese": "Lebanon",
-                "race/ethn: Colombian": "Colombia",
-                "race/ethn: Israeli": "Israel",
-                "race/ethn: US American": "United States of America",
-                "race/ethn: Chinese": "China",
-                "race/ethn: Dutch": "The Netherlands",
-                "race/ethn: Korean": "South Korea",
-                "race/ethn: Ethiopian": "ETHIOPIA",
-                "race/ethn: Omani": "Oman",
-                "race/ethn: Bangladeshi": "Bangladesh",
-                "race/ethn: Peruvian": "Peru",
-                "race/ethn: Other": "-",
-                "race/ethn: Guatemalan": "Guatemala"
+            "UserLanguage":{
+                "geo: Australian": "EN"
             },
             "Gender":{
                 "M": 1,

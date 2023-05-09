@@ -90,7 +90,8 @@ def manual_change(df, cols):
     #2016 Da Jiang LTP study11 0-5 to 1-5
     df.loc[df['paper_study'] == "2016 Da Jiang LTP study11", cols] = df.loc[df['paper_study'] == "2016 Da Jiang LTP study11", cols].apply(lambda x: np.where(x < 1, np.nan, x))
     #2016 Da Jiang LTP study2  1-6 to 1-5
-    df.loc[df['paper_study'] == "2016 Da Jiang LTP study2", cols] = df.loc[df['paper_study'] == "2016 Da Jiang LTP study2", cols].apply(lambda x: np.where(x > 5, np.nan, x))
+    #REMOVED
+    #df.loc[df['paper_study'] == "2016 Da Jiang LTP study2", cols] = df.loc[df['paper_study'] == "2016 Da Jiang LTP study2", cols].apply(lambda x: np.where(x > 5, np.nan, x))
     #2017 Oosterhoff study1 1-6 to 1-5
     df.loc[df['paper_study'] == "2017 Oosterhoff study1", cols] = df.loc[df['paper_study'] == "2017 Oosterhoff study1", cols].apply(lambda x: np.where(x > 5, np.nan, x))
     #Unpublished Cheung study1 1-7 to 1-5
@@ -102,7 +103,8 @@ def manual_change(df, cols):
     #2016 Da Jiang FTP study1 0-5 to 1-5
     df.loc[df['paper_study'] == "2016 Da Jiang FTP study1", cols] = df.loc[df['paper_study'] == "2016 Da Jiang FTP study1", cols].apply(lambda x: np.where(x < 1, np.nan, x))
     #2016 Da Jiang FTP study3  1-6 to 1-5
-    df.loc[df['paper_study'] == "2016 Da Jiang FTP study3", cols] = df.loc[df['paper_study'] == "2016 Da Jiang FTP study3", cols].apply(lambda x: np.where(x > 5, np.nan, x))
+    #REMOVED
+    #df.loc[df['paper_study'] == "2016 Da Jiang FTP study3", cols] = df.loc[df['paper_study'] == "2016 Da Jiang FTP study3", cols].apply(lambda x: np.where(x > 5, np.nan, x))
     #Unpublished Fung study1  1-6 to 1-5
     df.loc[df['paper_study'] == "Unpublished Fung study1", cols] = df.loc[df['paper_study'] == "Unpublished Fung study1", cols].apply(lambda x: np.where(x > 5, np.nan, x))
 

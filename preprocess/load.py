@@ -84,10 +84,16 @@ def recode(df, study, metadata):
 
 def replace(df, study, metadata):
     """Replace values of df"""
-    replace_map = metadata['Replace'][study]
+    #replace_map = metadata['Replace'][study]
     # look at recode, might need to cast to list
-    replace_map = {v:(np.nan if k==NAN else k) for k, v in replace_map.items()}
-
+    #replace_map = {v:(np.nan if k==NAN else k) for k, v in replace_map.items()}
+    replace_map = {}
+    for k, v in metadata['Replace'][study].items():
+        if isinstance(v, list):
+            replace_map.update(dict.fromkeys(v, (np.nan if k==NAN else k)))
+        else:
+            replace_map.update({v: (np.nan if k==NAN else k)})
+    
     return df.replace(replace_map)
 
 

@@ -4,8 +4,8 @@
     "Title": "",
     "Authors": "Ito, Mika",
     "Journal": "Unpublished",
-    "Studies": ["study1.sav"],
-    "Usable": ["study1.sav"],
+    "Studies": ["study1.csv"],
+    "Usable": ["study1.csv"],
     "Manipulation": [],
     "Reported": {
         "study1": {
@@ -17,6 +17,9 @@
     },
     "Recode":{
         "study1": {
+            "ethn":{
+                "geo: Japanese": "geo: Japanese"
+            },
             "Gender":{
                 "M": 1,
                 "F": 2
