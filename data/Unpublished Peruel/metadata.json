@@ -1,0 +1,48 @@
+{
+    "Paper": "Unpublished Peruel",
+    "Year": "Unpublished",
+    "Title": "Cultural Differences in Affect Valuation: A Comparison of Filipino-Americans and European Americans",
+    "Authors": "William Peruel, Christie Scollon (mentor)",
+    "Journal": "",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "ethn_mod":{
+                "race/ethn: Black/African American": "Black",
+                "race/ethn: East Asian": "EastAsian",
+                "race/ethn: Filipino": "Filipino",
+                "race/ethn: Hispanic/Latino": "Hispanic",
+                "race/ethn: Native American": "NativeAmerican",
+                "race/ethn: Pacific Islander": "PacificIslander",
+                "race/ethn: Southeast Asian": ["SoutheastAsian", "FilipinoSoutheastAsian"],
+                "race/ethn: South Asian": "SouthAsian",
+                "race/ethn: White/Caucasian": "White",
+                "race/ethn: Multiracial": ["FilipinoSoutheastAsianWhite", "FilipinoWhite", "FilipinoHispanic", "FilipinoPacificIslander", "EastAsianFilipinoHispanicPacificIslander", "FilipinoNativeAmericanWhite", "BlackFilipinoHispanic", "FilipinoHispanicPacificIslander", "EastAsianFilipino", "FilipinoOther", "FilipinoNativeAmerican", "EastAsianFilipinoHispanic", "EastAsianFilipinoWhite", "FilipinoHispanicPacificIslanderWhite", "BlackFilipino", "NativeAmericanWhite", "EastAsianWhite", "HispanicWhite", "BlackWhite", "EastAsianSoutheastAsian", "SoutheastAsianWhite"],
+                "race/ethn: Other": "Other"
+            },
+            "gendermod":{
+                "F": "Female",
+                "M": "Male",
+                "Non-binary/Genderqueer": ["GenderqueerMale", "FemaleGenderqueer", "Genderqueer"],
+                "Prefer not to answer": "FemalePreferNot",
+                "Transgender": "TransgenderM",
+                "Other": "Other"
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

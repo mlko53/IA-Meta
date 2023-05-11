@@ -1,0 +1,40 @@
+{
+    "Paper": "2022 Senft",
+    "Year": 2022,
+    "Title": "Within-and between-group heterogeneity in cultural models of emotion among people of European, Asian, and Latino heritage in the United States",
+    "Authors": "Senft, N., Doucerain, M. M., Campos, B., Shiota, M. N., & Chentsova-Dutton, Y. E.",
+    "Journal": "Emotion",
+    "Studies": ["study1.csv"],
+    "Usable": ["study1.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "race/ethn: European American/White/Caucasian": 490,
+            "race/ethn: Asian": 463,
+            "race/ethn: Latino": 665
+        }
+    },
+    "Filter":{
+        "study1": {
+            "culture": ["Asian", "Latino", "White"]
+        }
+    },
+    "Recode":{
+        "study1": {
+            "culture":{
+                "race/ethn: European American/White/Caucasian": "White",
+                "race/ethn: Asian": "Asian",
+                "race/ethn: Latino": "Latino"
+            },
+            "sex":{
+                "F": 2,
+                "M": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

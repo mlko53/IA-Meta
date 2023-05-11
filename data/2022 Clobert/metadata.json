@@ -1,0 +1,39 @@
+{
+    "Paper": "2022 Clobert",
+    "Year": 2022,
+    "Title": "Valuing high arousal negative states increases negative responses toward outgroups across cultures.",
+    "Authors": "Clobert, M., Sasaki, J., Hwang, K. K., & Tsai, J. L.",
+    "Journal": "Emotion",
+    "Studies": ["study12.sav"],
+    "Usable": ["study12.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study12": {
+            "race/ethn: European American": 227,
+            "culture: European Canadian": 162,
+            "culture: Taiwanese": 170
+        }
+    },
+    "Filter":{
+        "study12": {
+        }
+    },
+    "Recode":{
+        "study12": {
+            "Coutry_Stud":{
+                "race/ethn: European American": 2,
+                "culture: European Canadian": 3,
+                "culture: Taiwanese": 1
+            },
+            "gender":{
+                "F": 2,
+                "M": 1
+            }
+        }
+    },
+    "Replace":{
+        "study12":{
+            "_NAN_": 999
+        }
+    }
+}

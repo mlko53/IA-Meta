@@ -1,0 +1,61 @@
+{
+    "Paper": "2021 Koopmann-Holm",
+    "Year": 2021,
+    "Title": "What constitutes a compassionate response? The important role of culture.",
+    "Authors": "Koopmann-Holm, B., Bruchmann, K., Fuchs, M., & Pearson, M.",
+    "Journal": "Emotion",
+    "Studies": ["study1.sav", "study2ab.sav"],
+    "Usable": ["study1.sav", "study2ab.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 467,
+            "geo: US American": 152,
+            "geo: German": 315
+        },
+        "study2ab": {
+            "total": 198,
+            "culture: European American/Caucasian": 118,
+            "culture: German": 80
+            
+        }
+    },
+    "Filter":{
+        "study1": {
+            "finished": [1]
+        },
+        "study2ab": {
+            "filter_$": [1]
+        }
+    },
+    "Recode":{
+        "study1": {
+            "country":{
+                "geo: US American": 1,
+                "geo: German": 2
+            },
+            "gender":{
+                "F": 1,
+                "M": 2
+            }
+        },
+        "study2ab":{
+            "country":{
+                "culture: European American/Caucasian": 0,
+                "culture: German": 1
+            },
+            "genderparticipant":{
+                "F": 1,
+                "M": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        },
+        "study2ab":{
+            "_NAN_": 999
+        }
+    }
+}

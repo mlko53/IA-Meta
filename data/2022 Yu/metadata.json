@@ -1,0 +1,36 @@
+{
+    "Paper": "2022 Yu",
+    "Year": 2022,
+    "Title": "From Emotion Beliefs to Regulatory Behavior: Gratitude Journaling Initiation and Outcomes",
+    "Authors": "Yu, C. W., Chang, Y. P., Li, C. H., & Wu, H. Y.",
+    "Journal": "Journal of Happiness Studies",
+    "Studies": ["study1.csv"],
+    "Usable": ["study1.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 311,
+            "geo: Taiwanese": 311
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "ethn":{
+                "geo: Taiwanese": "Taiwanese"
+            },
+            "gender":{
+                "F": 0,
+                "M": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

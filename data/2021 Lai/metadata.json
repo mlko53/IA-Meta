@@ -1,0 +1,45 @@
+{
+    "Paper": "2021 Lai",
+    "Year": 2021,
+    "Title": "Shared and unique affective abnormalities in schizotypy dimensions",
+    "Authors": "Lai, J., Snyder, M. E., Vijayakumar, K. S. M., Bailey, D. H., & Martin, E. A.",
+    "Journal": "PsyCh Journal",
+    "Studies": ["study1.csv"],
+    "Usable": ["study1.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 2218
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Race/Ethnicity":{
+                "race/ethn: Black/African/African American/Carribbean": 1,
+                "race/ethn: East Asian": 2,
+                "race/ethn: South Asian": 3,
+                "race/ethn: Southeast Asian": 4,
+                "race/ethn: European American/White/Caucasian/Anglo": 5,
+                "race/ethn: Hispanic American/Latino/Chicano/Mexican/Colombian": 6,
+                "race/ethn: Pacific Islander": 7,
+                "race/ethn: Native Hawaiian/Native American": 8,
+                "race/ethn: Multiracial": 9
+            },
+            "Gender":{
+                "F": 1,
+                "M": 0,
+                "_NAN_": 9,
+                "Other": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

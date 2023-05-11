@@ -1,0 +1,77 @@
+{
+    "Paper": "2021 Millgram",
+    "Year": 2021,
+    "Title": "Motivations for emotions in bipolar disorder",
+    "Authors": "Millgram, Y., Gruber, J., Villanueva, C. M., Rapoport, A., & Tamir, M.",
+    "Journal": "Clinical science",
+    "Studies": ["study1.sav", "study2.sav", "study3.sav"],
+    "Usable": ["study1.sav", "study2.sav", "study3.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 387
+        },
+        "study2": {
+            "total": 63
+        },
+        "study3": {
+            "total": 67
+        }
+    },
+    "Filter":{
+        "study1": {
+        },
+        "study2": {
+        },
+        "study3": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "DEMO_Ethnicity":{
+                "race/ethn: African American": 1,
+                "race/ethn: Caucasian": 2,
+                "race/ethn: Hispanic": 3,
+                "race/ethn: Asian": 4,
+                "race/ethn: Middle Eastern": 5,
+                "race/ethn: Other": 6
+            },
+            "DEMO_Gender":{
+                "F": 2,
+                "M": 1
+            }
+        },
+        "study2": {
+            "Gender":{
+                "F": 1,
+                "M": 2
+            }
+        },
+        "study3": {
+            "ethn_mod":{
+                "race/ethn: White/Caucasian": "White",
+                "race/ethn: Black/African American": "Black",
+                "race/ethn: Native American": "NativeAmerican",
+                "race/ethn: Asian": "Asian",
+                "race/ethn: Hispanic/Latino": "Hispanic",
+                "race/ethn: Other": "Other",
+                "race/ethn: Multiracial": ["WhiteNativeAmericanAsianHispanicOther", "WhiteOther", "WhiteBlack"]
+            },
+            "gender":{
+                "F": 2,
+                "M": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        },
+        "study2":{
+            "_NAN_": 999
+        },
+        "study3":{
+            "_NAN_": 999
+        }
+    }
+}

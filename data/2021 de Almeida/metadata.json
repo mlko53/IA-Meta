@@ -1,0 +1,39 @@
+{
+    "Paper": "2021 de Almeida",
+    "Year": 2021,
+    "Title": "Who Can Buffer Marginalization Risk? Affect Experience, Affect Valuation, and Social Marginalization in Japan and Brazil",
+    "Authors": "De Almeida, I., & Uchida, Y.",
+    "Journal": "Frontiers in Psychology",
+    "Studies": ["study1.csv"],
+    "Usable": ["study1.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 108,
+            "culture: Brazilian": 54,
+            "culture: Japanese": 54
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "culture":{
+                "culture: Brazilian": ["br", "br2"],
+                "culture: Japanese": ["jp"]
+            },
+            "gender":{
+                "F": 1,
+                "M": 0,
+                "Other": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

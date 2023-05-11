@@ -1,0 +1,40 @@
+{
+    "Paper": "2023 Curlee",
+    "Year": 2023,
+    "Title": "The Examen for Life during COVID-19: Impact on Interpersonal Processes, Self-Transcendent Positive Emotions, and Mental Health Symptoms.",
+    "Authors": "Curlee MS.",
+    "Journal": "Thesis",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 115,
+            "race/ethn: White": 93,
+            "race/ethn: Black/African American": 12,
+            "race/ethn: Other": 10
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Race":{
+                "race/ethn: White": 1,
+                "race/ethn: Black/African American": 2,
+                "race/ethn: Other": 3
+            },
+            "BinaryGender":{
+                "M": 1,
+                "Non-male": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": "NA"
+        }
+    }
+}

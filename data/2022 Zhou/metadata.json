@@ -1,0 +1,40 @@
+{
+    "Paper": "2022 Zhou",
+    "Year": 2022,
+    "Title": "What you want to feel determines how you feel: The role of ideal affect in emotion regulation",
+    "Authors": "Zhou, X., Yeung, D. Y., Gerstein, L. H., & Zhang, Y.",
+    "Journal": "Journal of Positive Psychology",
+    "Studies": ["study1.sav", "study2.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": ["study2.sav"],
+    "Reported": {
+        "study1": {
+            "total": 300,
+            "culture: European American": 150,
+            "culture: Hong Kong Chinese": 150
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "CD":{
+                "culture: European American": 0,
+                "culture: Hong Kong Chinese": 1
+            },
+            "Gender":{
+                "F": 1,
+                "M": 0,
+                "Non-binary/Genderqueer": 3,
+                "Transgender": 2
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}
