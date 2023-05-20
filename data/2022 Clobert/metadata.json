@@ -10,8 +10,8 @@
     "Reported": {
         "study12": {
             "race/ethn: European American": 227,
-            "culture: European Canadian": 162,
-            "culture: Taiwanese": 170
+            "race/ethn: European Canadian": 162,
+            "geo: Taiwanese": 170
         }
     },
     "Filter":{
@@ -22,8 +22,8 @@
         "study12": {
             "Coutry_Stud":{
                 "race/ethn: European American": 2,
-                "culture: European Canadian": 3,
-                "culture: Taiwanese": 1
+                "race/ethn: European Canadian": 3,
+                "geo: Taiwanese": 1
             },
             "gender":{
                 "F": 2,

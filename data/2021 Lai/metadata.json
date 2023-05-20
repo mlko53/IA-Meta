@@ -32,7 +32,7 @@
             "Gender":{
                 "F": 1,
                 "M": 0,
-                "_NAN_": 9,
+                "Prefer not to answer": 9,
                 "Other": 2
             }
         }
