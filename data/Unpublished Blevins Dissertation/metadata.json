@@ -1,0 +1,154 @@
+{
+    "Paper": "Unpublished Blevins Dissertation",
+    "Year": "Unpublished",
+    "Title": "",
+    "Authors": "Blevins, E.",
+    "Journal": "",
+    "Studies": ["study3.csv", "study4a.csv", "study4b.csv", "study5a.sav", "study5b.sav", "study6.sav", "study7.sav"],
+    "Usable": ["study3.csv", "study4a.csv", "study4b.csv", "study5a.sav", "study5b.sav", "study6.sav", "study7.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study3": {
+        },
+        "study4a": {
+            "total": 100,
+            "culture: European American": 100
+        },
+        "study4b": {
+        },
+        "study5a": {
+            "total": 87,
+            "culture: European American": 87
+        },
+        "study5b": {
+            "total": 54,
+            "culture: Chinese": 31,
+            "culture: Taiwanese": 23
+        },
+        "study6": {
+        },
+        "study7": {
+        }
+    },
+    "Filter":{
+        "study3": {
+        },
+        "study4a": {
+            "Finished": [1]
+        },
+        "study4b": {
+            "Finished": [1]
+        },
+        "study5a": {
+            "exclude": [0]
+        },
+        "study5b": {
+            "filter_$": [1]
+        },
+        "study6": {
+            "filter_ethn$": [1],
+            "filter_ethn_fami$": [1]
+        },
+        "study7": {
+            "filter_dem$": [1]
+        }
+    },
+    "Recode":{
+        "study3": {
+            "culture":{
+                "culture: European American": 0,
+                "culture: Chinese International": 1,
+                "culture: Hong Kong Chinese": 2
+            },
+            "gender_code":{
+                "F": 1,
+                "M": 0
+            }
+        },
+        "study4a": {
+            "Status":{
+                "culture: European American": 0
+            },
+            "gend":{
+                "F": 2,
+                "M": 1,
+                "Other": 3
+            }
+        },
+        "study4b": {
+            "Status":{
+                "culture: Chinese": 0
+            },
+            "gend":{
+                "F": 2,
+                "M": 1,
+                "Other": 3
+            }
+        },
+        "study5a": {
+            "ethnicity":{
+                "culture: European American": 1
+            },
+            "gender":{
+                "F": 2,
+                "M": 1
+            }
+        },
+        "study5b": {
+            "Country":{
+                "culture: Chinese": 1,
+                "culture: Taiwanese": 2
+            },
+            "Q505.0":{
+                "F": 2,
+                "M": 1,
+                "Other": 3
+            }
+        },
+        "study6": {
+            "ethn_ea0_ch1":{
+                "culture: Chinese": 1,
+                "culture: European American": 0
+            },
+            "gender":{
+                "F": 2,
+                "M": 1,
+                "Other": 3
+            }
+        },
+        "study7": {
+            "ethn_ea0_ch1":{
+                "culture: Chinese": 1,
+                "culture: European American": 0
+            },
+            "gender":{
+                "F": 2,
+                "M": 1,
+                "Other": 3
+            }
+        }
+    },
+    "Replace":{
+        "study3":{
+            "_NAN_": 999
+        },
+        "study4a":{
+            "_NAN_": 999
+        },
+        "study4b":{
+            "_NAN_": 999
+        },
+        "study5a":{
+            "_NAN_": 999
+        },
+        "study5b":{
+            "_NAN_": 999
+        },
+        "study6":{
+            "_NAN_": 999
+        },
+        "study7":{
+            "_NAN_": 999
+        }
+    }
+}

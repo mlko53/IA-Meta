@@ -1,0 +1,52 @@
+{
+    "Paper": "Unpublished Cachia Love",
+    "Year": "Unpublished",
+    "Title": "",
+    "Authors": "Cachia, J.Y.A.",
+    "Journal": "",
+    "Studies": ["study1.csv", "study2.csv"],
+    "Usable": ["study1.csv", "study2.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+        },
+        "study2": {
+        }
+    },
+    "Filter":{
+        "study1": {
+        },
+        "study2": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Culture":{
+                "culture: European American": "European Americans",
+                "culture: Japanese": "Japanese"
+            },
+            "Gender":{
+                "F": "Female",
+                "M": "Male"
+            }
+        },
+        "study2": {
+            "Culture":{
+                "culture: European American": "European American",
+                "culture: Japanese": "Japanese"
+            },
+            "Gender":{
+                "F": "Female",
+                "M": "Male"
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": "NA"
+        },
+        "study2":{
+            "_NAN_": "NA"
+        }
+    }
+}

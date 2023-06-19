@@ -1,0 +1,42 @@
+{
+    "Paper": "Unpublished Bencharit Leadership",
+    "Year": "Unpublished",
+    "Title": "",
+    "Authors": "Bencharit, L.Z.",
+    "Journal": "",
+    "Studies": ["study1_momentary.sav", "study2.sav", "study3_covid.sav"],
+    "Usable": ["study2.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study2": {
+            "total": 449,
+            "culture: European American": 197,
+            "culture: East Asian American": 129,
+            "culture: Hong Kong Chinese": 123
+        }
+    },
+    "Filter":{
+        "study2": {
+            "filter_$": [1]
+        }
+    },
+    "Recode":{
+        "study2": {
+            "ethnicity":{
+                "culture: European American": "EA",
+                "culture: East Asian American": "AA",
+                "culture: Hong Kong Chinese": "HK"
+            },
+            "Prescreen_gender":{
+                "M": 1,
+                "F": 2,
+                "Other": 3
+            }
+        }
+    },
+    "Replace":{
+        "study2":{
+            "_NAN_": 999
+        }
+    }
+}

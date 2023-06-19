@@ -1,0 +1,35 @@
+{
+    "Paper": "2022 Mizrahi Lakan",
+    "Year": 2022,
+    "Title": "Desired sadness, happiness, fear and calmness in depression: The potential roles of valence and arousal.",
+    "Authors": "Mizrahi Lakan, S., Millgram, Y., & Tamir, M.",
+    "Journal": "Emotion",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 72
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Birth_country":{
+                "geo: Israeli": [1, 2, 3]
+            },
+            "gender":{
+                "F": 0,
+                "M": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

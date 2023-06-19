@@ -1,0 +1,1134 @@
+---
+title: "SIDgeneralizability"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(lme4)
+library(lmerTest)
+library(matrixStats)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include = FALSE}
+compute_affect <- function(df){
+    hap <- c("enth1", "exci1", "elat1", "euph1")
+    lap <- c("peac1", "sere1", "rela1", "calm1")
+    han <- c("nerv1", "host1", "fear1", "angr1")
+    lan <- c("dull1", "slee1", "slug1")
+    
+    ideal_items <- colnames(df)[str_which(colnames(df), "^i[.]")]
+    actual_items <- colnames(df)[str_which(colnames(df), "^r[.]")]
+    
+    df$r.mean <- rowMeans(as.matrix(df[actual_items]), na.rm=TRUE)
+    df$r.sd <- rowSds(as.matrix(df[actual_items]), na.rm=TRUE)
+    df$i.mean <- rowMeans(as.matrix(df[ideal_items]), na.rm=TRUE)
+    df$i.sd <- rowSds(as.matrix(df[ideal_items]), na.rm=TRUE)
+    
+    df[paste0(ideal_items, "_i")] <- (as.matrix(df[ideal_items]) - df$i.mean) / df$i.sd
+    df[paste0(actual_items, "_i")] <- (as.matrix(df[actual_items]) - df$r.mean) / df$r.sd
+
+    df$i.hap <- rowMeans(as.matrix(df[paste0("i.", hap)]), na.rm=TRUE)
+    df$r.hap <- rowMeans(as.matrix(df[paste0("r.", hap)]), na.rm=TRUE)
+    df$i.lap <- rowMeans(as.matrix(df[paste0("i.", lap)]), na.rm=TRUE)
+    df$r.lap <- rowMeans(as.matrix(df[paste0("r.", lap)]), na.rm=TRUE)
+    df$i.han <- rowMeans(as.matrix(df[paste0("i.", han)]), na.rm=TRUE)
+    df$r.han <- rowMeans(as.matrix(df[paste0("r.", han)]), na.rm=TRUE)
+    df$i.lan <- rowMeans(as.matrix(df[paste0("i.", lan)]), na.rm=TRUE)
+    df$r.lan <- rowMeans(as.matrix(df[paste0("r.", lan)]), na.rm=TRUE)
+    df$i.hap_i <- rowMeans(as.matrix(df[paste0(paste0("i.", hap), "_i")]), na.rm=TRUE)
+    df$r.hap_i <- rowMeans(as.matrix(df[paste0(paste0("r.", hap), "_i")]), na.rm=TRUE)
+    df$i.lap_i <- rowMeans(as.matrix(df[paste0(paste0("i.", lap), "_i")]), na.rm=TRUE)
+    df$r.lap_i <- rowMeans(as.matrix(df[paste0(paste0("r.", lap), "_i")]), na.rm=TRUE)
+    df$i.han_i <- rowMeans(as.matrix(df[paste0(paste0("i.", han), "_i")]), na.rm=TRUE)
+    df$r.han_i <- rowMeans(as.matrix(df[paste0(paste0("r.", han), "_i")]), na.rm=TRUE)
+    df$i.lan_i <- rowMeans(as.matrix(df[paste0(paste0("i.", lan), "_i")]), na.rm=TRUE)
+    df$r.lan_i <- rowMeans(as.matrix(df[paste0(paste0("r.", lan), "_i")]), na.rm=TRUE)
+    
+    return(df)
+}
+```
+
+# Data Wrangling
+
+```{r echo = FALSE}
+df_us <- read.csv("SID_generalizability_prolific_cleaned.csv", head = T)
+df_ch <- read.csv("SID_generalizability_china_070122.csv", head = T)
+
+df_us <- df_us %>%
+  # filter out incomplete responses
+  filter(Finished == 1 & order == 1 | order == 2) %>%
+  # filter out participants who do not identify as White or Chinese
+  filter(ethn_p == 1 ) %>%
+  # drop empty columns
+  select(-c("RecipientLastName", "RecipientFirstName",	"RecipientEmail",	"ExternalReference")) %>%
+  # clean up demographic variable names
+  rename("ethn_p_text" = Q349,
+         "born_p_text" = Q359,
+         "raise_p" = Q355,
+         "raise_p_text" = Q356,
+         "born_m" = Q367,
+         "born_m_text" = Q369,
+         "raise_m" = Q357,
+         "raise_m_text" = Q358,
+         "ethn_m" = Q371,
+         "ethn_m_text" = Q373,
+         "born_f" = Q375,
+         "born_f_text" = Q377,
+         "raise_f" = Q359,
+         "raise_f_text" = Q360,
+         "ethn_f" = Q379,
+         "ethn_f_text" = Q381,
+         "born_fourGrand" = Q383,
+         "born_fourGrand_text" = Q385,
+         "ladderCountry" = Q1097,
+         "ladderCommunity" = Q1099,
+         "ses" = Q1103,
+         "income" = Q1104) %>%
+    # clean up trait rating names
+    rename("AAW11_hap1_frie" = AAM1_hap5_traits_1,
+           "AAW11_hap1_domi" = AAM1_hap5_traits_2,
+           "AAW11_hap1_host" = AAM1_hap5_traits_3,
+           "AAW11_hap1_inte" = AAM1_hap5_traits_4,
+           "AAW11_hap1_trus" = AAM1_hap5_traits_5,
+           "AAW11_hap1_stab" = AAM1_hap5_traits_6,
+           "EAW2new_neu_frie" = AAM1_hap5_traits_1.1,
+           "EAW2new_neu_domi" = AAM1_hap5_traits_2.1,
+           "EAW2new_neu_host" = AAM1_hap5_traits_3.1,
+           "EAW2new_neu_inte" = AAM1_hap5_traits_4.1,
+           "EAW2new_neu_trus" = AAM1_hap5_traits_5.1,
+           "EAW2new_neu_stab" = AAM1_hap5_traits_6.1,
+           "EAM19_ang5_frie" = AAM1_hap5_traits_1.2,
+           "EAM19_ang5_domi" = AAM1_hap5_traits_2.2,
+           "EAM19_ang5_host" = AAM1_hap5_traits_3.2,
+           "EAM19_ang5_inte" = AAM1_hap5_traits_4.2,
+           "EAM19_ang5_trus" = AAM1_hap5_traits_5.2,
+           "EAM19_ang5_stab" = AAM1_hap5_traits_6.2,
+           "AAM1_hap5_frie" = AAM1_hap5_traits_1.3,
+           "AAM1_hap5_domi" = AAM1_hap5_traits_2.3,
+           "AAM1_hap5_host" = AAM1_hap5_traits_3.3,
+           "AAM1_hap5_inte" = AAM1_hap5_traits_4.3,
+           "AAM1_hap5_trus" = AAM1_hap5_traits_5.3,
+           "AAM1_hap5_stab" = AAM1_hap5_traits_6.3,
+           "AAW22_ang5_frie" = AAM1_hap5_traits_1.4,
+           "AAW22_ang5_domi" = AAM1_hap5_traits_2.4,
+           "AAW22_ang5_host" = AAM1_hap5_traits_3.4,
+           "AAW22_ang5_inte" = AAM1_hap5_traits_4.4,
+           "AAW22_ang5_trus" = AAM1_hap5_traits_5.4,
+           "AAW22_ang5_stab" = AAM1_hap5_traits_6.4,
+           "EAM10_hap1_frie" = AAM1_hap5_traits_1.5,
+           "EAM10_hap1_domi" = AAM1_hap5_traits_2.5,
+           "EAM10_hap1_host" = AAM1_hap5_traits_3.5,
+           "EAM10_hap1_inte" = AAM1_hap5_traits_4.5,
+           "EAM10_hap1_trus" = AAM1_hap5_traits_5.5,
+           "EAM10_hap1_stab" = AAM1_hap5_traits_6.5,
+           "AAW1_neu_frie" = AAM1_hap5_traits_1.6,
+           "AAW1_neu_domi" = AAM1_hap5_traits_2.6,
+           "AAW1_neu_host" = AAM1_hap5_traits_3.6,
+           "AAW1_neu_inte" = AAM1_hap5_traits_4.6,
+           "AAW1_neu_trus" = AAM1_hap5_traits_5.6,
+           "AAW1_neu_stab" = AAM1_hap5_traits_6.6,
+           "AAM16_ang1_frie" = AAM1_hap5_traits_1.7,
+           "AAM16_ang1_domi" = AAM1_hap5_traits_2.7,
+           "AAM16_ang1_host" = AAM1_hap5_traits_3.7,
+           "AAM16_ang1_inte" = AAM1_hap5_traits_4.7,
+           "AAM16_ang1_trus" = AAM1_hap5_traits_5.7,
+           "AAM16_ang1_stab" = AAM1_hap5_traits_6.7,
+           "EAM3_neu_frie" = AAM1_hap5_traits_1.8,
+           "EAM3_neu_domi" = AAM1_hap5_traits_2.8,
+           "EAM3_neu_host" = AAM1_hap5_traits_3.8,
+           "EAM3_neu_inte" = AAM1_hap5_traits_4.8,
+           "EAM3_neu_trus" = AAM1_hap5_traits_5.8,
+           "EAM3_neu_stab" = AAM1_hap5_traits_6.8,
+           "EAW10_hap5_frie" = AAM1_hap5_traits_1.9,
+           "EAW10_hap5_domi" = AAM1_hap5_traits_2.9,
+           "EAW10_hap5_host" = AAM1_hap5_traits_3.9,
+           "EAW10_hap5_inte" = AAM1_hap5_traits_4.9,
+           "EAW10_hap5_trus" = AAM1_hap5_traits_5.9,
+           "EAW10_hap5_stab" = AAM1_hap5_traits_6.9,
+           "AAM17_neu_frie" = AAM1_hap5_traits_1.10,
+           "AAM17_neu_domi" = AAM1_hap5_traits_2.10,
+           "AAM17_neu_host" = AAM1_hap5_traits_3.10,
+           "AAM17_neu_inte" = AAM1_hap5_traits_4.10,
+           "AAM17_neu_trus" = AAM1_hap5_traits_5.10,
+           "AAM17_neu_stab" = AAM1_hap5_traits_6.10,
+           "EAW19_ang1_frie" = AAM1_hap5_traits_1.11,
+           "EAW19_ang1_domi" = AAM1_hap5_traits_2.11,
+           "EAW19_ang1_host" = AAM1_hap5_traits_3.11,
+           "EAW19_ang1_inte" = AAM1_hap5_traits_4.11,
+           "EAW19_ang1_trus" = AAM1_hap5_traits_5.11,
+           "EAW19_ang1_stab" = AAM1_hap5_traits_6.11,
+           "AAW3_hap5_frie" = AAM1_hap5_traits_1.12,
+           "AAW3_hap5_domi" = AAM1_hap5_traits_2.12,
+           "AAW3_hap5_host" = AAM1_hap5_traits_3.12,
+           "AAW3_hap5_inte" = AAM1_hap5_traits_4.12,
+           "AAW3_hap5_trus" = AAM1_hap5_traits_5.12,
+           "AAW3_hap5_stab" = AAM1_hap5_traits_6.12,
+           "EAM23_neu_frie" = AAM1_hap5_traits_1.13,
+           "EAM23_neu_domi" = AAM1_hap5_traits_2.13,
+           "EAM23_neu_host" = AAM1_hap5_traits_3.13,
+           "EAM23_neu_inte" = AAM1_hap5_traits_4.13,
+           "EAM23_neu_trus" = AAM1_hap5_traits_5.13,
+           "EAM23_neu_stab" = AAM1_hap5_traits_6.13,
+           "AAM3_ang5_frie" = AAM1_hap5_traits_1.14,
+           "AAM3_ang5_domi" = AAM1_hap5_traits_2.14,
+           "AAM3_ang5_host" = AAM1_hap5_traits_3.14,
+           "AAM3_ang5_inte" = AAM1_hap5_traits_4.14,
+           "AAM3_ang5_trus" = AAM1_hap5_traits_5.14,
+           "AAM3_ang5_stab" = AAM1_hap5_traits_6.14,
+           "EAW11_hap1_frie" = AAM1_hap5_traits_1.15,
+           "EAW11_hap1_domi" = AAM1_hap5_traits_2.15,
+           "EAW11_hap1_host" = AAM1_hap5_traits_3.15,
+           "EAW11_hap1_inte" = AAM1_hap5_traits_4.15,
+           "EAW11_hap1_trus" = AAM1_hap5_traits_5.15,
+           "EAW11_hap1_stab" = AAM1_hap5_traits_6.15,
+           "EAM11_ang1_frie" = AAM1_hap5_traits_1.16,
+           "EAM11_ang1_domi" = AAM1_hap5_traits_2.16,
+           "EAM11_ang1_host" = AAM1_hap5_traits_3.16,
+           "EAM11_ang1_inte" = AAM1_hap5_traits_4.16,
+           "EAM11_ang1_trus" = AAM1_hap5_traits_5.16,
+           "EAM11_ang1_stab" = AAM1_hap5_traits_6.16,
+           "AAW16_neu_frie" = AAM1_hap5_traits_1.17,
+           "AAW16_neu_domi" = AAM1_hap5_traits_2.17,
+           "AAW16_neu_host" = AAM1_hap5_traits_3.17,
+           "AAW16_neu_inte" = AAM1_hap5_traits_4.17,
+           "AAW16_neu_trus" = AAM1_hap5_traits_5.17,
+           "AAW16_neu_stab" = AAM1_hap5_traits_6.17,
+           "AAM15_hap1_frie" = AAM1_hap5_traits_1.18,
+           "AAM15_hap1_domi" = AAM1_hap5_traits_2.18,
+           "AAM15_hap1_host" = AAM1_hap5_traits_3.18,
+           "AAM15_hap1_inte" = AAM1_hap5_traits_4.18,
+           "AAM15_hap1_trus" = AAM1_hap5_traits_5.18,
+           "AAM15_hap1_stab" = AAM1_hap5_traits_6.18,
+           "EAW12_ang5_frie" = AAM1_hap5_traits_1.19,
+           "EAW12_ang5_domi" = AAM1_hap5_traits_2.19,
+           "EAW12_ang5_host" = AAM1_hap5_traits_3.19,
+           "EAW12_ang5_inte" = AAM1_hap5_traits_4.19,
+           "EAW12_ang5_trus" = AAM1_hap5_traits_5.19,
+           "EAW12_ang5_stab" = AAM1_hap5_traits_6.19,
+           "AAM14_neu_frie" = AAM1_hap5_traits_1.20,
+           "AAM14_neu_domi" = AAM1_hap5_traits_2.20,
+           "AAM14_neu_host" = AAM1_hap5_traits_3.20,
+           "AAM14_neu_inte" = AAM1_hap5_traits_4.20,
+           "AAM14_neu_trus" = AAM1_hap5_traits_5.20,
+           "AAM14_neu_stab" = AAM1_hap5_traits_6.20,
+           "EAM1_hap5_frie" = AAM1_hap5_traits_1.21,
+           "EAM1_hap5_domi" = AAM1_hap5_traits_2.21,
+           "EAM1_hap5_host" = AAM1_hap5_traits_3.21,
+           "EAM1_hap5_inte" = AAM1_hap5_traits_4.21,
+           "EAM1_hap5_trus" = AAM1_hap5_traits_5.21,
+           "EAM1_hap5_stab" = AAM1_hap5_traits_6.21,
+           "EAW6_neu_frie" = AAM1_hap5_traits_1.22,
+           "EAW6_neu_domi" = AAM1_hap5_traits_2.22,
+           "EAW6_neu_host" = AAM1_hap5_traits_3.22,
+           "EAW6_neu_inte" = AAM1_hap5_traits_4.22,
+           "EAW6_neu_trus" = AAM1_hap5_traits_5.22,
+           "EAW6_neu_stab" = AAM1_hap5_traits_6.22,
+           "AAW2_ang1_frie" = AAM1_hap5_traits_1.23,
+           "AAW2_ang1_domi" = AAM1_hap5_traits_2.23,
+           "AAW2_ang1_host" = AAM1_hap5_traits_3.23,
+           "AAW2_ang1_inte" = AAM1_hap5_traits_4.23,
+           "AAW2_ang1_trus" = AAM1_hap5_traits_5.23,
+           "AAW2_ang1_stab" = AAM1_hap5_traits_6.23,
+           "AAW14_hap1_vale_p" = Q1248, 
+           "AAW14_hap1_arou_p" = Q1249, 
+           "AAW14_hap1_like" = Q1251,
+           "AAW14_hap1_enga" = Q1252,
+           "AAW14_hap1_avoi" = Q1253,
+           "AAW14_hap1_frie" = AAM1_hap5_traits_1.24,
+           "AAW14_hap1_domi" = AAM1_hap5_traits_2.24,
+           "AAW14_hap1_host" = AAM1_hap5_traits_3.24,
+           "AAW14_hap1_inte" = AAM1_hap5_traits_4.24,
+           "AAW14_hap1_trus" = AAM1_hap5_traits_5.24,
+           "AAW14_hap1_stab" = AAM1_hap5_traits_6.24,
+           "EAW17_neu_vale_p" = Q1365, 
+           "EAW17_neu_arou_p" = Q1366, 
+           "EAW17_neu_like" = Q1368,
+           "EAW17_neu_enga" = Q1369,
+           "EAW17_neu_avoi" = Q1370,
+           "EAW17_neu_frie" = AAM1_hap5_traits_1.25,
+           "EAW17_neu_domi" = AAM1_hap5_traits_2.25,
+           "EAW17_neu_host" = AAM1_hap5_traits_3.25,
+           "EAW17_neu_inte" = AAM1_hap5_traits_4.25,
+           "EAW17_neu_trus" = AAM1_hap5_traits_5.25,
+           "EAW17_neu_stab" = AAM1_hap5_traits_6.25,
+           "EAM9_ang5_vale_p" = Q1338, 
+           "EAM9_ang5_arou_p" = Q1339, 
+           "EAM9_ang5_like" = Q1341,
+           "EAM9_ang5_enga" = Q1342,
+           "EAM9_ang5_avoi" = Q1343,
+           "EAM9_ang5_frie" = AAM1_hap5_traits_1.26,
+           "EAM9_ang5_domi" = AAM1_hap5_traits_2.26,
+           "EAM9_ang5_host" = AAM1_hap5_traits_3.26,
+           "EAM9_ang5_inte" = AAM1_hap5_traits_4.26,
+           "EAM9_ang5_trus" = AAM1_hap5_traits_5.26,
+           "EAM9_ang5_stab" = AAM1_hap5_traits_6.26,
+           "AAM11_hap5_vale_p" = Q1185, 
+           "AAM11_hap5_arou_p" = Q1186, 
+           "AAM11_hap5_like" = Q1188,
+           "AAM11_hap5_enga" = Q1189,
+           "AAM11_hap5_avoi" = Q1190,
+           "AAM11_hap5_frie" = AAM1_hap5_traits_1.27,
+           "AAM11_hap5_domi" = AAM1_hap5_traits_2.27,
+           "AAM11_hap5_host" = AAM1_hap5_traits_3.27,
+           "AAM11_hap5_inte" = AAM1_hap5_traits_4.27,
+           "AAM11_hap5_trus" = AAM1_hap5_traits_5.27,
+           "AAM11_hap5_stab" = AAM1_hap5_traits_6.27,
+           "AAW6_ang5_vale_p" = Q1284, 
+           "AAW6_ang5_arou_p" = Q1285, 
+           "AAW6_ang5_like" = Q1287,
+           "AAW6_ang5_enga" = Q1288,
+           "AAW6_ang5_avoi" = Q1289,
+           "AAW6_ang5_frie" = AAM1_hap5_traits_1.28,
+           "AAW6_ang5_domi" = AAM1_hap5_traits_2.28,
+           "AAW6_ang5_host" = AAM1_hap5_traits_3.28,
+           "AAW6_ang5_inte" = AAM1_hap5_traits_4.28,
+           "AAW6_ang5_trus" = AAM1_hap5_traits_5.28,
+           "AAW6_ang5_stab" = AAM1_hap5_traits_6.28,
+           "EAM25_hap1_vale_p" = Q1302, 
+           "EAM25_hap1_arou_p" = Q1303, 
+           "EAM25_hap1_like" = Q1305,
+           "EAM25_hap1_enga" = Q1306,
+           "EAM25_hap1_avoi" = Q1307,
+           "EAM25_hap1_frie" = AAM1_hap5_traits_1.29,
+           "EAM25_hap1_domi" = AAM1_hap5_traits_2.29,
+           "EAM25_hap1_host" = AAM1_hap5_traits_3.29,
+           "EAM25_hap1_inte" = AAM1_hap5_traits_4.29,
+           "EAM25_hap1_trus" = AAM1_hap5_traits_5.29,
+           "EAM25_hap1_stab" = AAM1_hap5_traits_6.29,
+           "AAW19_neu_vale_p" = Q1257, 
+           "AAW19_neu_arou_p" = Q1258, 
+           "AAW19_neu_like" = Q1260,
+           "AAW19_neu_enga" = Q1261,
+           "AAW19_neu_avoi" = Q1262,
+           "AAW19_neu_frie" = AAM1_hap5_traits_1.30,
+           "AAW19_neu_domi" = AAM1_hap5_traits_2.30,
+           "AAW19_neu_host" = AAM1_hap5_traits_3.30,
+           "AAW19_neu_inte" = AAM1_hap5_traits_4.30,
+           "AAW19_neu_trus" = AAM1_hap5_traits_5.30,
+           "AAW19_neu_stab" = AAM1_hap5_traits_6.30,
+           "AAM6_ang1_vale_p" = Q1221, 
+           "AAM6_ang1_arou_p" = Q1222, 
+           "AAM6_ang1_like" = Q1224,
+           "AAM6_ang1_enga" = Q1225,
+           "AAM6_ang1_avoi" = Q1226,
+           "AAM6_ang1_frie" = AAM1_hap5_traits_1.31,
+           "AAM6_ang1_domi" = AAM1_hap5_traits_2.31,
+           "AAM6_ang1_host" = AAM1_hap5_traits_3.31,
+           "AAM6_ang1_inte" = AAM1_hap5_traits_4.31,
+           "AAM6_ang1_trus" = AAM1_hap5_traits_5.31,
+           "AAM6_ang1_stab" = AAM1_hap5_traits_6.31,
+           "EAM8_neu_vale_p" = Q1320, 
+           "EAM8_neu_arou_p" = Q1321, 
+           "EAM8_neu_like" = Q1323,
+           "EAM8_neu_enga" = Q1324,
+           "EAM8_neu_avoi" = Q1325,
+           "EAM8_neu_frie" = AAM1_hap5_traits_1.32,
+           "EAM8_neu_domi" = AAM1_hap5_traits_2.32,
+           "EAM8_neu_host" = AAM1_hap5_traits_3.32,
+           "EAM8_neu_inte" = AAM1_hap5_traits_4.32,
+           "EAM8_neu_trus" = AAM1_hap5_traits_5.32,
+           "EAM8_neu_stab" = AAM1_hap5_traits_6.32,
+           "EAW4_hap5_vale_p" = Q1347, 
+           "EAW4_hap5_arou_p" = Q1348, 
+           "EAW4_hap5_like" = Q1350,
+           "EAW4_hap5_enga" = Q1351,
+           "EAW4_hap5_avoi" = Q1352,
+           "EAW4_hap5_frie" = AAM1_hap5_traits_1.33,
+           "EAW4_hap5_domi" = AAM1_hap5_traits_2.33,
+           "EAW4_hap5_host" = AAM1_hap5_traits_3.33,
+           "EAW4_hap5_inte" = AAM1_hap5_traits_4.33,
+           "EAW4_hap5_trus" = AAM1_hap5_traits_5.33,
+           "EAW4_hap5_stab" = AAM1_hap5_traits_6.33,
+           "AAM8_neu_vale_p" = Q1212, 
+           "AAM8_neu_arou_p" = Q1213, 
+           "AAM8_neu_like" = Q1215,
+           "AAM8_neu_enga" = Q1216,
+           "AAM8_neu_avoi" = Q1217,
+           "AAM8_neu_frie" = AAM1_hap5_traits_1.34,
+           "AAM8_neu_domi" = AAM1_hap5_traits_2.34,
+           "AAM8_neu_host" = AAM1_hap5_traits_3.34,
+           "AAM8_neu_inte" = AAM1_hap5_traits_4.34,
+           "AAM8_neu_trus" = AAM1_hap5_traits_5.34,
+           "AAM8_neu_stab" = AAM1_hap5_traits_6.34,
+           "EAW8_ang1_vale_p" = Q1383, 
+           "EAW8_ang1_arou_p" = Q1384, 
+           "EAW8_ang1_like" = Q1386,
+           "EAW8_ang1_enga" = Q1387,
+           "EAW8_ang1_avoi" = Q1388,
+           "EAW8_ang1_frie" = AAM1_hap5_traits_1.35,
+           "EAW8_ang1_domi" = AAM1_hap5_traits_2.35,
+           "EAW8_ang1_host" = AAM1_hap5_traits_3.35,
+           "EAW8_ang1_inte" = AAM1_hap5_traits_4.35,
+           "EAW8_ang1_trus" = AAM1_hap5_traits_5.35,
+           "EAW8_ang1_stab" = AAM1_hap5_traits_6.35,
+           "AAW9_hap5_vale_p" = Q1239, 
+           "AAW9_hap5_arou_p" = Q1240, 
+           "AAW9_hap5_like" = Q1242,
+           "AAW9_hap5_enga" = Q1243,
+           "AAW9_hap5_avoi" = Q1244,
+           "AAW9_hap5_frie" = AAM1_hap5_traits_1.36,
+           "AAW9_hap5_domi" = AAM1_hap5_traits_2.36,
+           "AAW9_hap5_host" = AAM1_hap5_traits_3.36,
+           "AAW9_hap5_inte" = AAM1_hap5_traits_4.36,
+           "AAW9_hap5_trus" = AAM1_hap5_traits_5.36,
+           "AAW9_hap5_stab" = AAM1_hap5_traits_6.36,
+           "EAM4_neu_vale_p" = Q1311, 
+           "EAM4_neu_arou_p" = Q1312, 
+           "EAM4_neu_like" = Q1314,
+           "EAM4_neu_enga" = Q1315,
+           "EAM4_neu_avoi" = Q1316,
+           "EAM4_neu_frie" = AAM1_hap5_traits_1.37,
+           "EAM4_neu_domi" = AAM1_hap5_traits_2.37,
+           "EAM4_neu_host" = AAM1_hap5_traits_3.37,
+           "EAM4_neu_inte" = AAM1_hap5_traits_4.37,
+           "EAM4_neu_trus" = AAM1_hap5_traits_5.37,
+           "EAM4_neu_stab" = AAM1_hap5_traits_6.37,
+           "AAM32_ang5_vale_p" = Q1230, 
+           "AAM32_ang5_arou_p" = Q1231, 
+           "AAM32_ang5_like" = Q1233,
+           "AAM32_ang5_enga" = Q1234,
+           "AAM32_ang5_avoi" = Q1235,
+           "AAM32_ang5_frie" = AAM1_hap5_traits_1.38,
+           "AAM32_ang5_domi" = AAM1_hap5_traits_2.38,
+           "AAM32_ang5_host" = AAM1_hap5_traits_3.38,
+           "AAM32_ang5_inte" = AAM1_hap5_traits_4.38,
+           "AAM32_ang5_trus" = AAM1_hap5_traits_5.38,
+           "AAM32_ang5_stab" = AAM1_hap5_traits_6.38,
+           "EAW16_hap1_vale_p" = Q1356, 
+           "EAW16_hap1_arou_p" = Q1357, 
+           "EAW16_hap1_like" = Q1359,
+           "EAW16_hap1_enga" = Q1360,
+           "EAW16_hap1_avoi" = Q1361,
+           "EAW16_hap1_frie" = AAM1_hap5_traits_1.39,
+           "EAW16_hap1_domi" = AAM1_hap5_traits_2.39,
+           "EAW16_hap1_host" = AAM1_hap5_traits_3.39,
+           "EAW16_hap1_inte" = AAM1_hap5_traits_4.39,
+           "EAW16_hap1_trus" = AAM1_hap5_traits_5.39,
+           "EAW16_hap1_stab" = AAM1_hap5_traits_6.39,
+           "EAM16_ang1_vale_p" = Q1329, 
+           "EAM16_ang1_arou_p" = Q1330, 
+           "EAM16_ang1_like" = Q1332,
+           "EAM16_ang1_enga" = Q1333,
+           "EAM16_ang1_avoi" = Q1334,
+           "EAM16_ang1_frie" = AAM1_hap5_traits_1.40,
+           "EAM16_ang1_domi" = AAM1_hap5_traits_2.40,
+           "EAM16_ang1_host" = AAM1_hap5_traits_3.40,
+           "EAM16_ang1_inte" = AAM1_hap5_traits_4.40,
+           "EAM16_ang1_trus" = AAM1_hap5_traits_5.40,
+           "EAM16_ang1_stab" = AAM1_hap5_traits_6.40,
+           "AAW5_neu_vale_p" = Q1266, 
+           "AAW5_neu_arou_p" = Q1267, 
+           "AAW5_neu_like" = Q1269,
+           "AAW5_neu_enga" = Q1270,
+           "AAW5_neu_avoi" = Q1271,
+           "AAW5_neu_frie" = AAM1_hap5_traits_1.41,
+           "AAW5_neu_domi" = AAM1_hap5_traits_2.41,
+           "AAW5_neu_host" = AAM1_hap5_traits_3.41,
+           "AAW5_neu_inte" = AAM1_hap5_traits_4.41,
+           "AAW5_neu_trus" = AAM1_hap5_traits_5.41,
+           "AAW5_neu_stab" = AAM1_hap5_traits_6.41,
+           "AAM5_hap1_vale_p" = Q1194, 
+           "AAM5_hap1_arou_p" = Q1195, 
+           "AAM5_hap1_like" = Q1197,
+           "AAM5_hap1_enga" = Q1198,
+           "AAM5_hap1_avoi" = Q1199,
+           "AAM5_hap1_frie" = AAM1_hap5_traits_1.42,
+           "AAM5_hap1_domi" = AAM1_hap5_traits_2.42,
+           "AAM5_hap1_host" = AAM1_hap5_traits_3.42,
+           "AAM5_hap1_inte" = AAM1_hap5_traits_4.42,
+           "AAM5_hap1_trus" = AAM1_hap5_traits_5.42,
+           "AAM5_hap1_stab" = AAM1_hap5_traits_6.42,
+           "EAW9_ang5_vale_p" = Q1392, 
+           "EAW9_ang5_arou_p" = Q1393, 
+           "EAW9_ang5_like" = Q1395,
+           "EAW9_ang5_enga" = Q1396,
+           "EAW9_ang5_avoi" = Q1397,
+           "EAW9_ang5_frie" = AAM1_hap5_traits_1.43,
+           "EAW9_ang5_domi" = AAM1_hap5_traits_2.43,
+           "EAW9_ang5_host" = AAM1_hap5_traits_3.43,
+           "EAW9_ang5_inte" = AAM1_hap5_traits_4.43,
+           "EAW9_ang5_trus" = AAM1_hap5_traits_5.43,
+           "EAW9_ang5_stab" = AAM1_hap5_traits_6.43,
+           "AAM19_neu_vale_p" = Q1203, 
+           "AAM19_neu_arou_p" = Q1204, 
+           "AAM19_neu_like" = Q1206,
+           "AAM19_neu_enga" = Q1207,
+           "AAM19_neu_avoi" = Q1208,
+           "AAM19_neu_frie" = AAM1_hap5_traits_1.44,
+           "AAM19_neu_domi" = AAM1_hap5_traits_2.44,
+           "AAM19_neu_host" = AAM1_hap5_traits_3.44,
+           "AAM19_neu_inte" = AAM1_hap5_traits_4.44,
+           "AAM19_neu_trus" = AAM1_hap5_traits_5.44,
+           "AAM19_neu_stab" = AAM1_hap5_traits_6.44,
+           "EAM15_hap5_vale_p" = Q1293, 
+           "EAM15_hap5_arou_p" = Q1294, 
+           "EAM15_hap5_like" = Q1296,
+           "EAM15_hap5_enga" = Q1297,
+           "EAM15_hap5_avoi" = Q1298,
+           "EAM15_hap5_frie" = AAM1_hap5_traits_1.45,
+           "EAM15_hap5_domi" = AAM1_hap5_traits_2.45,
+           "EAM15_hap5_host" = AAM1_hap5_traits_3.45,
+           "EAM15_hap5_inte" = AAM1_hap5_traits_4.45,
+           "EAM15_hap5_trus" = AAM1_hap5_traits_5.45,
+           "EAM15_hap5_stab" = AAM1_hap5_traits_6.45,
+           "EAW30_neu_vale_p" = Q1374, 
+           "EAW30_neu_arou_p" = Q1375, 
+           "EAW30_neu_like" = Q1377,
+           "EAW30_neu_enga" = Q1378,
+           "EAW30_neu_avoi" = Q1379,
+           "EAW30_neu_frie" = AAM1_hap5_traits_1.46,
+           "EAW30_neu_domi" = AAM1_hap5_traits_2.46,
+           "EAW30_neu_host" = AAM1_hap5_traits_3.46,
+           "EAW30_neu_inte" = AAM1_hap5_traits_4.46,
+           "EAW30_neu_trus" = AAM1_hap5_traits_5.46,
+           "EAW30_neu_stab" = AAM1_hap5_traits_6.46,
+           "AAW8_ang1_vale_p" = Q1275, 
+           "AAW8_ang1_arou_p" = Q1276, 
+           "AAW8_ang1_like" = Q1278,
+           "AAW8_ang1_enga" = Q1279,
+           "AAW8_ang1_avoi" = Q1280,
+           "AAW8_ang1_frie" = AAM1_hap5_traits_1.47,
+           "AAW8_ang1_domi" = AAM1_hap5_traits_2.47,
+           "AAW8_ang1_host" = AAM1_hap5_traits_3.47,
+           "AAW8_ang1_inte" = AAM1_hap5_traits_4.47,
+           "AAW8_ang1_trus" = AAM1_hap5_traits_5.47,
+           "AAW8_ang1_stab" = AAM1_hap5_traits_6.47)
+
+faceRating_us <- df_us %>%
+  # select subID, order, and face ratings
+  dplyr::select("ResponseId", "order", "age", "gend", "check",
+                # "AAW11_hap1_vale_p":"AAW8_ang1_stab",
+                starts_with("i1_"),
+                starts_with("a1_")) %>%
+  # add column for participant ethnicity
+  add_column(ethni_r = 0)
+
+faceRating_ch <- df_ch %>%
+  # select subID, order, and face ratings
+  dplyr::select("ResponseId", "order", "age", "gend", "check",
+                # "AAW11_hap1_vale_p":"AAW8_ang1_stab",
+                starts_with("i1_"),
+                starts_with("a1_")) %>%
+  filter(age <= 30) %>%
+  filter(check == 2) %>%
+  # add column for participant ethnicity
+  add_column(ethni_r = 1)
+
+# merge files
+faceRating <- rbind(faceRating_us, faceRating_ch) %>%
+  mutate(i.hap = rowMeans(cbind(i1_1, i1_13), na.rm = T),
+         i.lap = rowMeans(cbind(i1_8, i1_9), na.rm = T),
+         i.mean = rowMeans(cbind(i1_1, i1_2, i1_3, i1_4, i1_5, i1_6, i1_7, i1_8,
+                                 i1_9, i1_10, i1_11, i1_12, i1_13, i1_14, i1_15), na.rm = T),
+         i.stdv = rowSds(cbind(i1_1, i1_2, i1_3, i1_4, i1_5, i1_6, i1_7, i1_8,
+                                 i1_9, i1_10, i1_11, i1_12, i1_13, i1_14, i1_15), na.rm = T),
+         r.mean = rowMeans(cbind(a1_1, a1_2, a1_3, a1_4, a1_5, a1_6, a1_7, a1_8,
+                                 a1_9, a1_10, a1_11, a1_12, a1_13, a1_14, a1_15), na.rm = T),
+         r.stdv = rowSds(cbind(a1_1, a1_2, a1_3, a1_4, a1_5, a1_6, a1_7, a1_8,
+                               a1_9, a1_10, a1_11, a1_12, a1_13, a1_14, a1_15), na.rm = T),
+         i.enth_i = (i1_1 - i.mean) / i.stdv,
+         i.exci_i = (i1_13 - i.mean) / i.stdv,
+         i.calm_i = (i1_8 - i.mean) / i.stdv,
+         i.rela_i = (i1_9 - i.mean) / i.stdv,
+         r.enth_i = (a1_1 - r.mean) / r.stdv,
+         r.exci_i = (a1_13 - r.mean) / r.stdv,
+         r.calm_i = (a1_8 - r.mean) / r.stdv,
+         r.rela_i = (a1_9 - r.mean) / r.stdv,
+         i.hap_i = rowMeans(cbind(i.enth_i, i.exci_i), na.rm = T),
+         i.lap_i = rowMeans(cbind(i.calm_i, i.rela_i), na.rm = T),
+         r.hap_i = rowMeans(cbind(r.enth_i, r.exci_i), na.rm = T),
+         r.lap_i = rowMeans(cbind(r.calm_i, r.rela_i), na.rm = T))
+```
+
+```{r}
+compute_pa <- function(df) {
+  
+  arou_items <- colnames(df)[str_which(colnames(df), "_arou_p$")]
+  vale_items <- colnames(df)[str_which(colnames(df), "_vale_p$")]
+    
+  df$arou_mean <- rowMeans(as.matrix(df[arou_items]), na.rm = T)
+  df$vale_mean <- rowMeans(as.matrix(df[vale_items]), na.rm = T)
+  df$arou_stdv <- rowSds(as.matrix(df[arou_items]), na.rm = T)
+  df$vale_stdv <- rowSds(as.matrix(df[vale_items]), na.rm = T)
+  
+  df[paste0(arou_items, "_md")] <- (as.matrix(df[arou_items]) - df$arou_mean)
+  df[paste0(vale_items, "_md")] <- (as.matrix(df[vale_items]) - df$vale_mean)
+  
+  arou_items_md <- colnames(df)[str_which(colnames(df), "_arou_p_md$")]
+  vale_items_md <- colnames(df)[str_which(colnames(df), "_vale_p_md$")]
+  
+  df[paste0(str_sub(arou_items, 1, nchar(arou_items)-7), "_pa")] <- (as.matrix(df[arou_items_md]/sqrt(2)) + df[vale_items_md]/sqrt(2))
+  
+  return(df)
+}
+```
+
+```{r}
+faceRating_pa <- compute_pa(faceRating) %>%
+  dplyr::select("ResponseId", "order", "age", "gend", "check", "ethni_r",
+                contains("_pa")) %>%
+  left_join(faceRating, by = c("ResponseId", "order", "age", "gend", "check", "ethni_r"))
+```
+
+```{r echo = FALSE}
+order <- read.csv("order.csv", head = T) %>%
+  dplyr::select(-trialtype)
+order$identity <- str_remove_all(order$identity, "x_b.jpg$")
+```
+
+# Demographics
+
+```{r}
+demographics <- faceRating %>%
+  filter(age <= 30) %>%
+  group_by(ethni_r) %>%
+  summarise(mean_age = mean(age, na.rm = T),
+            stdv_age = sd(age),
+            n_males = sum(gend == (1), na.rm = T),
+            n_females = sum(gend == (2), na.rm = T),
+            n_fillIn = sum(gend == (3), na.rm = T),
+            n_total = n(),
+            i.hap = mean(i.hap, na.rm = T),
+            i.lap = mean(i.lap, na.rm = T),
+            i.hap_i = mean(i.hap_i, na.rm = T),
+            i.lap_i = mean(i.lap_i, na.rm = T))
+demographics
+
+avi_long <- faceRating %>% 
+  dplyr::select(ResponseId, ethni_r, i.hap_i, i.lap_i, r.hap_i, r.lap_i) %>%
+  gather(key = octant, value = response, i.hap_i, i.lap_i, r.hap_i, r.lap_i) %>%
+  separate(octant, c("question", "aggregate"), sep = "\\.") %>%
+  mutate(question = factor(question, levels = c("r", "i"))) %>%
+  mutate(question = fct_recode(question, "actual" = "r", "ideal" = "i")) %>%
+  spread(question, response) %>%
+  mutate(ethni_r = factor(ethni_r, levels = c("0", "1"))) %>%
+  mutate(ethni_r = fct_recode(ethni_r, "European American" = "0", "Chinese" = "1"))
+
+avi_long_hap <- avi_long %>%
+  filter(aggregate == "hap_i")
+
+avi_long_lap <- avi_long %>%
+  filter(aggregate == "lap_i")
+  
+# relevel culture: chinese as reference group
+avi_long_hap$ethni_r = relevel(avi_long_hap$ethni_r, ref = "Chinese")
+hap <- lm(ideal ~ ethni_r + actual, data = avi_long_hap)
+summary(hap)
+
+avi_long_lap$ethni_r = relevel(avi_long_lap$ethni_r, ref = "Chinese")
+lap <- lm(ideal ~ ethni_r + actual, data = avi_long_lap)
+summary(lap)
+```
+
+# Compute Means
+
+Mean ratings of extremely angry (`ang5`), slightly angry (`ang1`), neutral (`neu`), slightly happy (`hap1`), and extremely happy (`hap5`) faces. Each point represents an individual participant, and the error bars represent approximate 95% confidence intervals around the mean.
+
+```{r echo = FALSE}
+faceRating_long <- faceRating_pa %>%
+  gather(question, rating, "AAW11_hap1_pa":"AAW8_ang1_stab") %>%
+  mutate(question = gsub("vale_p", "valeP", question),
+         question = gsub("arou_p", "arouP", question)) %>%
+  separate(question, c("targ", "emot", "question"), sep = "\\_") %>%
+  mutate(emot = factor(emot, levels = c("ang5", "ang1", "neu", "hap1", "hap5"))) %>%
+  # add new column for target expression
+  mutate(expr = emot) %>%
+  unite("identity", "targ", "expr")
+
+faceRating_output_expr_subj <- faceRating_long %>%
+  # group by target identity
+  group_by(ethni_r, ResponseId, emot, question) %>%
+  summarise(mean = mean(rating, na.rm = T),
+            stdv = sd(rating, na.rm = T))
+
+faceRating_output_expr <- faceRating_long %>%
+  group_by(ethni_r, ResponseId, emot, question) %>%
+  # calculate for each subject
+  summarise(mean = mean(rating, na.rm = T),
+            stdv = sd(rating, na.rm = T),
+            # divide n by 2 since participants only rated half of the faces
+            n = n()/2,
+            se = stdv / n,
+            ci = 1.96 * se) %>%
+  # calculate across subjects
+  group_by(ethni_r, emot, question) %>%
+  summarise(mean = mean(mean, na.rm = T),
+            stdv = mean(stdv, na.rm = T),
+            se = mean(se, na.rm = T),
+            ci = mean(ci, na.rm = T))
+```
+
+## Positive Arousal
+
+```{r warning = FALSE}
+ggplot(filter(faceRating_output_expr, question == "pa"), aes(x = emot, y = mean, fill = emot), na.rm = T) +
+  geom_bar(stat = "identity",  width = 0.6) +
+  geom_point(data = filter(faceRating_output_expr_subj, question == "pa"), aes(x = emot, y = mean),
+             position = position_jitter(width = 0.10),
+             alpha = 0.05) +
+  facet_wrap(~ ethni_r) +
+  scale_fill_manual(values = c("#d7191c","#fdae61", "#ffffbf", "#abd9e9", "#2c7bb6")) +
+  geom_errorbar(width = 0.2, aes(ymin = (mean - ci), ymax = (mean + ci))) +
+  ggtitle("Positive Arousal (Mean-Deviated)") +
+  xlab("Target Expression") +
+  ylab("Rating") +
+  ggthemes::theme_few() +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+```
+
+## Valence
+
+```{r warning = FALSE}
+ggplot(filter(faceRating_output_expr, question == "valeP"), aes(x = emot, y = mean, fill = emot), na.rm = T) +
+  geom_bar(stat = "identity",  width = 0.6) +
+  geom_point(data = filter(faceRating_output_expr_subj, question == "valeP"), aes(x = emot, y = mean),
+             position = position_jitter(width = 0.10),
+             alpha = 0.05) +
+  facet_wrap(~ ethni_r) +
+  scale_fill_manual(values = c("#d7191c","#fdae61", "#ffffbf", "#abd9e9", "#2c7bb6")) +
+  scale_y_continuous(breaks = seq(1, 8, by = 1)) +
+  geom_errorbar(width = 0.2, aes(ymin = (mean - ci), ymax = (mean + ci))) +
+  ggtitle("Valence") +
+  xlab("Target Expression") +
+  ylab("Mean Rating (1-7)") +
+  ggthemes::theme_few() +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+```
+
+## Arousal
+
+```{r warning = FALSE}
+ggplot(filter(faceRating_output_expr, question == "arouP"), aes(x = emot, y = mean, fill = emot), na.rm = T) +
+  geom_bar(stat = "identity",  width = 0.6) +
+  geom_point(data = filter(faceRating_output_expr_subj, question == "arouP"), aes(x = emot, y = mean),
+             position = position_jitter(width = 0.10),
+             alpha = 0.05) +
+  facet_wrap(~ ethni_r) +
+  scale_fill_manual(values = c("#d7191c","#fdae61", "#ffffbf", "#abd9e9", "#2c7bb6")) +
+  scale_y_continuous(breaks = seq(1, 8, by = 1)) +
+  geom_errorbar(width = 0.2, aes(ymin = (mean - ci), ymax = (mean + ci))) +
+  ggtitle("Arousal") +
+  xlab("Target Expression") +
+  ylab("Mean Rating (1-7)") +
+  ggthemes::theme_few() +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+```
+
+## Like
+
+```{r warning = FALSE}
+ggplot(filter(faceRating_output_expr, question == "like"), aes(x = emot, y = mean, fill = emot), na.rm = T) +
+  geom_bar(stat = "identity",  width = 0.6) +
+  geom_point(data = filter(faceRating_output_expr_subj, question == "like"), aes(x = emot, y = mean),
+             position = position_jitter(width = 0.10),
+             alpha = 0.05) +
+  facet_wrap(~ ethni_r) +
+  scale_fill_manual(values = c("#d7191c","#fdae61", "#ffffbf", "#abd9e9", "#2c7bb6")) +
+  scale_y_continuous(breaks = seq(1, 8, by = 1)) +
+  geom_errorbar(width = 0.2, aes(ymin = (mean - ci), ymax = (mean + ci))) +
+  ggtitle("Like Person") +
+  xlab("Target Expression") +
+  ylab("Mean Rating (1-7)") +
+  ggthemes::theme_few() +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+```
+
+## Engage with Person
+
+```{r warning = FALSE}
+ggplot(filter(faceRating_output_expr, question == "enga"), aes(x = emot, y = mean, fill = emot), na.rm = T) +
+  geom_bar(stat = "identity",  width = 0.6) +
+  geom_point(data = filter(faceRating_output_expr_subj, question == "enga"), aes(x = emot, y = mean),
+             position = position_jitter(width = 0.10),
+             alpha = 0.05) +
+  facet_wrap(~ ethni_r) +
+  scale_fill_manual(values = c("#d7191c","#fdae61", "#ffffbf", "#abd9e9", "#2c7bb6")) +
+  scale_y_continuous(breaks = seq(1, 8, by = 1)) +
+  geom_errorbar(width = 0.2, aes(ymin = (mean - ci), ymax = (mean + ci))) +
+  ggtitle("Engage with Person") +
+  xlab("Target Expression") +
+  ylab("Mean Rating (1-7)") +
+  ggthemes::theme_few() +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+```
+
+## Avoid Person
+
+```{r warning = FALSE}
+ggplot(filter(faceRating_output_expr, question == "avoi"), aes(x = emot, y = mean, fill = emot), na.rm = T) +
+  geom_bar(stat = "identity",  width = 0.6) +
+  geom_point(data = filter(faceRating_output_expr_subj, question == "avoi"), aes(x = emot, y = mean),
+             position = position_jitter(width = 0.10),
+             alpha = 0.05) +
+  facet_wrap(~ ethni_r) +
+  scale_fill_manual(values = c("#d7191c","#fdae61", "#ffffbf", "#abd9e9", "#2c7bb6")) +
+  scale_y_continuous(breaks = seq(1, 8, by = 1)) +
+  geom_errorbar(width = 0.2, aes(ymin = (mean - ci), ymax = (mean + ci))) +
+  ggtitle("Avoid Person") +
+  xlab("Target Expression") +
+  ylab("Mean Rating (1-7)") +
+  ggthemes::theme_few() +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+```
+
+## Friendly
+
+```{r warning = FALSE}
+ggplot(filter(faceRating_output_expr, question == "frie"), aes(x = emot, y = mean, fill = emot), na.rm = T) +
+  geom_bar(stat = "identity",  width = 0.6) +
+  geom_point(data = filter(faceRating_output_expr_subj, question == "frie"), aes(x = emot, y = mean),
+             position = position_jitter(width = 0.10),
+             alpha = 0.05) +
+  facet_wrap(~ ethni_r) +
+  scale_fill_manual(values = c("#d7191c","#fdae61", "#ffffbf", "#abd9e9", "#2c7bb6")) +
+  scale_y_continuous(breaks = seq(1, 8, by = 1)) +
+  geom_errorbar(width = 0.2, aes(ymin = (mean - ci), ymax = (mean + ci))) +
+  ggtitle("Friendly") +
+  xlab("Target Expression") +
+  ylab("Mean Rating (1-7)") +
+  ggthemes::theme_few() +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+```
+
+## Hostile
+
+```{r warning = FALSE}
+ggplot(filter(faceRating_output_expr, question == "host"), aes(x = emot, y = mean, fill = emot), na.rm = T) +
+  geom_bar(stat = "identity",  width = 0.6) +
+  geom_point(data = filter(faceRating_output_expr_subj, question == "host"), aes(x = emot, y = mean),
+             position = position_jitter(width = 0.10),
+             alpha = 0.05) +
+  facet_wrap(~ ethni_r) +
+  scale_fill_manual(values = c("#d7191c","#fdae61", "#ffffbf", "#abd9e9", "#2c7bb6")) +
+  scale_y_continuous(breaks = seq(1, 8, by = 1)) +
+  geom_errorbar(width = 0.2, aes(ymin = (mean - ci), ymax = (mean + ci))) +
+  ggtitle("Hostile") +
+  xlab("Target Expression") +
+  ylab("Mean Rating (1-7)") +
+  ggthemes::theme_few() +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+```
+
+## Dominant
+
+```{r warning = FALSE}
+ggplot(filter(faceRating_output_expr, question == "domi"), aes(x = emot, y = mean, fill = emot), na.rm = T) +
+  geom_bar(stat = "identity",  width = 0.6) +
+  geom_point(data = filter(faceRating_output_expr_subj, question == "domi"), aes(x = emot, y = mean),
+             position = position_jitter(width = 0.10),
+             alpha = 0.05) +
+  facet_wrap(~ ethni_r) +
+  scale_fill_manual(values = c("#d7191c","#fdae61", "#ffffbf", "#abd9e9", "#2c7bb6")) +
+  scale_y_continuous(breaks = seq(1, 8, by = 1)) +
+  geom_errorbar(width = 0.2, aes(ymin = (mean - ci), ymax = (mean + ci))) +
+  ggtitle("Dominant") +
+  xlab("Target Expression") +
+  ylab("Mean Rating (1-7)") +
+  ggthemes::theme_few() +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+```
+
+## Intelligent
+
+```{r warning = FALSE}
+ggplot(filter(faceRating_output_expr, question == "inte"), aes(x = emot, y = mean, fill = emot), na.rm = T) +
+  geom_bar(stat = "identity",  width = 0.6) +
+  geom_point(data = filter(faceRating_output_expr_subj, question == "inte"), aes(x = emot, y = mean),
+             position = position_jitter(width = 0.10),
+             alpha = 0.05) +
+  facet_wrap(~ ethni_r) +
+  scale_fill_manual(values = c("#d7191c","#fdae61", "#ffffbf", "#abd9e9", "#2c7bb6")) +
+  scale_y_continuous(breaks = seq(1, 8, by = 1)) +
+  geom_errorbar(width = 0.2, aes(ymin = (mean - ci), ymax = (mean + ci))) +
+  ggtitle("Intelligent") +
+  xlab("Target Expression") +
+  ylab("Mean Rating (1-7)") +
+  ggthemes::theme_few() +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+```
+
+## Trustworthy
+
+```{r warning = FALSE}
+ggplot(filter(faceRating_output_expr, question == "trus"), aes(x = emot, y = mean, fill = emot), na.rm = T) +
+  geom_bar(stat = "identity",  width = 0.6) +
+  geom_point(data = filter(faceRating_output_expr_subj, question == "trus"), aes(x = emot, y = mean),
+             position = position_jitter(width = 0.10),
+             alpha = 0.05) +
+  facet_wrap(~ ethni_r) +
+  scale_fill_manual(values = c("#d7191c","#fdae61", "#ffffbf", "#abd9e9", "#2c7bb6")) +
+  scale_y_continuous(breaks = seq(1, 8, by = 1)) +
+  geom_errorbar(width = 0.2, aes(ymin = (mean - ci), ymax = (mean + ci))) +
+  ggtitle("Trustworthy") +
+  xlab("Target Expression") +
+  ylab("Mean Rating (1-7)") +
+  ggthemes::theme_few() +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+```
+## Emotionally Stable
+
+```{r warning = FALSE}
+ggplot(filter(faceRating_output_expr, question == "stab"), aes(x = emot, y = mean, fill = emot), na.rm = T) +
+  geom_bar(stat = "identity",  width = 0.6) +
+  geom_point(data = filter(faceRating_output_expr_subj, question == "stab"), aes(x = emot, y = mean),
+             position = position_jitter(width = 0.10),
+             alpha = 0.05) +
+  facet_wrap(~ ethni_r) +
+  scale_fill_manual(values = c("#d7191c","#fdae61", "#ffffbf", "#abd9e9", "#2c7bb6")) +
+  scale_y_continuous(breaks = seq(1, 8, by = 1)) +
+  geom_errorbar(width = 0.2, aes(ymin = (mean - ci), ymax = (mean + ci))) +
+  ggtitle("Emotionally Stable") +
+  xlab("Target Expression") +
+  ylab("Mean Rating (1-7)") +
+  ggthemes::theme_few() +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+```
+
+# Generalizability
+
+# NAcc
+
+```{r}
+faceRating_output <- faceRating_long %>%
+  group_by(ethni_r, identity, question) %>%
+  summarise(mean = mean(rating, na.rm = T)) %>%
+  spread(question, mean) %>%
+  rename(ethni_r_behv = ethni_r)
+
+# hit trials for nucleus accumbens
+x <- sid.tc.long %>%
+  left_join(order, by = c("trial")) %>%
+  mutate(ethni_t = factor(ethni_t, levels = c("0", "1"))) %>%
+  mutate(ethni_t = fct_recode(ethni_t,
+                             "White" = "0", "Asian" = "1")) %>%
+  mutate(gender_t = factor(gender_t, levels = c("0", "1"))) %>%
+  mutate(gender_t = fct_recode(gender_t,
+                               "male" = "0", "female" = "1")) %>%
+  filter(variable == "nacc8mm_raw.tc", hemi == "bilateral", hit == "hit", vale == "pos", trialtype %in% c("neup", "lap", "hap")) %>%
+  filter(TR == 6 | TR == 7) %>%
+#  group_by(trialtype, ethni_t, gender_t, identity) %>%
+  group_by(ethni_r, trialtype, identity) %>%
+  summarise(mean_nacc = mean(value))
+
+faceRating_tc <- x %>%
+  left_join(faceRating_output, by = c("identity"))
+
+faceRating_tc_ea_us <- faceRating_tc %>%
+  filter(ethni_r == "European American") %>%
+  filter(ethni_r_behv == 0)
+
+faceRating_tc_ea_ch <- faceRating_tc %>%
+  filter(ethni_r == "European American") %>%
+  filter(ethni_r_behv == 1)
+
+faceRating_tc_ch_us <- faceRating_tc %>%
+  filter(ethni_r == "Chinese International") %>%
+  filter(ethni_r_behv == 0)
+
+faceRating_tc_ch_ch <- faceRating_tc %>%
+  filter(ethni_r == "Chinese International") %>%
+  filter(ethni_r_behv == 1)
+
+# aggregate ratings for EAs
+cor.test(faceRating_tc_ea_us$mean_nacc, faceRating_tc_ea_us$frie, method = "pearson")
+cor.test(faceRating_tc_ch_us$mean_nacc, faceRating_tc_ch_us$frie, method = "pearson")
+
+# aggregate ratings for CH
+cor.test(faceRating_tc_ea_ch$mean_nacc, faceRating_tc_ea_ch$pa, method = "pearson")
+cor.test(faceRating_tc_ch_ch$mean_nacc, faceRating_tc_ch_ch$frie, method = "pearson")
+
+
+cor.test(faceRating_tc_us$mean_nacc, faceRating_tc_ch$frie, method = "pearson")
+
+
+e41a1c
+
+ggplot(faceRating_tc_ch_ch,
+       aes(x = mean_nacc, y = frie)) +
+  geom_point(color = "#2171b5") +
+  geom_smooth(method = "lm", color = "#2171b5") +
+  xlab("Chinese NAcc Activity During Outcome in the SID Task") + 
+  ylab("Aggregate Friendliness for Mainland Chinese") +
+#  ylim(3,6) +
+  theme_minimal() +
+  theme(panel.grid.major = element_blank()) +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.title=element_blank(),
+        axis.title.x = element_text(face = "bold", size = 12),
+        axis.title.y = element_text(face = "bold", size = 12),
+        axis.text = element_text(size = 10))
+
+faceRating_tc_ea_us$trialtype <- relevel(faceRating_tc_ea_us$trialtype, ref = "neup")
+
+lm <- lm(pa ~ mean_nacc + trialtype, data = faceRating_tc_ea_us)
+summary(lm)
+```
+
+```{r}
+demographics_market <- df_ch %>%
+  select("ResponseId", "age", "gend", "educ", "ses", "ladderCountry", "ladderCommunity", "i1_1", "i1_13") %>%
+  mutate(gender_code = ifelse(gend == 1, 0, 1),
+         educ_univ = ifelse(educ %in% c(3, 4, 6), 1, 0),
+         hap = rowMeans(cbind(i1_1, i1_13), na.rm = T))
+
+demographics_fmri_ea_test <- demographics %>%
+  filter(pid >= 400 & pid < 500) %>%
+  rename(subID = "pid") %>%
+  left_join(subID_to_fmrID, by = "subID") %>%
+  filter(!(fmrID %in% exclude)) %>%
+  dplyr::select("subID", "fmrID", "culture", "age", "gender_code",
+                "self_ses", "ladder_country", "ladder_community",
+                "i.enth1", "i.exci1") %>%
+  rename("ladderCountry" = "ladder_country",
+         "ladderCommunity" = "ladder_community") %>%
+  mutate(educ_univ = 1) %>%
+  mutate(hap = rowMeans(cbind(i.enth1, i.exci1), na.rm = T))
+
+demographics_fmri_ch_test <- demographics %>%
+  filter(pid >= 500) %>%
+  rename(subID = "pid") %>%
+  left_join(subID_to_fmrID, by = "subID") %>%
+  filter(!(fmrID %in% exclude)) %>%
+  dplyr::select("subID", "fmrID", "culture", "age", "gender_code",
+                "self_ses", "ladder_country", "ladder_community",
+                "i.enth1", "i.exci1") %>%
+  rename("ladderCountry" = "ladder_country",
+         "ladderCommunity" = "ladder_community") %>%
+  mutate(educ_univ = 1) %>%
+  mutate(hap = rowMeans(cbind(i.enth1, i.exci1), na.rm = T))
+
+x_population <-
+demographics_market[,c("age", "gender_code", "educ_univ", "hap")]
+
+x_population <-
+demographics_market[,c("age", "hap")]
+
+
+x_target <-
+  demographics_fmri_ea_test[,c("age", "gender_code", "educ_univ", "hap")]
+
+x_target <-
+  demographics_fmri_ch_test[,c("age", "gender_code", "educ_univ", "hap")]
+
+
+mahalanobis_distance <- mahalanobis(x_population, colMeans(rbind(x_population, x_target)), cov(rbind(x_population, x_target)))
+print(as.data.frame(mahalanobis_distance))
+
+median(mahalanobis_distance)
+
+test_df_ia <- cbind(demographics_market, mahalanobis_distance) %>%
+  filter(mahalanobis_distance < median(mahalanobis_distance))
+
+market_highMatch_id <- test_df_ia$ResponseId
+
+faceRating_output <- faceRating_long %>%
+  filter(!(ResponseId %in% market_highMatch_id)) %>%
+#  filter(prolificID %in% market_highMatch_id) %>%
+  group_by(ethni_r, identity, question) %>%
+  summarise(mean = mean(rating, na.rm = T)) %>%
+  spread(question, mean) %>%
+  rename(ethni_r_behv = ethni_r)
+
+faceRating_tc <- x %>%
+  left_join(faceRating_output, by = c("identity"))
+
+faceRating_tc_us <- faceRating_tc %>%
+  filter(ethni_r == "European American") %>%
+  filter(ethni_r_behv == 1)
+
+cor.test(faceRating_tc_us$mean_nacc, faceRating_tc_us$pa, method = "pearson")
+cor.test(faceRating_tc_us$mean_nacc, faceRating_tc_us$frie, method = "pearson")
+
+faceRating_tc_ch <- faceRating_tc %>%
+  filter(ethni_r == "Chinese International") %>%
+  filter(ethni_r_behv == 1)
+
+# marginal
+cor.test(faceRating_tc_ch$mean_nacc, faceRating_tc_ch$pa, method = "pearson")
+# ns
+cor.test(faceRating_tc_ch$mean_nacc, faceRating_tc_ch$frie, method = "pearson")
+
+
+
+
+# function to segment into most and least representative groups
+distance_based_quantile_split <- function(population, target, q = .5) {
+  target_mean <- colMeans(target)
+  n <- nrow(population) # number rows in population df (100)
+  x <- as.matrix(rbind(population, target)) # bind together population and target df
+  S <- cov(x) # calculate covariance matrix
+  d <- x %*% chol2inv(chol(S)) %*% t(x) # chol2inv(chol(S)) is C^-1 in formula
+  sum_d2 <- rowSums(d[seq_len(n), n + seq_len(nrow(x) - n)])
+  iq <- quantile(sum_d2, q) # median split
+  f <- ifelse(sum_d2 > iq, "Distant", "Close") # label as close or distant
+  f
+}
+
+n <- nrow(x_population)
+x <- as.matrix(rbind(x_population, x_target))
+S <- cov(x)
+d <- x %*% chol2inv(chol(S)) %*% t(x)
+sum_d2 <- rowSums(d[seq_len(n), n + seq_len(nrow(x) - n)])
+iq <- quantile(sum_d2, 0.5) 
+f <- ifelse(sum_d2 > iq, "Distant", "Close")
+
+test_df_ia$d <- distance_based_quantile_split(x_population, x_target)
+```
+
+```{r}
+mahalanobis_distance <- mahalanobis(x_population, colMeans(rbind(x_population, x_target)), cov(rbind(x_population, x_target)))
+print(as.data.frame(mahalanobis_distance))
+
+median(mahalanobis_distance)
+
+test_df_ia <- cbind(demographics_market, mahalanobis_distance) %>%
+  filter(mahalanobis_distance < median(mahalanobis_distance))
+
+demographics_fmri_ea_test <- demographics %>%
+  filter(pid >= 400) %>%
+  rename(subID = "pid") %>%
+  filter(culture == 0) %>%
+  left_join(subID_to_fmrID, by = "subID") %>%
+  dplyr::select("subID", "fmrID", "culture", "age", "gender_code", "self_ses", "born", "ladder_country", "ladder_community",
+                "i.enth1", "i.exci1") %>%
+  filter(!(fmrID %in% exclude_fmrID)) %>%
+  select(-c("subID", "fmrID", "culture", "self_ses", "born", "ladder_country", "ladder_community")) %>%
+  drop_na()
+```
+
+```{r}
+
+market_highMatch_id <- test_df_ia$PROLIFIC_PID
+
+market_highMatch <- demographics_market %>%
+  filter(d == "Close")
+
+market_highMatch_id <- market_highMatch$PROLIFIC_PID
+
+market_lowMatch <- demographics_market %>%
+  filter(d == "Distant")
+market_lowMatch_id <- market_lowMatch$PROLIFIC_PID
+
+
+faceRating_output <- faceRating_long %>%
+  filter(!(prolificID %in% market_highMatch_id)) %>%
+#  filter(prolificID %in% market_highMatch_id) %>%
+  group_by(ethni_r, identity, question) %>%
+  summarise(mean = mean(rating, na.rm = T)) %>%
+  spread(question, mean) %>%
+  rename(ethni_r_behv = ethni_r)
+```

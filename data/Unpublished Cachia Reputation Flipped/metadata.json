@@ -1,0 +1,34 @@
+{
+    "Paper": "Unpublished Cachia Reputation Flipped",
+    "Year": "Unpublished",
+    "Title": "",
+    "Authors": "Cachia, J.Y.A.",
+    "Journal": "",
+    "Studies": ["study1.csv"],
+    "Usable": ["study1.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+        }
+    },
+    "Filter":{
+        "study1": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Ethnicity_1":{
+                "culture: European American": 1
+            },
+            "Gender":{
+                "F": "Female",
+                "M": "Male"
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        }
+    }
+}

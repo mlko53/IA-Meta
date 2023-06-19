@@ -1,0 +1,90 @@
+{
+    "Paper": "Unpublished Cachia Reputation",
+    "Year": "Unpublished",
+    "Title": "",
+    "Authors": "Cachia, J.Y.A.",
+    "Journal": "",
+    "Studies": ["study1.csv", "study2.csv", "study3.csv", "study4.csv"],
+    "Usable": ["study1.csv", "study2.csv", "study3.csv", "study4.csv"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+        },
+        "study2": {
+        },
+        "study3": {
+        },
+        "study4": {
+        }
+    },
+    "Filter":{
+        "study1": {
+        },
+        "study2": {
+        },
+        "study3": {
+        },
+        "study4": {
+        }
+    },
+    "Recode":{
+        "study1": {
+            "Culture":{
+                "culture: European American": "European American",
+                "culture: Taiwanese": "Taiwanese"
+            },
+            "Gender":{
+                "F": "Female",
+                "M": "Male",
+                "Other": ["Other", "NA"]
+            }
+        },
+        "study2": {
+            "Culture":{
+                "culture: European American": "European American",
+                "culture: Taiwanese": "Taiwanese"
+            },
+            "Gender":{
+                "F": "Female",
+                "M": "Male",
+                "Other": ["Other", "NA"]
+            }
+        },
+        "study3": {
+            "Culture":{
+                "culture: European American": "European American",
+                "culture: Taiwanese": "Taiwanese"
+            },
+            "Gender":{
+                "F": "Female",
+                "M": "Male",
+                "Other": ["Other", "NA"]
+            }
+        },
+        "study4": {
+            "Culture":{
+                "culture: European American": "European American",
+                "culture: Taiwanese": "Taiwanese"
+            },
+            "Gender":{
+                "F": "Female",
+                "M": "Male",
+                "Other": ["Other", "NA"]
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": 999
+        },
+        "study2":{
+            "_NAN_": 999
+        },
+        "study3":{
+            "_NAN_": 999
+        },
+        "study4":{
+            "_NAN_": 999
+        }
+    }
+}
