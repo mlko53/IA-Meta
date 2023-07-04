@@ -5,17 +5,24 @@
     "Authors": "Zhou, X., Yeung, D. Y., Gerstein, L. H., & Zhang, Y.",
     "Journal": "Journal of Positive Psychology",
     "Studies": ["study1.sav", "study2.sav"],
-    "Usable": ["study1.sav"],
-    "Manipulation": ["study2.sav"],
+    "Usable": ["study1.sav", "study2.sav"],
+    "Manipulation": [],
     "Reported": {
         "study1": {
             "total": 300,
             "culture: European American": 150,
             "culture: Hong Kong Chinese": 150
+        },
+        "study2": {
+            "total": 101,
+            "culture: European American": 52,
+            "culture: Hong Kong Chinese": 49
         }
     },
     "Filter":{
         "study1": {
+        },
+        "study2": {
         }
     },
     "Recode":{
@@ -30,10 +37,23 @@
                 "Non-binary/Genderqueer": 3,
                 "Transgender": 2
             }
+        },
+        "study2": {
+            "culture":{
+                "culture: European American": 0,
+                "culture: Hong Kong Chinese": 1
+            },
+            "gender":{
+                "F": 1,
+                "M": 0
+            }
         }
     },
     "Replace":{
         "study1":{
+            "_NAN_": 999
+        },
+        "study2":{
             "_NAN_": 999
         }
     }

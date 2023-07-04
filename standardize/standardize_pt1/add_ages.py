@@ -73,6 +73,8 @@ def manual_change(df):
         return int(test_year)       
     df['age'] = df.apply(lambda x: x['age']  if (x['paper_study']!="2015 Sims Patients study1" or "nan" in x['age']) else int(float(x['collected_year']) - sims_date(x['age'])), axis=1)
     
+    # Fixing 1.8e-29 error in 2021 Koopmann-Holm study1
+    df['age'] = df.apply(lambda x: x['age']  if (x['paper_study']!="2021 Koopmann-Holm study1" or "nan" in str(x['age']) or int(x['age']) > 1) else np.nan, axis=1)
     return df
 
     

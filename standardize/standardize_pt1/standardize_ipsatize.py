@@ -116,6 +116,11 @@ def manual_change(df, cols):
     # Unpublished Ito Kono study1: reverse code
     df.loc[df['paper_study'] == "Unpublished Ito Kono study1", cols] = df.loc[df['paper_study'] == "Unpublished Ito Kono study1", cols].apply(lambda x: -1*x+5)
 
+
+
+
+    # 2022 Zhou study1: remove -99.0 value (1-5)
+    df.loc[df['paper_study'] == "2022 Zhou study1", cols] = df.loc[df['paper_study'] == "2022 Zhou study1", cols].apply(lambda x: np.where(x < 1, np.nan, x))
     
     
     return df  
@@ -152,6 +157,7 @@ def main(fname, custom=None):
     
     # fixing further out of bound errors that will get caught in min max otherwise
     data = manual_change(data, affect_cols)
+    #data.loc[data['paper_study'] == "2022 Zhou study1", affect_cols] = data.loc[data['paper_study'] == "2022 Zhou study1", affect_cols].apply(lambda x: np.where(x < 1, np.nan, x))
     
     # get_min_max
     min_max = get_min_max(data, affect_cols)

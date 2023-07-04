@@ -114,6 +114,42 @@ def manual_change(df):
     df['time.month'] = df.apply(lambda x: x['time.month'] if x['paper_study']!="2016 Park study1" else int(park_lookup[str(int(x['ID']))][2:4]), axis=1)
     df['time.day']   = df.apply(lambda x: x['time.day']   if x['paper_study']!="2016 Park study1" else int(park_lookup[str(int(x['ID']))][4:6]), axis=1)
     
+    
+    # 2021 de Almeida study1: Brazilian data - 2015 June/July; Japanese data 2015 November
+    dealmeida_lookup = {"culture: Brazilian": (6+7)/2, "culture: Japanese": 11}
+    df['time.year']  = df.apply(lambda x: x['time.year']  if x['paper_study']!="2021 de Almeida study1" else 2015, axis=1)
+    df['time.month'] = df.apply(lambda x: x['time.month'] if x['paper_study']!="2021 de Almeida study1" else dealmeida_lookup[str(x['ethn'])], axis=1)
+        
+    # 2021 Koopmann-Holm study2ab: Participants completed the survey with the compassionate prompt in the U.S. between April and May 2016 and German participants between July 2016 and March 2017. For the happy prompt, participants completed it in the U.S. and Germany between February and March 2017.
+    def kh2ab_lookup(ethn, condition, mode):
+        # 0 = happy, 1 = compassionate
+        # happy prompt, participants completed it in the U.S. and Germany between February and March 2017
+        if int(condition) == 0:
+            if mode == "year":
+                return(2017)
+            if mode == "month":
+                return( (2 + 3) / 2 )
+            raise Exception("No mode selected")
+        # compassionate prompt German participants between July 2016 and March 2017
+        if int(condition) == 1 and str(ethn) == "culture: German":
+            avgyear = ((7/12+2016) + (3/12+2017))/2
+            if mode == "year":
+                return(int(avgyear))
+            if mode == "month":
+                return(12 * (avgyear - int(avgyear)))
+            raise Exception("No mode selected")
+        # compassionate prompt in the U.S. between April and May 2016
+        if int(condition) == 1 and str(ethn) == "culture: European American/Caucasian":
+            if mode == "year":
+                return(2016)
+            if mode == "month":
+                return( (4 + 5) / 2 )
+            raise Exception("No mode selected")
+        raise Exception("No return value found")
+    df['time.year']  = df.apply(lambda x: x['time.year']  if x['paper_study']!="2021 Koopmann-Holm study2ab" else kh2ab_lookup(x['ethn'], x['condition'], mode="year"), axis=1)
+    df['time.month'] = df.apply(lambda x: x['time.month'] if x['paper_study']!="2021 Koopmann-Holm study2ab" else kh2ab_lookup(x['ethn'], x['condition'], mode="month"), axis=1)
+
+        
     return df
 
 
