@@ -30,7 +30,9 @@ knitr::opts_chunk$set(echo = TRUE)
 #df <- read.csv("./std_pt1_df_5_16_22.csv")
 #df <- read.csv("./std_pt1_df_2_19_23.csv")
 #df <- read.csv("./std_pt1_df_3_1_23.csv")
-df <- read.csv("./std_pt1_df_3_2_23.csv")
+#df <- read.csv("./std_pt1_df_3_2_23.csv")
+#df <- read.csv("./std_pt1_df_7_4_23_partial.csv")
+df <- read.csv("./std_pt1_df_7_4_23.csv")
 
 
 df[1] <- NULL #removing a weird extra column from step 1
@@ -45,7 +47,7 @@ head(df)
 
 
 ```{r}
-# GDP per capita, PPP, year, country
+# GDP per capita, PPP, year, country - https://data.worldbank.org/indicator/NY.GDP.PCAP.PP.CD
 gdp <- read.csv("./GDP.csv", skip = 4)
 head(gdp)
 ```
@@ -208,7 +210,9 @@ df$country <- "Not included"
 
 df$country[as.character(df$ethn) == "geo: Australian"] = "Australia"
 
-df$country[as.character(df$ethn) == "geo: Brazilian"] = "Brazil"
+df$country[as.character(df$ethn) == "geo: Brazilian" |
+             
+           as.character(df$ethn) == "culture: Brazilian"] = "Brazil"
 
 df$country[as.character(df$ethn) == "culture: Chinese Canadian" |
            as.character(df$ethn) == "culture: Hong Kong Chinese Canadian" |
@@ -276,7 +280,9 @@ df$country[as.character(df$ethn) == "culture: Asian American" |
            as.character(df$ethn) == "race/ethn: Nigerian American" |
            as.character(df$ethn) == "race/ethn: Persian American" |
            as.character(df$ethn) == "race/ethn: Taiwanese American" |
-           as.character(df$ethn) == "race/ethn: Vietnamese American" 
+           as.character(df$ethn) == "race/ethn: Vietnamese American" |
+             
+           as.character(df$ethn) == "culture: European American/Caucasian"
            ] = "United States"
 
 
@@ -356,6 +362,25 @@ df_final$year_GDP_per_capita <- df_final$year_GDP_per_capita / 10000
 # 2020 Vishkin study3 (1-5)
 
 
+# Updated w/ 2023 search
+# 2021 Millgram study3 (1-10 -> reversed, so 1=10, 10=1)
+# Unpublished Blevins Dissertation study3 (1-5, 6 is NA)
+# Unpublished Blevins Dissertation study4a (1-5, 6 is NA)
+# Unpublished Blevins Dissertation study4b (1-5, 6 is NA)
+# Unpublished Blevins Dissertation study5a (1-5, 6 is NA)
+# Unpublished Blevins Dissertation study5b (1-5, 6 is NA)
+# Unpublished Blevins Dissertation study6 (1-5, 6 is NA)
+# Unpublished Blevins Dissertation study7 (1-5, 6 is NA)
+# Unpublished Cachia Love study1 (1-5, 6 is NA)
+# Unpublished Cachia Love study2 (1-5, 6 is NA)
+# Unpublished Cachia Reputation Flipped study1 (1-5, 6 is NA)
+# Unpublished Cachia Reputation Graphic study1 (1-5, 6 is NA)
+# Unpublished Cachia Reputation study1 (1-5, 6 is NA)
+# Unpublished Cachia Reputation study2 (1-5, 6 is NA)
+# Unpublished Cachia Reputation study3 (1-5, 6 is NA)
+# Unpublished Cachia Reputation study4 (1-5, 6 is NA)
+
+
 # Create new variables for analysis
 df_final$indSES_new <- df_final$indSES
 
@@ -368,6 +393,9 @@ df_final$indSES_new <- ifelse(df_final$paper_study == "2018 Koc Identity Integra
 df_final$indSES_new <- ifelse(df_final$paper_study == "Unpublished Yi study1", 1+4/9*(df_final$indSES_new-1), df_final$indSES_new)
 df_final$indSES_new <- ifelse(df_final$paper_study == "2020 Salvador study1", 1+4/9*(df_final$indSES_new-1), df_final$indSES_new)
 #unique(df_final$indSES_new)
+# also 2021 Millgram study3 (1-10 -> reversed, so 1=10, 10=1)
+df_final$indSES_new <- ifelse(df_final$paper_study == "2021 Millgram study3", 1+4/9*((11-df_final$indSES_new)-1), df_final$indSES_new)
+
 
 # Convert appropriate values to NA (should be anything > 5)
 df_final$indSES_new[df_final$indSES_new > 5] <- NA
@@ -419,6 +447,29 @@ df_final$indSES_new[df_final$indSES_new > 5] <- NA
 #*** 2020 Koopmann-Holm 2 study3 (USD; 1 - < 10k, 2 - 10,001-20k, 3 - 20,001-30k, 4 - 30,001-40k, 5 - 40,001-50k, 6 - 50,001-75k, 7 - 75,001-100k, 8 - >100k, 999 is NA)
 
 #*** 2020 Park study3 (USD; 1 - < 10k, 2 - 10,001-20k, 3 - 20,001-30k, 4 - 30,001-40k, 5 - 40,001-50k, 6 - 50,001-75k, 7 - 75,001-100k, 8 - >100k)
+
+
+
+# Updated w/ 2023 search
+
+# (USD; 1 - < 10k, 2 - 10,001-20k, 3 - 20,001-30k, 4 - 30,001-40k, 5 - 40,001-50k, 6 - 50,001-75k, 7 - 75,001-100k, 8 - >100k) for these studies:
+# Unpublished Blevins Dissertation study3
+# Unpublished Blevins Dissertation study4a
+# Unpublished Blevins Dissertation study4b
+# Unpublished Blevins Dissertation study5a
+# Unpublished Blevins Dissertation study6
+# Unpublished Blevins Dissertation study7
+# Unpublished Cachia Reputation Flipped study1
+# Unpublished Cachia Reputation Graphic study1
+# Unpublished Cachia Reputation study1
+# Unpublished Cachia Reputation study2
+# Unpublished Cachia Reputation study3
+# Unpublished Cachia Reputation study4
+
+# Unpublished Blevins Dissertation study5b has (yuan; 10 - <60k, 13 - 60k-120k, 3 - 120k-180k, 4 - 180k-240k, 5 - 240k-300k, 6 - 300k-450k, 7 - 450k-600k, 12 - >600k), but has values of 9, 10, 13???
+
+
+
 
 
 # Create new variable for analysis
@@ -613,6 +664,46 @@ df_final$indincome_new <- ifelse((df_final$indincome_new == 7 & df_final$paper_s
 df_final$indincome_new <- ifelse((df_final$indincome_new == 8 & df_final$paper_study == "Unpublished Ito Kono study1"), 17500000*(1/Japan_convert), df_final$indincome_new)
 df_final$indincome_new <- ifelse((df_final$indincome_new == 9 & df_final$paper_study == "Unpublished Ito Kono study1"), max_mult*20000000*(1/Japan_convert), df_final$indincome_new)
 df_final$indincome_new <- ifelse((df_final$indincome_new == 10 & df_final$paper_study == "Unpublished Ito Kono study1"), NA, df_final$indincome_new)
+
+
+
+
+
+
+# w/ 2023 search
+# (USD; 1 - < 10k, 2 - 10,001-20k, 3 - 20,001-30k, 4 - 30,001-40k, 5 - 40,001-50k, 6 - 50,001-75k, 7 - 75,001-100k, 8 - >100k) for these studies:
+# Unpublished Blevins Dissertation study3
+# Unpublished Blevins Dissertation study4a
+# Unpublished Blevins Dissertation study4b
+# Unpublished Blevins Dissertation study5a
+# Unpublished Blevins Dissertation study6
+# Unpublished Blevins Dissertation study7
+# Unpublished Cachia Reputation Flipped study1
+# Unpublished Cachia Reputation Graphic study1
+# Unpublished Cachia Reputation study1
+# Unpublished Cachia Reputation study2
+# Unpublished Cachia Reputation study3
+# Unpublished Cachia Reputation study4
+indincome_2023search_list <- c("Unpublished Blevins Dissertation study3", "Unpublished Blevins Dissertation study4a", "Unpublished Blevins Dissertation study4b", "Unpublished Blevins Dissertation study5a", "Unpublished Blevins Dissertation study6", "Unpublished Blevins Dissertation study7", "Unpublished Cachia Reputation Flipped study1", "Unpublished Cachia Reputation Graphic study1", "Unpublished Cachia Reputation study1", "Unpublished Cachia Reputation study2", "Unpublished Cachia Reputation study3", "Unpublished Cachia Reputation study4")
+df_final$indincome_new <- ifelse((df_final$indincome_new == 1 & (df_final$paper_study %in% indincome_2023search_list)), 5000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 2 & (df_final$paper_study %in% indincome_2023search_list)), 15000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 3 & (df_final$paper_study %in% indincome_2023search_list)), 25000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 4 & (df_final$paper_study %in% indincome_2023search_list)), 35000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 5 & (df_final$paper_study %in% indincome_2023search_list)), 45000, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 6 & (df_final$paper_study %in% indincome_2023search_list)), 62500, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 7 & (df_final$paper_study %in% indincome_2023search_list)), 87500, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 8 & (df_final$paper_study %in% indincome_2023search_list)), max_mult*100000, df_final$indincome_new)
+
+# Unpublished Blevins Dissertation study5b has (yuan; 10 - <60k, 13 - 60k-120k, 3 - 120k-180k, 4 - 180k-240k, 5 - 240k-300k, 6 - 300k-450k, 7 - 450k-600k, 12 - >600k), but has values of 9, 10, 13???
+df_final$indincome_new <- ifelse((df_final$indincome_new == 10 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 13 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 3 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 4 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 5 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 6 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 7 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 12 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 9 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$indincome_new)
 ```
 
 
@@ -668,6 +759,30 @@ df_final$indincome_new <- ifelse((df_final$indincome_new == 10 & df_final$paper_
 
 #*** Unpublished Samanez-Larkin agerl study1 - existing strings: Less than $10,000, $10,000-$19,999, $20,000-$29,999, $30,000-$39,999, $40,000-$49,999, $50,000-$59,999, $60,000-$69,999, $70,000-$79,999, $80,000-$89,999, $90,000-$99,999, $120,000-$129,999, $130,000-$139,999, $140,000-$149,999, $150,000 or more
 #Note that the regex truncates the buckets for Unpublished Samanez-Larkin agerl study1 to the first number found, so the two 10k buckets must be combined
+
+
+
+# Updated w/ 2023 search
+
+# 2021 Millgram study3 (USD; 1 - <10k, 2 - 10k-25k, 3 - 25k-50k, 4 - 50k-75k, 5 - 75k-100k, 6 - >100k)
+
+# (USD; 1 - < 10k, 2 - 10,001-20k, 3 - 20,001-30k, 4 - 30,001-40k, 5 - 40,001-50k, 6 - 50,001-75k, 7 - 75,001-100k, 8 - >100k) for these studies:
+# Unpublished Blevins Dissertation study3
+# Unpublished Blevins Dissertation study5a
+# Unpublished Blevins Dissertation study6
+# Unpublished Blevins Dissertation study7
+# Unpublished Cachia Love study2
+# Unpublished Cachia Reputation Flipped study1
+# Unpublished Cachia Reputation Graphic study1
+# Unpublished Cachia Reputation study1
+# Unpublished Cachia Reputation study2
+# Unpublished Cachia Reputation study3
+# Unpublished Cachia Reputation study4
+
+# Unpublished Blevins Dissertation study5b has (yuan; 10 - <60k, 13 - 60k-120k, 3 - 120k-180k, 4 - 180k-240k, 5 - 240k-300k, 6 - 300k-450k, 7 - 450k-600k, 12 - >600k), but has values of 10, 13, 3, 4, 5, 6, 7, 12, 9, 14, 15
+
+
+
 
 
 # Create new variable for analysis
@@ -903,10 +1018,55 @@ df_final$famincome_new <- ifelse((df_final$famincome_new == 140000 & df_final$pa
 df_final$famincome_new <- ifelse((df_final$famincome_new == 150000 & df_final$paper_study == "Unpublished Samanez-Larkin agerl study1"), max_mult*150000, df_final$famincome_new)
 
 
+
+# w/ 2023 search
+# (USD; 1 - < 10k, 2 - 10,001-20k, 3 - 20,001-30k, 4 - 30,001-40k, 5 - 40,001-50k, 6 - 50,001-75k, 7 - 75,001-100k, 8 - >100k) for these studies:
+# Unpublished Blevins Dissertation study3
+# Unpublished Blevins Dissertation study5a
+# Unpublished Blevins Dissertation study6
+# Unpublished Blevins Dissertation study7
+# Unpublished Cachia Love study2
+# Unpublished Cachia Reputation Flipped study1
+# Unpublished Cachia Reputation Graphic study1
+# Unpublished Cachia Reputation study1
+# Unpublished Cachia Reputation study2
+# Unpublished Cachia Reputation study3
+# Unpublished Cachia Reputation study4
+famincome_2023search_list <- c("Unpublished Blevins Dissertation study3", "Unpublished Blevins Dissertation study5a", "Unpublished Blevins Dissertation study6", "Unpublished Blevins Dissertation study7", "Unpublished Cachia Love study2", "Unpublished Cachia Reputation Flipped study1", "Unpublished Cachia Reputation Graphic study1", "Unpublished Cachia Reputation study1", "Unpublished Cachia Reputation study2", "Unpublished Cachia Reputation study3", "Unpublished Cachia Reputation study4")
+df_final$famincome_new <- ifelse((df_final$famincome_new == 1 & (df_final$paper_study %in% famincome_2023search_list)), 5000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 2 & (df_final$paper_study %in% famincome_2023search_list)), 15000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 3 & (df_final$paper_study %in% famincome_2023search_list)), 25000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 4 & (df_final$paper_study %in% famincome_2023search_list)), 35000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 5 & (df_final$paper_study %in% famincome_2023search_list)), 45000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & (df_final$paper_study %in% famincome_2023search_list)), 62500, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 7 & (df_final$paper_study %in% famincome_2023search_list)), 87500, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 8 & (df_final$paper_study %in% famincome_2023search_list)), max_mult*100000, df_final$famincome_new)
+
+# Unpublished Blevins Dissertation study5b has (yuan; 10 - <60k, 13 - 60k-120k, 3 - 120k-180k, 4 - 180k-240k, 5 - 240k-300k, 6 - 300k-450k, 7 - 450k-600k, 12 - >600k), but has values of 10, 13, 3, 4, 5, 6, 7, 12, 9, 14, 15
+df_final$famincome_new <- ifelse((df_final$famincome_new == 10 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 13 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 3 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 4 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 5 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 7 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 12 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 9 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 14 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 15 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
+
+
+# 2021 Millgram study3 (USD; 1 - <10k, 2 - 10k-25k, 3 - 25k-50k, 4 - 50k-75k, 5 - 75k-100k, 6 - >100k)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 1 & df_final$paper_study == "2021 Millgram study3"), 5000, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 2 & df_final$paper_study == "2021 Millgram study3"), 17500, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 3 & df_final$paper_study == "2021 Millgram study3"), 37500, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 4 & df_final$paper_study == "2021 Millgram study3"), 62500, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 5 & df_final$paper_study == "2021 Millgram study3"), 87500, df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_study == "2021 Millgram study3"), max_mult*100000, df_final$famincome_new)
 ```
 
 
 ```{r}
 df_final <- df_final[order(df_final$"Unnamed..0"), ]
-write.csv(df_final, "std_pt2_df_3_2_23.csv", row.names = FALSE, na="")
+write.csv(df_final, "std_pt2_df_7_4_23.csv", row.names = FALSE, na="")
 ```
