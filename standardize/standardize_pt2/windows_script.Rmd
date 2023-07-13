@@ -497,6 +497,15 @@ China_convert <- 3.87069725990295
 HK_convert <- 5.83105325698853
 Japan_convert <- 103.469437
 
+## Convert all to USD using official exchange rate - ~2015.9 is median, so use 2016
+## Data source here: https://data.worldbank.org/indicator/PA.NUS.FCRF
+Canada_convert <- 1.3256151637482
+China_convert <- 6.644477829
+HK_convert <- 7.76225
+Japan_convert <- 108.7929
+Taiwan_convert <- 30.0 # this is what is used in our lab, since no World Bank data
+
+
 # Set a max multiplier - for things that are X_amount+ (e.g. $100,000+), set the value as multipler * X_amount
 # So if we have a box of $100,000+ and the multipler is 2, then we would set the income as 200,000.
 # max_mult <- 2
@@ -694,16 +703,25 @@ df_final$indincome_new <- ifelse((df_final$indincome_new == 6 & (df_final$paper_
 df_final$indincome_new <- ifelse((df_final$indincome_new == 7 & (df_final$paper_study %in% indincome_2023search_list)), 87500, df_final$indincome_new)
 df_final$indincome_new <- ifelse((df_final$indincome_new == 8 & (df_final$paper_study %in% indincome_2023search_list)), max_mult*100000, df_final$indincome_new)
 
-# Unpublished Blevins Dissertation study5b has (yuan; 10 - <60k, 13 - 60k-120k, 3 - 120k-180k, 4 - 180k-240k, 5 - 240k-300k, 6 - 300k-450k, 7 - 450k-600k, 12 - >600k), but has values of 9, 10, 13???
-df_final$indincome_new <- ifelse((df_final$indincome_new == 10 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$indincome_new)
-df_final$indincome_new <- ifelse((df_final$indincome_new == 13 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$indincome_new)
-df_final$indincome_new <- ifelse((df_final$indincome_new == 3 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$indincome_new)
-df_final$indincome_new <- ifelse((df_final$indincome_new == 4 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$indincome_new)
-df_final$indincome_new <- ifelse((df_final$indincome_new == 5 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$indincome_new)
-df_final$indincome_new <- ifelse((df_final$indincome_new == 6 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$indincome_new)
-df_final$indincome_new <- ifelse((df_final$indincome_new == 7 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$indincome_new)
-df_final$indincome_new <- ifelse((df_final$indincome_new == 12 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$indincome_new)
-df_final$indincome_new <- ifelse((df_final$indincome_new == 9 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$indincome_new)
+# Unpublished Blevins Dissertation study5b has for Chinese (yuan; 10 - <60k, 13 - 60k-120k, 3 - 120k-180k, 4 - 180k-240k, 5 - 240k-300k, 6 - 300k-450k, 7 - 450k-600k, 12 - >600k)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 10 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Chinese"), 30000*(1/China_convert), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 13 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Chinese"), 90000*(1/China_convert), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 3 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Chinese"), 150000*(1/China_convert), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 4 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Chinese"), 210000*(1/China_convert), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 5 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Chinese"), 270000*(1/China_convert), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 6 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Chinese"), 375000*(1/China_convert), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 7 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Chinese"), 525000*(1/China_convert), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 12 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Chinese"), max_mult*600000*(1/China_convert), df_final$indincome_new)
+
+# Unpublished Blevins Dissertation study5b has for Taiwanese (NTD; 9 - <300k, 13 - 300k-600k, 15 - 600k-900k, 4 - 900k-1200k, 17 - 1200k-1500k, 6 - 1500k-2250k, 7 - 2250k-3000k, 12 - >3000k)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 9 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Taiwanese"), 150000*(1/Taiwan_convert), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 13 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Taiwanese"), 450000*(1/Taiwan_convert), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 15 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Taiwanese"), 750000*(1/Taiwan_convert), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 4 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Taiwanese"), 1050000*(1/Taiwan_convert), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 17 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Taiwanese"), 1350000*(1/Taiwan_convert), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 6 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Taiwanese"), 1875000*(1/Taiwan_convert), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 7 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Taiwanese"), 2625000*(1/Taiwan_convert), df_final$indincome_new)
+df_final$indincome_new <- ifelse((df_final$indincome_new == 12 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Taiwanese"), max_mult*3000000*(1/Taiwan_convert), df_final$indincome_new)
 ```
 
 
@@ -1042,18 +1060,25 @@ df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & (df_final$paper_
 df_final$famincome_new <- ifelse((df_final$famincome_new == 7 & (df_final$paper_study %in% famincome_2023search_list)), 87500, df_final$famincome_new)
 df_final$famincome_new <- ifelse((df_final$famincome_new == 8 & (df_final$paper_study %in% famincome_2023search_list)), max_mult*100000, df_final$famincome_new)
 
-# Unpublished Blevins Dissertation study5b has (yuan; 10 - <60k, 13 - 60k-120k, 3 - 120k-180k, 4 - 180k-240k, 5 - 240k-300k, 6 - 300k-450k, 7 - 450k-600k, 12 - >600k), but has values of 10, 13, 3, 4, 5, 6, 7, 12, 9, 14, 15
-df_final$famincome_new <- ifelse((df_final$famincome_new == 10 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
-df_final$famincome_new <- ifelse((df_final$famincome_new == 13 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
-df_final$famincome_new <- ifelse((df_final$famincome_new == 3 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
-df_final$famincome_new <- ifelse((df_final$famincome_new == 4 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
-df_final$famincome_new <- ifelse((df_final$famincome_new == 5 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
-df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
-df_final$famincome_new <- ifelse((df_final$famincome_new == 7 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
-df_final$famincome_new <- ifelse((df_final$famincome_new == 12 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
-df_final$famincome_new <- ifelse((df_final$famincome_new == 9 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
-df_final$famincome_new <- ifelse((df_final$famincome_new == 14 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
-df_final$famincome_new <- ifelse((df_final$famincome_new == 15 & df_final$paper_study == "Unpublished Blevins Dissertation study5b"), NA, df_final$famincome_new)
+# Unpublished Blevins Dissertation study5b has for Chinese (yuan; 10 - <60k, 13 - 60k-120k, 3 - 120k-180k, 4 - 180k-240k, 5 - 240k-300k, 6 - 300k-450k, 7 - 450k-600k, 12 - >600k)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 10 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Chinese"), 30000*(1/China_convert), df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 13 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Chinese"), 90000*(1/China_convert), df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 3 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Chinese"), 150000*(1/China_convert), df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 4 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Chinese"), 210000*(1/China_convert), df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 5 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Chinese"), 270000*(1/China_convert), df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Chinese"), 375000*(1/China_convert), df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 7 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Chinese"), 525000*(1/China_convert), df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 12 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Chinese"), max_mult*600000*(1/China_convert), df_final$famincome_new)
+
+# Unpublished Blevins Dissertation study5b has for Taiwanese (NTD; 9 - <300k, 13 - 300k-600k, 14 - 600k-900k, 15 - 900k-1200k, 3 - 1200k-1500k, 4 - 1500k-2250k, 5 - 2250k-3000k, 6 - >3000k)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 9 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Taiwanese"), 150000*(1/Taiwan_convert), df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 13 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Taiwanese"), 450000*(1/Taiwan_convert), df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 14 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Taiwanese"), 750000*(1/Taiwan_convert), df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 15 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Taiwanese"), 1050000*(1/Taiwan_convert), df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 3 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Taiwanese"), 1350000*(1/Taiwan_convert), df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 4 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Taiwanese"), 1875000*(1/Taiwan_convert), df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 5 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Taiwanese"), 2625000*(1/Taiwan_convert), df_final$famincome_new)
+df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_study == "Unpublished Blevins Dissertation study5b" & df_final$ethn == "culture: Taiwanese"), max_mult*3000000*(1/Taiwan_convert), df_final$famincome_new)
 
 
 # 2021 Millgram study3 (USD; 1 - <10k, 2 - 10k-25k, 3 - 25k-50k, 4 - 50k-75k, 5 - 75k-100k, 6 - >100k)
