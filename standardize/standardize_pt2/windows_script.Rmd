@@ -32,7 +32,8 @@ knitr::opts_chunk$set(echo = TRUE)
 #df <- read.csv("./std_pt1_df_3_1_23.csv")
 #df <- read.csv("./std_pt1_df_3_2_23.csv")
 #df <- read.csv("./std_pt1_df_7_4_23_partial.csv")
-df <- read.csv("./std_pt1_df_7_4_23.csv")
+#df <- read.csv("./std_pt1_df_7_4_23.csv")
+df <- read.csv("./std_pt1_df_7_23_23.csv")
 
 
 df[1] <- NULL #removing a weird extra column from step 1
@@ -1093,5 +1094,5 @@ df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_s
 
 ```{r}
 df_final <- df_final[order(df_final$"Unnamed..0"), ]
-write.csv(df_final, "std_pt2_df_7_4_23.csv", row.names = FALSE, na="")
+write.csv(df_final, "std_pt2_df_7_23_23.csv", row.names = FALSE, na="")
 ```
