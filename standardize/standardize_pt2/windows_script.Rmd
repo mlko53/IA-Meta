@@ -292,6 +292,152 @@ sort(unique(df$country))
 
 
 ```{r}
+df$country_surveyed <- df$country
+
+df$country_surveyed[as.character(df$paper_study) == "2009 Scollon study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2012 Chen study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2012 Ruby study1" &
+                      as.character(df$ethn) == "race/ethn: Mexican International"] = "Canada"
+
+df$country_surveyed[as.character(df$paper_study) == "2012 Tamir study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2014 Ditzfield Thesis study3"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2014 Ditzfield study1_sample1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2014 Kumar study1" &
+                      as.character(df$ethn) == "culture: Taiwanese"] = "Taiwan"
+
+df$country_surveyed[as.character(df$paper_study) == "2014 Luong study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2015 Chow study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2015 Sims study3" &
+                      as.character(df$ethn) == "race/ethn: Asian"] = "United States"
+df$country_surveyed[as.character(df$paper_study) == "2015 Sims study3" &
+                      as.character(df$ethn) == "race/ethn: Black"] = "United States"
+df$country_surveyed[as.character(df$paper_study) == "2015 Sims study3" &
+                      as.character(df$ethn) == "race/ethn: Hispanic"] = "United States"
+df$country_surveyed[as.character(df$paper_study) == "2015 Sims study3" &
+                      as.character(df$ethn) == "race/ethn: Multiracial"] = "United States"
+df$country_surveyed[as.character(df$paper_study) == "2015 Sims study3" &
+                      as.character(df$ethn) == "race/ethn: White"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2016 Thompson study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2016 Tsai study3" &
+                      as.character(df$ethn) == "culture: Taiwanese"] = "Taiwan"
+
+df$country_surveyed[as.character(df$paper_study) == "2017 Chim study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2017 Chim study4a"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2017 Chim study4b"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2017 Floerke study2"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2017 Park study2"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2017 Parker study3"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2017 Sands study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2018 Gentzler study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2018 Lee study2" &
+                      as.character(df$ethn) == "culture: Taiwanese"] = "Taiwan"
+
+df$country_surveyed[as.character(df$paper_study) == "2018 Lin study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2018 Swerdlow study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2018 Swerdlow study2"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2018 Tompson study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2018 Yip study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2019 Kraus study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2019 Li study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2019 Painter study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2019 Palmer study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2020 Koopmann-Holm 1 study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2020 Koopmann-Holm 1 study2"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2020 Koopmann-Holm 1 study3"] = "United States"
+df$country_surveyed[as.character(df$paper_study) == "2020 Koopmann-Holm 1 study3" &
+                      as.character(df$ethn) == "race/ethn: German"] = "Germany"
+
+df$country_surveyed[as.character(df$paper_study) == "2021 Lai study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2021 Millgram study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2021 Song study1" &
+                      as.character(df$ethn) == "race/ethn: Black/African American"] = "United States"
+df$country_surveyed[as.character(df$paper_study) == "2021 Song study1" &
+                      as.character(df$ethn) == "race/ethn: Hispanic/Latino"] = "United States"
+df$country_surveyed[as.character(df$paper_study) == "2021 Song study1" &
+                      as.character(df$ethn) == "race/ethn: Native Hawaiian/Pacific Islander"] = "United States"
+df$country_surveyed[as.character(df$paper_study) == "2021 Song study1" &
+                      as.character(df$ethn) == "race/ethn: Other"] = "United States"
+df$country_surveyed[as.character(df$paper_study) == "2021 Song study1" &
+                      as.character(df$ethn) == "race/ethn: White/Caucasian"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2022 Clobert study12" &
+                      as.character(df$ethn) == "geo: Taiwanese"] = "Taiwan"
+
+df$country_surveyed[as.character(df$paper_study) == "2022 Senft study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "2022 Yu study1" &
+                      as.character(df$ethn) == "geo: Taiwanese"] = "Taiwan"
+
+df$country_surveyed[as.character(df$paper_study) == "Unpublished Acevedo study2"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "Unpublished Blevins Dissertation study3" &
+                      as.character(df$ethn) == "culture: Chinese International"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "Unpublished Blevins Dissertation study5b" &
+                      as.character(df$ethn) == "culture: Taiwanese"] = "Taiwan"
+
+df$country_surveyed[as.character(df$paper_study) == "Unpublished Cachia Reputation study1" &
+                      as.character(df$ethn) == "culture: Taiwanese"] = "Taiwan"
+
+df$country_surveyed[as.character(df$paper_study) == "Unpublished Cachia Reputation study2" &
+                      as.character(df$ethn) == "culture: Taiwanese"] = "Taiwan"
+
+df$country_surveyed[as.character(df$paper_study) == "Unpublished Cachia Reputation study3" &
+                      as.character(df$ethn) == "culture: Taiwanese"] = "Taiwan"
+
+df$country_surveyed[as.character(df$paper_study) == "Unpublished Cachia Reputation study4" &
+                      as.character(df$ethn) == "culture: Taiwanese"] = "Taiwan"
+
+df$country_surveyed[as.character(df$paper_study) == "Unpublished Cheung study1"] = "Canada"
+
+df$country_surveyed[as.character(df$paper_study) == "Unpublished Palmer study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "Unpublished Peruel study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "Unpublished Samanez-Larkin agerl study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "Unpublished Samanez-Larkin finra2 study1"] = "United States"
+
+df$country_surveyed[as.character(df$paper_study) == "Unpublished Yi study1"] = "United States"
+
+table(df$country_surveyed)
+
+```
+
+
+
+
+```{r}
 gdp_new <- gdp[, c(1, 45:65)]
 colnames(gdp_new)[1] <- "country"
 head(gdp_new)
@@ -1094,5 +1240,6 @@ df_final$famincome_new <- ifelse((df_final$famincome_new == 6 & df_final$paper_s
 
 ```{r}
 df_final <- df_final[order(df_final$"Unnamed..0"), ]
-write.csv(df_final, "std_pt2_df_7_23_23.csv", row.names = FALSE, na="")
+#write.csv(df_final, "std_pt2_df_7_23_23.csv", row.names = FALSE, na="")
+write.csv(df_final, "withcountry_std_pt2_df_7_23_23.csv", row.names = FALSE, na="")
 ```
