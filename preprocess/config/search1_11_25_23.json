@@ -1,0 +1,18 @@
+{
+"Datasets": {
+        "2006" : ["Tsai"],
+        "2007" : ["Tsai", "Tsai Influence"],
+        "2009" : ["Scollon"],
+        "2011" : ["Harmon-Jones", "Li"],
+        "2012" : ["Chen", "Chow", "Ruby", "Tamir"],
+        "2013" : ["Koopman-Holm", "Scheibe"],
+        "2014" : ["Ditzfield", "Ditzfield Thesis"],
+        "2014" : ["Ford", "Koopman-Holm", "Kumar", "Luong", "Mannell", "Mannell Diss", "Mortazavi"],
+        "2015" : ["Chow", "Sims", "Sims Patients"],
+        "2016" : ["Da Jiang FTP", "Da Jiang LTP", "Tamir", "Thompson", "Tsai", "Park"],
+        "2017" : ["Chim", "Floerke", "Gui", "Oosterhoff", "Park", "Parker", "Sands"],
+        "2018" : ["Benachrit", "Gentzler", "Ito", "Lee", "Lin", "Shim", "Swerdlow", "Tompson", "Tsai", "Yamada", "Yip", "Sims"],
+        "2019" : ["Li", "Palmer", "Tsai"],
+        "Unpublished" : ["Acevedo", "Cheung", "Ito Kono", "Ito Mika", "Ito Yamaguchi Takamatsu", "Kashima 1", "Kashima 2", "Palmer", "Samanez-Larkin agerl", "Samanez-Larkin finra2", "Yi"]
+    }
+}
