@@ -1,0 +1,34 @@
+{
+    "Paper": "2020 Ito",
+    "Year": "2020",
+    "Title": "Development of Supplemental Tourism Itineraries and Relationships Between Tourism Satisfaction and Psychological Experience at the Nenrinpic Kinokuni Wakayama 2019",
+    "Authors": "Ito, E.",
+    "Journal": "Tourism Studies",
+    "Studies": ["study1.sav"],
+    "Usable": ["study1.sav"],
+    "Manipulation": [],
+    "Reported": {
+        "study1": {
+            "total": 74
+        }
+    },
+    "Filter": {
+        "study1": {}
+    },
+    "Recode":{
+        "study1": {
+            "Gender": {
+                "M": 0,
+                "F": 1
+            },
+            "Race": {
+                "geo: Japanese": 1
+            }
+        }
+    },
+    "Replace":{
+        "study1":{
+            "_NAN_": "NA" 
+        }
+    }
+}

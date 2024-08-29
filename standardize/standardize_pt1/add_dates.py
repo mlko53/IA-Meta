@@ -104,7 +104,7 @@ def recalc_collection_date(row):
         return row['time.year'] + row['time.month']/12.0
     else:
         return row['collected_year']
-    
+
 
 def manual_change(df):
     
@@ -194,6 +194,8 @@ def main(fname, custom=None):
         #print(stdzd_data.loc[stdzd_data['paper_study'].str.startswith(key)]['collected_year'])
 
 
+    # calculating collected_year if necessary information already exists
+    stdzd_data['collected_year'] = stdzd_data.apply(recalc_collection_date, axis=1)
 
     ## ADD: 1) Overwrite with date.time 2) search using regex of d/d/d 3) identify (by study) if it's m/d/y or d/m/y    
     #print(stdzd_data['date.time'])
