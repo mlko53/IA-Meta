@@ -5,7 +5,7 @@
     "Authors": "Koopmann-Holm, B., Bruchmann, K., Fuchs, M., & Pearson, M.",
     "Journal": "Emotion",
     "Studies": ["study1.sav", "study2ab.sav"],
-    "Usable": ["study1.sav", "study2ab.sav"],
+    "Usable": ["study2ab.sav"],
     "Manipulation": [],
     "Reported": {
         "study1": {

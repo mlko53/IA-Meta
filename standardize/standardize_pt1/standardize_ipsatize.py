@@ -101,7 +101,8 @@ def manual_change(df, cols):
     #2014 Mortazavi study1 1-6 to 1-5
     df.loc[df['paper_study'] == "2014 Mortazavi study1", cols] = df.loc[df['paper_study'] == "2014 Mortazavi study1", cols].apply(lambda x: np.where(x > 5, np.nan, x))
     #2016 Da Jiang FTP study1 0-5 to 1-5
-    df.loc[df['paper_study'] == "2016 Da Jiang FTP study1", cols] = df.loc[df['paper_study'] == "2016 Da Jiang FTP study1", cols].apply(lambda x: np.where(x < 1, np.nan, x))
+    #REMOVED
+    #df.loc[df['paper_study'] == "2016 Da Jiang FTP study1", cols] = df.loc[df['paper_study'] == "2016 Da Jiang FTP study1", cols].apply(lambda x: np.where(x < 1, np.nan, x))
     #2016 Da Jiang FTP study3  1-6 to 1-5
     #REMOVED
     #df.loc[df['paper_study'] == "2016 Da Jiang FTP study3", cols] = df.loc[df['paper_study'] == "2016 Da Jiang FTP study3", cols].apply(lambda x: np.where(x > 5, np.nan, x))

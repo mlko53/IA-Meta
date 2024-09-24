@@ -164,7 +164,7 @@ def main(fname, custom=None):
 
     collected['collected_mod'] = collected['collected_mod'].apply(parse_date)
     earlypub['earlypub_mod'] = earlypub['earlypub_mod'].apply(parse_date)
-
+    
     collected.set_index('study_name_mod', inplace=True)
     collected = collected.to_dict()['collected_mod']
     earlypub.set_index('study_name_mod', inplace=True)
@@ -192,7 +192,7 @@ def main(fname, custom=None):
         stdzd_data.loc[stdzd_data['paper_study'].str.startswith(key), 'collected_year'] = collected[key]
         #print(key, collected[key])
         #print(stdzd_data.loc[stdzd_data['paper_study'].str.startswith(key)]['collected_year'])
-
+    
 
     # calculating collected_year if necessary information already exists
     stdzd_data['collected_year'] = stdzd_data.apply(recalc_collection_date, axis=1)

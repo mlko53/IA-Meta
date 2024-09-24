@@ -35,7 +35,8 @@ knitr::opts_chunk$set(echo = TRUE)
 #df <- read.csv("./std_pt1_df_7_4_23.csv")
 #df <- read.csv("./std_pt1_df_7_23_23.csv")
 #df <- read.csv("./std_pt1_df_11_25_23.csv")
-df <- read.csv("./std_pt1_df_8_3_24.csv")
+#df <- read.csv("./std_pt1_df_8_3_24.csv")
+df <- read.csv("./std_pt1_df_9_23_24.csv")
 
 
 df[1] <- NULL #removing a weird extra column from step 1
@@ -1245,5 +1246,6 @@ df_final <- df_final[order(df_final$"Unnamed..0"), ]
 #write.csv(df_final, "std_pt2_df_7_23_23.csv", row.names = FALSE, na="")
 #write.csv(df_final, "withcountry_std_pt2_df_7_23_23.csv", row.names = FALSE, na="")
 #write.csv(df_final, "std_pt2_df_11_25_23.csv", row.names = FALSE, na="")
-write.csv(df_final, "std_pt2_df_8_3_24.csv", row.names = FALSE, na="")
+#write.csv(df_final, "std_pt2_df_8_3_24.csv", row.names = FALSE, na="")
+write.csv(df_final, "std_pt2_df_9_23_24.csv", row.names = FALSE, na="")
 ```

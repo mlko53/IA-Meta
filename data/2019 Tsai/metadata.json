@@ -4,21 +4,78 @@
     "Title": "Cultural variation in social judgments of smiles: The role of ideal affect",
     "Authors": "Tsai, J. L., Blevins, E., Bencharit, L. Z., Chim, L., Fung, H. H., & Yeung, D. Y.",
     "Journal": "Journal of Personality and Social Psychology",
-    "Studies": ["study3.sav"],
-    "Usable": ["study3.sav"],
+    "Studies": ["study1a.sav", "study1b.sav", "study2.csv", "study3.sav"],
+    "Usable": ["study1a.sav", "study1b.sav", "study2.csv", "study3.sav"],
     "Manipulation": [],
     "Reported": {
+        "study1a": {
+        	"culture: European American": 66,
+        	"culture: Hong Kong Chinese": 68
+        },
+        "study1b": {
+        	"culture: European American": 83,
+        	"culture: Hong Kong Chinese": 82
+        },
+        "study2": {
+            "race/ethn: European American": 68,
+            "geo: Hong Kong Chinese": 114
+        },
         "study3": {
         	"culture: European American": 98,
         	"culture: Hong Kong Chinese": 100
         }
     },
     "Filter":{
+        "study1a": {
+            "ethni_ea1_ch0": [0, 1]
+        },
+        "study1b": {
+            "filter_translate$": [1]
+        },
+        "study2": {
+            "ethni_r": [0, 1, 2]
+        },
         "study3": {
             "filter_$": [1]
         }
     },
     "Recode":{
+        "study1a": {
+            "ethni_ea1_ch0": {
+            	"culture: European American": 1,
+            	"culture: Hong Kong Chinese": 0
+            },
+            "gender":{
+                "M": 0,
+                "F": 1
+            }
+        },
+        "study1b": {
+            "ethn_ea0_ch1": {
+            	"culture: European American": 0,
+            	"culture: Hong Kong Chinese": 1
+            },
+            "gend":{
+                "M": 1,
+                "F": 2,
+                "Other": 3
+            }
+        },
+        "study2": {
+            "ethn_combined": {
+                "race/ethn: European American": "EuAm",
+                "geo: Hong Kong Chinese": "HKC",
+                "race/ethn: Chinese American": "ChAm",
+                "race/ethn: Japanese American": "JaAm",
+                "race/ethn: Korean American": "KoAm",
+                "race/ethn: Vietnamese American": "ViAm",
+                "race/ethn: Asian American": "AsAm"
+            },
+            "gender":{
+                "M": 0,
+                "F": 1
+            }
+        },
         "study3": {
             "eth": {
             	"culture: European American": 1,
@@ -32,6 +89,15 @@
         }
     },
     "Replace":{
+        "study1a":{
+            "_NAN_": "NA"
+        },
+        "study1b":{
+            "_NAN_": "NA"
+        },
+        "study2":{
+            "_NAN_": "NA"
+        },
         "study3":{
             "_NAN_": "NA"
         }
