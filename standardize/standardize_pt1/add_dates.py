@@ -16,7 +16,7 @@ def parse_date(date):
         if "." in year1:
             month = int(year1.split('.')[0])
             year = int(year1.split('.')[1])
-            year1 = year + month/12.0
+            year1 = year + (month-0.5)/12.0
         else:
             year1 = int(year1)+0.5
         
@@ -24,7 +24,7 @@ def parse_date(date):
         if "." in year2:
             month = int(year2.split('.')[0])
             year = int(year2.split('.')[1])
-            year2 = year + month/12.0
+            year2 = year + (month-0.5)/12.0
         else:
             year2 = int(year2)+0.5        
         
@@ -36,7 +36,9 @@ def parse_date(date):
         year = int(updated_date[1])
         if month == 0:
             month = 6
-        updated_date = year + month/12.0
+            updated_date = year + month/12.0
+        else:
+            updated_date = year + (month-0.5)/12.0
     
     #print(updated_date)
     #print('-------')
@@ -101,7 +103,7 @@ def switch_month_day(row, switch_list):
 def recalc_collection_date(row):
     #if not(pd.isnull(row['time.year']) and pd.isnull(row['time.month']) and pd.isnull(row['time.day'])):
     if not(pd.isnull(row['time.year']) and pd.isnull(row['time.month'])):
-        return row['time.year'] + row['time.month']/12.0
+        return row['time.year'] + (row['time.month']-0.5)/12.0
     else:
         return row['collected_year']
 
