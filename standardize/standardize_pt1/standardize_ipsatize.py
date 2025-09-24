@@ -67,7 +67,9 @@ def standardize(min_max_ranges, data, affect_cols, new_min, new_max):
         paper_min = paper_vals['min']
         paper_max = paper_vals['max']
         old_diff = paper_max - paper_min
-        
+        if (pd.isnull(paper_min) and pd.isnull(paper_max)):
+            print("Skipping "+paper_name+" due to no min/max")
+            continue
         curr_rows = data.loc[data['paper_study'] == str(paper_name), affect_cols]
         #print(curr_rows)
         curr_rows = curr_rows.sub(paper_min)
@@ -78,7 +80,7 @@ def standardize(min_max_ranges, data, affect_cols, new_min, new_max):
         #print(data.loc[data['paper_study'] == str(paper_name), affect_cols])
         #print(paper_name, paper_min, paper_max)
         #print('--')
-    
+        
     return data
 
         
@@ -176,6 +178,7 @@ def main(fname, custom=None):
     new_min = 1
     new_max = 5
     raw_cols = data.filter(regex=("raw")).columns
+    print(raw_cols)
     #pd.options.display.max_seq_items=None
     #print(raw_cols)
     
